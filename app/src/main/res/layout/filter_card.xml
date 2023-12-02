@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iconView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:scaleType="fitCenter"
@@ -20,12 +20,12 @@
     <TextView
         android:id="@+id/filterName"
         android:layout_width="322dp"
-        android:layout_height="35dp"
+        android:layout_height="25dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:text="TextView"
         android:textColor="@color/accent_color"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/iconView"
         app:layout_constraintTop_toTopOf="@+id/iconView" />

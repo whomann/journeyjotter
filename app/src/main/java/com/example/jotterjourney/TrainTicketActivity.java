@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ import java.util.Locale;
 
 public class TrainTicketActivity extends AppCompatActivity {
 
-    private int selectedTripId;TextView arrowTextView; Boolean isReturnBought = false; Button buyReturnTicket; RecyclerView recyclerView; ArrayList<ArrayList<Object>> trainsList = new ArrayList<>(); Spinner departureSpinner, targetSpinner; ImageButton searchTrainTicketButton;  private SQLiteDatabase db; private String returnDate, departureDate, targetLocation, departureLocation, departureLocationCode, targetLocationCode, ticketInfo; private int adultsCount;
+    ProgressBar progressBarTrainTickets; private int selectedTripId;TextView arrowTextView; Boolean isReturnBought = false; Button buyReturnTicket; RecyclerView recyclerView; ArrayList<ArrayList<Object>> trainsList = new ArrayList<>(); Spinner departureSpinner, targetSpinner; ImageButton searchTrainTicketButton;  private SQLiteDatabase db; private String returnDate, departureDate, targetLocation, departureLocation, departureLocationCode, targetLocationCode, ticketInfo; private int adultsCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,7 @@ public class TrainTicketActivity extends AppCompatActivity {
         arrowTextView.setText("\u276F");
         buyReturnTicket=findViewById(R.id.buyReturnTicket);
         buyReturnTicket.setVisibility(View.GONE);
+        progressBarTrainTickets=findViewById(R.id.progressBarTrainTickets);
 
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         readAndLogDataFromSQLite(selectedTripId);
@@ -74,6 +76,7 @@ public class TrainTicketActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 arrowTextView.setText("\u276E");
+                progressBarTrainTickets.setVisibility(View.VISIBLE);
                 trainsList.clear();
                 TrainTicketAdapter ticketAdapter = new TrainTicketAdapter(new ArrayList<>());
                 recyclerView.setAdapter(ticketAdapter);
@@ -89,6 +92,7 @@ public class TrainTicketActivity extends AppCompatActivity {
                 Log.d("tutu url", apiUrl);
                 isReturnBought = true;
                 new SendTrainRequestTask().execute(apiUrl);
+                buyReturnTicket.setVisibility(View.GONE);
             }
         });
         searchTrainTicketButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +100,7 @@ public class TrainTicketActivity extends AppCompatActivity {
             public void onClick(View view) {
                 arrowTextView.setText("\u276F");
                 isReturnBought = false;
+                progressBarTrainTickets.setVisibility(View.VISIBLE);
                 trainsList.clear();
                 String targetOption = targetSpinner.getSelectedItem().toString();
                 String targetStationId = extractStationId(targetOption);
@@ -242,6 +247,7 @@ public class TrainTicketActivity extends AppCompatActivity {
                             trainInfo.add(pricesList);
                             trainsList.add(trainInfo);
                             RecyclerView recyclerView = findViewById(R.id.recyclerViewTicket);
+                            progressBarTrainTickets.setVisibility(View.GONE);
                             TrainTicketAdapter ticketAdapter = new TrainTicketAdapter(trainsList);
                             recyclerView.setAdapter(ticketAdapter);
                         }
@@ -457,7 +463,6 @@ public class TrainTicketActivity extends AppCompatActivity {
                     if (cursor != null) {
                         cursor.close();
                     }
-                    buyReturnTicket.setVisibility(View.GONE);
                 }
                 else {
                     buyReturnTicket.setVisibility(View.VISIBLE);

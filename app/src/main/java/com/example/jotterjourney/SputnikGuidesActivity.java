@@ -75,13 +75,11 @@ public class SputnikGuidesActivity extends AppCompatActivity {
         previousSputnikPageButton=findViewById(R.id.previousSputnikPageButton);
         previousSputnikPageButton.setVisibility(View.GONE);
         progressBar = findViewById(R.id.progressBarGuide);
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         nextSputnikPageButton=findViewById(R.id.nextSputnikPageButton);
         nextSputnikPageButton.setVisibility(View.GONE);
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         readAndLogDataFromSQLite(selectedTripId);
-        searchSputnikTourButton=findViewById(R.id.searchSputnikTourButton);
-        searchSputnikTourButton.setEnabled(false);
         recyclerView=findViewById(R.id.recyclerViewGuides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -111,19 +109,6 @@ public class SputnikGuidesActivity extends AppCompatActivity {
 
                 page += 1;
                 progressBar.setVisibility(View.VISIBLE);
-                new SputnikApiTask().execute();
-            }
-        });
-        searchSputnikTourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                page = 1;
-                progressBar.setVisibility(View.VISIBLE);
-                GuidesAdapter guidesAdapter = new GuidesAdapter(new ArrayList<>());
-                recyclerView.setAdapter(guidesAdapter);
-                guidesAdapter.clearData();
-                nextSputnikPageButton.setVisibility(View.GONE);
-                previousSputnikPageButton.setVisibility(View.GONE);
                 new SputnikApiTask().execute();
             }
         });
@@ -178,7 +163,14 @@ public class SputnikGuidesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void unused) {
             Log.d("loc id", String.valueOf(regionId));
-            searchSputnikTourButton.setEnabled(true);
+            page = 1;
+            progressBar.setVisibility(View.VISIBLE);
+            GuidesAdapter guidesAdapter = new GuidesAdapter(new ArrayList<>());
+            recyclerView.setAdapter(guidesAdapter);
+            guidesAdapter.clearData();
+            nextSputnikPageButton.setVisibility(View.GONE);
+            previousSputnikPageButton.setVisibility(View.GONE);
+            new SputnikApiTask().execute();
         }
     }
     private class SputnikApiTask extends AsyncTask<Void, Void, Void> {

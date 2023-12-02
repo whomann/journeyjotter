@@ -54,11 +54,11 @@
             app:srcCompat="@drawable/eraser" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/adultImageView"
             android:layout_width="52dp"
             android:layout_height="48dp"
             android:layout_marginStart="133dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="28dp"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -285,7 +285,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/adultImageView" />
 
         <TextView
             android:id="@+id/textView6"
@@ -335,16 +335,15 @@
 
         <TextView
             android:id="@+id/visaTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="153dp"
+            android:layout_marginTop="8dp"
             android:text="Виза: не нужна"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/targetLocationSelect" />
 
@@ -725,6 +724,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/more" />
+
+        <ImageButton
+            android:id="@+id/showImageButton"
+            android:layout_width="44dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="45dp"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/countryInfoButton"
+            app:layout_constraintTop_toBottomOf="@+id/targetLocationSelect"
+            app:srcCompat="@drawable/imageicon" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

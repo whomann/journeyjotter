@@ -16,7 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
+import android.graphics.Bitmap;
 import android.icu.util.Calendar;
 import android.location.Address;
 import android.location.Geocoder;
@@ -60,12 +60,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LaunchActivity extends AppCompatActivity {
-    private String yandexTaxiApiKey, yandexClid; private int selectedTripId; RecyclerView recyclerViewEventsLaunch; TextView visaTextView; private String countryCode; RecyclerView recyclerViewLaunchGuides,recyclerViewLaunchLandmarks; private String hotelLink; ImageButton clearDataButton; Button guideButton, landmarksButton; RadioButton planeRadioButton,trainRadioButton; RadioGroup transportationRadioGroup; String transport; ImageButton hotelLinkButton,taxiLinkButton; String hotelInfo, yandexTaxiURL; TextView transferInfoTextView; String targetLocation, locationNameForTaxi, targetIATA, originIATA; Button orderTransfer; Button chooseTicketButton; EditText adultCountEditText; AutoCompleteTextView departureLocationSelect, targetLocationSelect; TextView departureDateTextView; TextView returnDateTextView; private int returnYear; private int returnMonth; private int returnDay; private String returnDate, departureDate; private SQLiteDatabase db; private int adultsCount; private String hotelLat, hotelLon;
+    private String photoTargetIata; ImageButton showImageButton; private String yandexTaxiApiKey, yandexClid; private int selectedTripId; RecyclerView recyclerViewEventsLaunch; TextView visaTextView; private String countryCode; RecyclerView recyclerViewLaunchGuides,recyclerViewLaunchLandmarks; private String hotelLink; ImageButton clearDataButton; Button guideButton, landmarksButton; RadioButton planeRadioButton,trainRadioButton; RadioGroup transportationRadioGroup; String transport; ImageButton hotelLinkButton,taxiLinkButton; String hotelInfo, yandexTaxiURL; TextView transferInfoTextView; String targetLocation, locationNameForTaxi, targetIATA, originIATA; Button orderTransfer; Button chooseTicketButton; EditText adultCountEditText; AutoCompleteTextView departureLocationSelect, targetLocationSelect; TextView departureDateTextView; TextView returnDateTextView; private int returnYear; private int returnMonth; private int returnDay; private String returnDate, departureDate; private SQLiteDatabase db; private int adultsCount; private String hotelLat, hotelLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +83,7 @@ public class LaunchActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         transport="plane";
+        showImageButton=findViewById(R.id.showImageButton);
         landmarksButton=findViewById(R.id.landmarksButton);
         guideButton=findViewById(R.id.guideButton);
         ProgressBar progressBar = findViewById(R.id.progressBar);
@@ -130,6 +130,7 @@ public class LaunchActivity extends AppCompatActivity {
         Button countryInfoButton = findViewById(R.id.countryInfoButton);
         Button checkEventsButton= findViewById(R.id.checkEventsButton);
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
+        showImageButton.setVisibility(View.GONE);
 
         SharedPreferences preferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
         String value = preferences.getString("selectedTripId", null);
@@ -178,7 +179,11 @@ public class LaunchActivity extends AppCompatActivity {
         targetLocationSelect.setOnItemClickListener((parent, view, position, id) -> {
             targetLocationSelect.clearFocus();
             if(!departureLocationSelect.getText().toString().equals("") && !targetLocationSelect.getText().toString().equals("")){
+                showImageButton.setVisibility(View.GONE);
                 checkVisa();
+                String requestUrl = "https://www.travelpayouts.com/widgets_suggest_params?q=Из%20Москва%20в%20" + targetLocation;
+                Log.d("loc request", requestUrl);
+                new SendIataRequestTask().execute(requestUrl);
             }
         });
         transportationRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
@@ -527,6 +532,10 @@ public class LaunchActivity extends AppCompatActivity {
                         targetLocationSelect.setText(targetLocation);
                         if(!targetLocationSelect.getText().toString().equals("") && !departureLocationSelect.getText().toString().equals("")){
                             checkVisa();
+                            showImageButton.setVisibility(View.GONE);
+                            String requestUrl = "https://www.travelpayouts.com/widgets_suggest_params?q=Из%20Москва%20в%20" + targetLocation;
+                            Log.d("loc request", requestUrl);
+                            new SendIataRequestTask().execute(requestUrl);
                         }
                         adultCountEditText.setText(String.valueOf(adultsCount));
                         if (hotelInfo != null) {
@@ -829,7 +838,7 @@ public class LaunchActivity extends AppCompatActivity {
         return new JSONArray(stringBuilder.toString());
     }
     public void showDatePickerDialog(View view, final String targetDateVariable) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.CustomDatePickerDialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 int userId = selectedTripId;
@@ -855,7 +864,6 @@ public class LaunchActivity extends AppCompatActivity {
                 db.close();
             }
         }, returnYear, returnMonth, returnDay);
-
         datePickerDialog.show();
     }
     public void startHotelApp(View view) {
@@ -1006,7 +1014,92 @@ public class LaunchActivity extends AppCompatActivity {
             }
         }
     }
+    private static class LoadImageTask extends AsyncTask<Void, Void, Bitmap> {
+        private final Context context;
+        private final String imageUrl;
+        ImageButton showImageButton;
 
+        LoadImageTask(Context context, String imageUrl, ImageButton showImageButton) {
+            this.context = context;
+            this.imageUrl = imageUrl;
+            this.showImageButton=showImageButton;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            try {
+                return Picasso.get().load(imageUrl).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if (result != null) {
+                showImageButton.setVisibility(View.VISIBLE);
+                showImageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showImagePopup(context, result);
+                    }
+                });
+            }
+        }
+    }
+    private static void showImagePopup(Context context, Bitmap bitmap) {
+        View popupView = LayoutInflater.from(context).inflate(R.layout.popup_image, null);
+        ImageView imageView = popupView.findViewById(R.id.showCityImageView);
+        imageView.setImageBitmap(bitmap);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(popupView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    private class SendIataRequestTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder responseStringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    responseStringBuilder.append(line);
+                }
+                reader.close();
+                connection.disconnect();
+                return responseStringBuilder.toString();
+            } catch (IOException e) {
+                Log.e("Error: ", e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            if (response != null) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    Log.d("Location response",response);
+                    JSONObject destination = jsonResponse.getJSONObject("destination");
+                    photoTargetIata= destination.getString("iata").trim();
+                    Log.d("Iata Code", "Target Iata: " + photoTargetIata);
+                    String imageUrl = "https://photo.hotellook.com/static/cities/960x720/"+photoTargetIata.toUpperCase()+".jpg";
+                    Log.d("imageUrl", imageUrl);
+                    LoadImageTask loadImageTask = new LoadImageTask(LaunchActivity.this, imageUrl, showImageButton);
+                    loadImageTask.execute();
+                } catch (JSONException e) {
+                    Log.e("JSON parsing error: ", e.getMessage());
+                }
+            } else {
+            }
+        }
+    }
     private class LoadDataAsyncTask extends AsyncTask<Void, Void, List<String>> {
         @Override
         protected List<String> doInBackground(Void... params) {

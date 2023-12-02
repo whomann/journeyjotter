@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageButton
         android:id="@+id/searchTrainTicketButton"
         android:layout_width="41dp"
@@ -103,5 +104,17 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/departureStationSelect"
         app:layout_constraintTop_toBottomOf="@+id/currentTicketTextView" />
+
+    <ProgressBar
+        android:id="@+id/progressBarTrainTickets"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:indeterminateTint="@color/accent_color"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
