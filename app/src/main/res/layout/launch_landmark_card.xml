@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="15dp"
+    android:layout_marginTop="15dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/launchLandmarkImage"
+        android:layout_width="176dp"
+        android:layout_height="152dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/placeholder" />
+
+    <TextView
+        android:id="@+id/launchLandmarkTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textColor="@color/accent_color"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/launchLandmarkAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textAlignment="center"
+        android:textColor="@color/accent_color"
+        android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/launchLandmarkDeleteButton"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="63dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="@color/accent_color"
+            android:text="-"
+            android:textColor="@color/main_color" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

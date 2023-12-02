@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".CountryInfoPopup">
+
+        <ImageButton
+            android:id="@+id/buttonClose"
+            android:layout_width="43dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="18dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="onCloseButtonClick"
+            android:scaleType="fitCenter"
+            android:src="@drawable/close"
+            android:text="Close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewShortInfo"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="23dp"
+            android:text="Испания — южноевропейская страна, богатая историей, культурой, искусством и известная своим средиземноморским климатом."
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCountryName" />
+
+        <TextView
+            android:id="@+id/textViewCountryName"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="23dp"
+            android:text="Испания"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCountryInfo" />
+
+
+        <TextView
+            android:id="@+id/textViewCousine"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="25dp"
+            android:text="• Блюда: паэлья, газпачо, тапас\n• Напитки: кава, тинто де Верано, тинто\n• Десерты: Флан, Туррон, Чуррос"
+
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+        <TextView
+            android:id="@+id/textViewCurrency"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="118dp"
+            android:text="Язык: Испанский\nВалюта: Евро (EUR)"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.447"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewShortInfo" />
+
+        <TextView
+            android:id="@+id/textViewWeather"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:textStyle="bold"
+            android:layout_marginEnd="25dp"
+            android:text="Различные климатические зоны: средиземноморский на побережье, континентальный в центре и океанический на севере. Важно учитывать различия в климате по регионам."
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+        <ImageView
+            android:id="@+id/imageViewCountryInfo"
+            android:layout_width="309dp"
+            android:layout_height="205dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="29dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonClose" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="147dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="147dp"
+            android:text="Климат"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCurrency" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="46dp"
+            android:text="Социальные нормы"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCousine" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="162dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="161dp"
+            android:text="Одежда"
+            android:textColor="@color/accent_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGiftGiving" />
+
+        <TextView
+            android:id="@+id/textViewCommunicationStyle"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="20dp"
+            android:text="Открытый и дружелюбный стиль общения. Обычно используется поцелуй на две щеки при приветствии."
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+        <TextView
+            android:id="@+id/textViewGiftGiving"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:textStyle="bold"
+            android:layout_marginEnd="25dp"
+            android:text="Подарки обычно открывают в присутствии дарителя и благодарят сразу."
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+        <TextView
+            android:id="@+id/textView38"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="171dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="171dp"
+            android:text="Табу"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPublicTransport" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="119dp"
+            android:text="Стиль общения"
+            android:textColor="@color/accent_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+        <TextView
+            android:id="@+id/textViewDressCode"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="25dp"
+            android:text="Казуальный стиль в повседневной жизни, но более формальная одежда ценится в ресторанах и на мероприятиях. "
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+        <TextView
+            android:id="@+id/textViewEmergencyInfo"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="29dp"
+            android:text="Полиция: 112\nСкорая помощь: 112\nПожарная охрана: 112"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.58"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEmergencyInfo"/>
+
+        <TextView
+            android:id="@+id/textViewPublicTransport"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="25dp"
+            android:text="Хорошо развит общественный транспорт, включая метро, автобусы и поезда. Такси также широко распространено."
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView37" />
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="37dp"
+            android:text="Экстренные службы"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTaboos" />
+
+        <TextView
+            android:id="@+id/textViewTaboos"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="25dp"
+            android:text="Не поднимайте тост первым, если вы гость. \nИзбегайте шума в период сиесты (после обеда)."
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+        <TextView
+            android:id="@+id/textView35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="102dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="102dp"
+            android:text="Дарение подарков"
+            android:textColor="@color/accent_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCommunicationStyle" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="313dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="29dp"
+            android:text="Публичный транспорт"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDressCode" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="41dp"
+            android:text="Национальная кухня"
+            android:textColor="@color/accent_color"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewWeather" />
+
+        <ImageView
+            android:id="@+id/flagImageView"
+            android:scaleType="centerCrop"
+            android:layout_width="57dp"
+            android:layout_height="38dp"
+            android:src="@drawable/icon"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewCountryInfo"
+            app:layout_constraintTop_toTopOf="@+id/imageViewCountryInfo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

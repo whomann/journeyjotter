@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HotelActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".HotelActivity">
+
+        <Spinner
+            android:id="@+id/sortSpinner"
+            android:layout_width="265dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/custom_spinner_background"
+            android:entries="@array/sorting_options"
+            android:textColor="@color/main_color"
+            app:layout_constraintStart_toEndOf="@+id/filterButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:scaleType="fitCenter"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/accent_color"
+            android:src="@drawable/search"
+            android:text="Search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintStart_toEndOf="@+id/sortSpinner"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="31dp"
+            android:indeterminateTint="@color/accent_color"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapViewHotels" />
+
+        <ImageButton
+            android:id="@+id/filterButton"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="showFiltersPopup"
+            android:src="@drawable/more"
+            android:text="Filters"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="1dp"
+            android:scrollbars="none"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sortSpinner">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/hostelTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="хостел"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/hotelTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="отель"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/apartmentTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="апартаменты"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/apartHotelTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="апарт-отель"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/guestHouseTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="гостевой дом"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/lodgeTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="лодж"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/villaTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="вилла"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/motelTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="мотель"
+                    android:textColor="@color/accent_color"
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/farmTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textColor="@color/accent_color"
+                    android:text="ферма"
+                    android:textSize="8sp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="365dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapViewHotels" />
+
+        <Button
+            android:id="@+id/nextPageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="147dp"
+            android:layout_marginEnd="147dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/accent_color"
+            android:text="Следующая страница"
+            android:visibility="gone"
+            android:textColor="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapViewHotels"
+            android:layout_width="373dp"
+            android:layout_height="143dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:paddingLeft="20dp"
+        android:background="#614961"
+        android:elevation="10dp">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/typeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Подборка отелей"
+                    android:layout_marginTop="20dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp"
+                    android:textColor="@color/main_color"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <Spinner
+                    android:id="@+id/typeSpinner"
+                    android:layout_width="230dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_spinner_background"
+                    android:textColor="#000000"
+                    app:layout_constraintStart_toEndOf="@+id/typeTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/priceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_color"
+                    android:text="Стоимость отеля\nза все время"
+                    android:layout_marginTop="10dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/rangeSlider"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="1"
+                    android:valueTo="1000000"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:thumbColor="@color/main_color"
+                    app:trackColorActive="@color/main_color"/>
+                <TextView
+                    android:id="@+id/hotelsTitle"
+                    android:textColor="@color/main_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Отель"
+                    android:layout_marginTop="10dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/CheckIn24hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/hotelsTitle"
+            app:layout_constraintStart_toStartOf="@+id/hotelsTitle"
+            android:text="Круглосуточная регистрация" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterRestaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/CheckIn24hr"
+            app:layout_constraintStart_toStartOf="@+id/CheckIn24hr"
+            android:text="Ресторан" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterPublicWiFi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterRestaurant"
+            app:layout_constraintStart_toStartOf="@+id/filterRestaurant"
+            android:text="Wi-Fi в общественных областях" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterPrivateBeach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterPublicWiFi"
+            app:layout_constraintStart_toStartOf="@+id/filterPublicWiFi"
+            android:text="Частный пляж" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterSmokingZones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterPrivateBeach"
+            app:layout_constraintStart_toStartOf="@+id/filterPrivateBeach"
+            android:text="Зона курения" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterDisabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterSmokingZones"
+            app:layout_constraintStart_toStartOf="@+id/filterSmokingZones"
+            android:text="Удобства для инвалидов" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterDisabled"
+            app:layout_constraintStart_toStartOf="@+id/filterDisabled"
+            android:text="Бар" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterParking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterBar"
+            app:layout_constraintStart_toStartOf="@+id/filterBar"
+            android:text="Автомобильная стоянка" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterPetsAllowed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterParking"
+            app:layout_constraintStart_toStartOf="@+id/filterParking"
+            android:text="Домашние животные разрешены" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterRussian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterPetsAllowed"
+            app:layout_constraintStart_toStartOf="@+id/filterPetsAllowed"
+            android:text="Русский язык" />
+
+        <TextView
+            android:id="@+id/roomsTitle"
+            android:textColor="@color/main_color"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Номер"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/filterRussian"
+            app:layout_constraintStart_toStartOf="@+id/filterRussian" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterFan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Фен"
+            app:layout_constraintTop_toBottomOf="@+id/roomsTitle"
+            app:layout_constraintStart_toStartOf="@+id/roomsTitle" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterAirConditioner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterFan"
+            app:layout_constraintStart_toStartOf="@+id/filterFan"
+            android:text="Кондиционер" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterSafe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterAirConditioner"
+            app:layout_constraintStart_toStartOf="@+id/filterAirConditioner"
+            android:text="Сейф" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterSafe"
+            app:layout_constraintStart_toStartOf="@+id/filterSafe"
+            android:text="ТВ" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterBath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterTV"
+            app:layout_constraintStart_toStartOf="@+id/filterTV"
+            android:text="Ванна" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterShower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterBath"
+            app:layout_constraintStart_toStartOf="@+id/filterBath"
+            android:text="Душ" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterCleaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterShower"
+            app:layout_constraintStart_toStartOf="@+id/filterShower"
+            android:text="Уборка" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterDailyCleaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterCleaning"
+            app:layout_constraintStart_toStartOf="@+id/filterCleaning"
+            android:text="Ежедневная уборка" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterMiniBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterDailyCleaning"
+            app:layout_constraintStart_toStartOf="@+id/filterDailyCleaning"
+            android:text="Мини-бар" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterToiletInRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterMiniBar"
+            app:layout_constraintStart_toStartOf="@+id/filterMiniBar"
+            android:text="Уборная в номере" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterCoffee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterToiletInRoom"
+            app:layout_constraintStart_toStartOf="@+id/filterToiletInRoom"
+            android:text="Кофемашина" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterSlippers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterCoffee"
+            app:layout_constraintStart_toStartOf="@+id/filterCoffee"
+            android:text="Домашние тапочки" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterSplitRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterSlippers"
+            app:layout_constraintStart_toStartOf="@+id/filterSlippers"
+            android:text="Смежные номера" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterSharedBathroom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterSplitRoom"
+            app:layout_constraintStart_toStartOf="@+id/filterSplitRoom"
+            android:text="Общая ванная комната" />
+
+        <TextView
+            android:id="@+id/servicesTitle"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/main_color"
+            android:paddingVertical="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Услуги"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/filterSharedBathroom"
+            app:layout_constraintStart_toStartOf="@+id/filterSharedBathroom" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterBusinessCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/servicesTitle"
+            app:layout_constraintStart_toStartOf="@+id/servicesTitle"
+            android:text="Бизнес центр" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterConcierge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterBusinessCenter"
+            app:layout_constraintStart_toStartOf="@+id/filterBusinessCenter"
+            android:text="Консьерж" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterLaundry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterConcierge"
+            app:layout_constraintStart_toStartOf="@+id/filterConcierge"
+            android:text="Прачечная" />
+
+        <TextView
+            android:id="@+id/entertainmentTitle"
+            android:textColor="@color/main_color"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Развлечения"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/filterLaundry"
+            app:layout_constraintStart_toStartOf="@+id/filterLaundry" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterSpa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/entertainmentTitle"
+            app:layout_constraintStart_toStartOf="@+id/entertainmentTitle"
+            android:text="Спа" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterFitness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterSpa"
+            app:layout_constraintStart_toStartOf="@+id/filterSpa"
+            android:text="Фитнес  зал" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/filterPool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/filterFitness"
+            app:layout_constraintStart_toStartOf="@+id/filterFitness"
+            android:text="Бассейн" />
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>

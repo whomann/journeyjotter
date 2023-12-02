@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LaunchActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        tools:context=".LaunchActivity">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/accent_color"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.152" />
+
+        <ImageButton
+            android:id="@+id/hotelLinkButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="110dp"
+            android:backgroundTint="@color/main_color"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:srcCompat="@drawable/link" />
+
+        <ImageButton
+            android:id="@+id/clearDataButton"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="28dp"
+            android:backgroundTint="@color/accent_color"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/eraser" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="52dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="133dp"
+            android:layout_marginTop="27dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/user" />
+
+        <EditText
+            android:id="@+id/adultCountEditText"
+            android:layout_width="48dp"
+            android:layout_height="51dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="146dp"
+            android:backgroundTint="@color/accent_color"
+            android:hint="Взрослых"
+            android:inputType="number"
+            android:max="25"
+            android:min="1"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <RadioGroup
+            android:id="@+id/transportationRadioGroup"
+            android:layout_width="255dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="85dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="88dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectReturnDateButton">
+
+            <RadioButton
+                android:id="@+id/trainRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/accent_color"
+                android:drawableTop="@drawable/train" />
+
+            <RadioButton
+                android:id="@+id/planeRadioButton"
+                android:layout_width="94dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="80dp"
+                android:buttonTint="@color/accent_color"
+                android:drawableTop="@drawable/plane"
+                tools:layout_editor_absoluteX="21dp"
+                tools:layout_editor_absoluteY="347dp" />
+
+        </RadioGroup>
+
+        <AutoCompleteTextView
+            android:id="@+id/departureLocationSelect"
+            android:layout_width="345dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="1dp"
+            android:dropDownHeight="200dp"
+            android:hint="Найти город"
+            android:clickable="true"
+            android:focusable="true"
+            android:inputType="text"
+            android:textColor="@color/accent_color"
+            android:textColorHint="@color/accent_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <Button
+            android:id="@+id/transferButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="157dp"
+            android:layout_marginTop="6dp"
+            android:backgroundTint="@color/accent_color"
+            android:text="Выбрать"
+            android:textColor="@color/main_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+        <Button
+            android:id="@+id/hotelButton"
+            android:layout_width="100dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="157dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="3dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="startHotelApp"
+            android:text="выбрать"
+            android:textColor="@color/main_color"
+            app:layout_constraintEnd_toStartOf="@+id/hotelLinkButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <Button
+            android:id="@+id/chooseTicketButton"
+            android:layout_width="100dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="157dp"
+            android:layout_marginEnd="155dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="startTicketApp"
+            android:text="Выбрать"
+            android:textColor="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ticketBackgroundImageView" />
+
+        <AutoCompleteTextView
+            android:id="@+id/targetLocationSelect"
+            android:layout_width="345dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="23dp"
+            android:dropDownHeight="200dp"
+            android:inputType="text"
+            android:clickable="true"
+            android:focusable="true"
+            android:hint="Найти город"
+            android:textColor="@color/accent_color"
+            android:textColorHint="@color/accent_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <ImageButton
+            android:id="@+id/taxiLinkButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="0dp"
+            android:backgroundTint="@color/main_color"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toEndOf="@+id/transferButton"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:srcCompat="@drawable/link" />
+
+        <Button
+            android:id="@+id/guideButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="157dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="163dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="startGuidesApp"
+            android:text="выбрать"
+            android:textColor="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewLaunchGuides" />
+
+        <Button
+            android:id="@+id/landmarksButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="157dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="162dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="startLandmarksApp"
+            android:text="выбрать"
+            android:textColor="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewLaunchLandmarks" />
+        <Button
+            android:id="@+id/checkEventsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="153dp"
+            android:layout_marginTop="5dp"
+            android:onClick="checkEvents"
+            android:text="Просмотр"
+            android:backgroundTint="@color/accent_color"
+            android:textColor="@color/main_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewEventsLaunch"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="210dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="16dp"
+            android:text="План\nпутешествия"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="117dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="78dp"
+            android:text="Дата возвращения"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/adultCountEditText" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="117dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="29dp"
+            android:text="Дата отправления"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="167dp"
+            android:text="Откуда"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transportationRadioGroup" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="178dp"
+            android:layout_marginTop="17dp"
+            android:text="Куда"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departureLocationSelect" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="133dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="134dp"
+            android:text="События"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/landmarksButton" />
+
+        <TextView
+            android:id="@+id/visaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="153dp"
+            android:text="Виза: не нужна"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/targetLocationSelect" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="153dp"
+            android:text="БИЛЕТ"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryInfoButton" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="151dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="154dp"
+            android:text="ОТЕЛЬ"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseTicketButton" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="122dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="114dp"
+            android:text="ТРАНСФЕР"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hotelButton" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="109dp"
+            android:text="ЭКСКУРСИИ"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transferButton" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="109dp"
+            android:text="ДОСТОПРИМЕЧАТЕЛЬНОСТИ"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideButton" />
+
+        <TextView
+            android:id="@+id/returnDateTextView"
+            android:layout_width="97dp"
+            android:layout_height="47dp"
+            android:layout_marginEnd="89dp"
+            android:background="@color/main_color"
+            android:paddingTop="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            tools:text="11-20-2023" />
+
+        <TextView
+            android:id="@+id/departureDateTextView"
+            android:layout_width="97dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="73dp"
+            android:background="@color/main_color"
+            android:paddingTop="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:text="11-15-2023" />
+
+        <Button
+            android:id="@+id/selectReturnDateButton"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="115dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="showDatePickerDialog"
+            android:text="+"
+            android:textColor="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/returnDateTextView" />
+
+        <Button
+            android:id="@+id/selectDepartureDateButton"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="showDatePickerDialog"
+            android:text="+"
+            android:textColor="@color/main_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departureDateTextView" />
+
+        <ImageView
+            android:id="@+id/ticketBackgroundImageView"
+            android:layout_width="365dp"
+            android:layout_height="184dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:srcCompat="@drawable/plane_background" />
+
+        <TextView
+            android:id="@+id/departureLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:text="Билет пока не выбран"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/ticketBackgroundImageView"
+            app:layout_constraintTop_toTopOf="@+id/ticketBackgroundImageView" />
+
+        <TextView
+            android:id="@+id/departureDateLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="воспользуйтесь поиском билетов"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/ticketBackgroundImageView"
+            app:layout_constraintTop_toBottomOf="@+id/departureLine" />
+
+        <TextView
+            android:id="@+id/returnDateLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/ticketBackgroundImageView"
+            app:layout_constraintTop_toBottomOf="@+id/returnLine" />
+
+        <TextView
+            android:id="@+id/returnLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/ticketBackgroundImageView"
+            app:layout_constraintTop_toBottomOf="@+id/departureDateLine" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="288dp"
+            android:layout_height="299dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="65dp"
+            android:background="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="414dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <ImageView
+            android:id="@+id/hotelImageView"
+            android:layout_width="288dp"
+            android:layout_height="165dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toTopOf="@+id/textView11"
+            app:srcCompat="@drawable/placeholder" />
+
+        <TextView
+            android:id="@+id/hotelNameTextView"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="19dp"
+            android:text="Отель не забронирован"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintHorizontal_bias="0.59"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/hotelImageView" />
+
+        <TextView
+            android:id="@+id/hotelPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="78dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="75dp"
+            android:text="↓"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/hotelAddressTextView" />
+
+        <TextView
+            android:id="@+id/hotelAddressTextView"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="21dp"
+            android:text="Но пора это исправить"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/hotelNameTextView" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="105dp"
+            android:layout_height="175dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="22dp"
+            app:layout_constraintEnd_toStartOf="@+id/transferAddressLine"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toTopOf="@+id/textView16"
+            app:srcCompat="@drawable/taxi" />
+
+        <TextView
+            android:id="@+id/transferAddressLine"
+            android:layout_width="221dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="32dp"
+            android:text="Трансфер\nв 20 странах мира"
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+        <TextView
+            android:id="@+id/transferPriceLine"
+            android:layout_width="218dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="32dp"
+            android:text="от 100 руб."
+            android:textAlignment="center"
+            android:textColor="@color/accent_color"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transferAddressLine" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewLaunchGuides"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="1dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:background="@color/accent_color"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewLaunchLandmarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:background="@color/accent_color"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="206dp" />
+
+        <Button
+            android:id="@+id/countryInfoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="109dp"
+            android:backgroundTint="@color/accent_color"
+            android:text="Информация о стране"
+            android:textColor="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visaTextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEventsLaunch"
+            android:layout_marginTop="12dp"
+            android:background="@color/accent_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <ImageButton
+            android:id="@+id/selectTripButton"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/accent_color"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/more" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

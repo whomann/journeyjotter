@@ -1,0 +1,848 @@
+[
+ {
+  "id": 50,
+  "name": "24h. Reception",
+  "groupName": "General",
+  "ruTranslation": "Круглосуточная регистрация"
+ },
+ {
+  "id": 23,
+  "name": "24hr room service",
+  "groupName": "Services",
+  "ruTranslation": "Круглосуточное обслуживание номера"
+ },
+ {
+  "id": 148,
+  "name": "Adults only",
+  "groupName": "General",
+  "ruTranslation": "Только для взрослых"
+ },
+ {
+  "id": 11,
+  "name": "Air conditioning",
+  "groupName": "Room",
+  "ruTranslation": "Кондиционер"
+ },
+ {
+  "id": 100,
+  "name": "Animation",
+  "groupName": "Activities",
+  "ruTranslation": "Анимация"
+ },
+ {
+  "id": 140,
+  "name": "Arabic",
+  "groupName": "Staff languages",
+  "ruTranslation": "Арабский язык"
+ },
+ {
+  "id": 63,
+  "name": "Babysitting",
+  "groupName": "Services",
+  "ruTranslation": "Услуги няни"
+ },
+ {
+  "id": 33,
+  "name": "Balcony\/terrace",
+  "groupName": "Room",
+  "ruTranslation": "Балкон\/терраса"
+ },
+ {
+  "id": 64,
+  "name": "Banquet Facilities",
+  "groupName": "General",
+  "ruTranslation": "Банкет"
+ },
+ {
+  "id": 14,
+  "name": "Bar",
+  "groupName": "General",
+  "ruTranslation": "Бар"
+ },
+ {
+  "id": 97,
+  "name": "Barbecue Area",
+  "groupName": "General",
+  "ruTranslation": "Барбекю"
+ },
+ {
+  "id": 61,
+  "name": "Bathrobes",
+  "groupName": "Room",
+  "ruTranslation": "Халат и тапочки"
+ },
+ {
+  "id": 22,
+  "name": "Bathroom",
+  "groupName": "Room",
+  "ruTranslation": "Ванная комната"
+ },
+ {
+  "id": 26,
+  "name": "Bathtub",
+  "groupName": "Room",
+  "ruTranslation": "Ванна"
+ },
+ {
+  "id": 94,
+  "name": "Beauty Salon",
+  "groupName": "Services",
+  "ruTranslation": "Салон красоты"
+ },
+ {
+  "id": 58,
+  "name": "Bicycle rental",
+  "groupName": "Activities",
+  "ruTranslation": "Прокат велосипедов"
+ },
+ {
+  "id": 101,
+  "name": "Billiards",
+  "groupName": "Activities",
+  "ruTranslation": "Бильярд"
+ },
+ {
+  "id": 116,
+  "name": "Bowling",
+  "groupName": "Activities",
+  "ruTranslation": "Боулинг"
+ },
+ {
+  "id": 88,
+  "name": "Breakfast to go",
+  "groupName": "Services",
+  "ruTranslation": "Завтрак"
+ },
+ {
+  "id": 6,
+  "name": "Business center",
+  "groupName": "Services",
+  "ruTranslation": "Бизнес центр"
+ },
+ {
+  "id": 41,
+  "name": "Cafe",
+  "groupName": "General",
+  "ruTranslation": "Кафе"
+ },
+ {
+  "id": 56,
+  "name": "Car parking",
+  "groupName": "Parking",
+  "ruTranslation": "Автомобильная стоянка"
+ },
+ {
+  "id": 93,
+  "name": "Casino",
+  "groupName": "Activities",
+  "ruTranslation": "Казино"
+ },
+ {
+  "id": 122,
+  "name": "Children care\/activities",
+  "groupName": "Activities",
+  "ruTranslation": "Развлечения и забота о детях"
+ },
+ {
+  "id": 142,
+  "name": "Chinese",
+  "groupName": "Staff languages",
+  "ruTranslation": "Китайский язык"
+ },
+ {
+  "id": 144,
+  "name": "Cleaning",
+  "groupName": "Room",
+  "ruTranslation": "Уборка"
+ },
+ {
+  "id": 84,
+  "name": "Cloakroom",
+  "groupName": "General",
+  "ruTranslation": "Гардероб"
+ },
+ {
+  "id": 27,
+  "name": "Coffee\/tea maker",
+  "groupName": "Room",
+  "ruTranslation": "Кофемашина"
+ },
+ {
+  "id": 44,
+  "name": "Concierge",
+  "groupName": "Services",
+  "ruTranslation": "Консьерж"
+ },
+ {
+  "id": 46,
+  "name": "Conference Facilities",
+  "groupName": "General",
+  "ruTranslation": "Конференц-залы"
+ },
+ {
+  "id": 135,
+  "name": "Connecting rooms",
+  "groupName": "Room",
+  "ruTranslation": "Смежные номера"
+ },
+ {
+  "id": 127,
+  "name": "Copying Services",
+  "groupName": "Services",
+  "ruTranslation": "МФУ"
+ },
+ {
+  "id": 67,
+  "name": "Crib available",
+  "groupName": "Room",
+  "ruTranslation": "Детская кроватка"
+ },
+ {
+  "id": 69,
+  "name": "Currency Exchange",
+  "groupName": "Services",
+  "ruTranslation": "Обмен валюты"
+ },
+ {
+  "id": 134,
+  "name": "Daily Housekeeping",
+  "groupName": "Room",
+  "ruTranslation": "Ежедневная уборка"
+ },
+ {
+  "id": 31,
+  "name": "Daily newspaper",
+  "groupName": "Room",
+  "ruTranslation": "Ежедневная газета"
+ },
+ {
+  "id": 145,
+  "name": "Deposit",
+  "groupName": "Hotel",
+  "ruTranslation": "Депозит"
+ },
+ {
+  "id": 19,
+  "name": "Desk",
+  "groupName": "Room",
+  "ruTranslation": "Рабочий стол"
+ },
+ {
+  "id": 138,
+  "name": "Deutsch",
+  "groupName": "Staff languages",
+  "ruTranslation": "Немецкий язык"
+ },
+ {
+  "id": 29,
+  "name": "Disabled facilities",
+  "groupName": "General",
+  "ruTranslation": "Удобства для инвалидов"
+ },
+ {
+  "id": 113,
+  "name": "Diving",
+  "groupName": "Activities",
+  "ruTranslation": "Дайвинг"
+ },
+ {
+  "id": 78,
+  "name": "Doctor on call",
+  "groupName": "Services",
+  "ruTranslation": "Доктор по вызову"
+ },
+ {
+  "id": 119,
+  "name": "Eco Friendly",
+  "groupName": "General",
+  "ruTranslation": "Экологически чисто"
+ },
+ {
+  "id": 71,
+  "name": "Electronic room keys",
+  "groupName": "Room",
+  "ruTranslation": "Электронные ключи"
+ },
+ {
+  "id": 21,
+  "name": "Elevator",
+  "groupName": "General",
+  "ruTranslation": "Лифт"
+ },
+ {
+  "id": 136,
+  "name": "English",
+  "groupName": "Staff languages",
+  "ruTranslation": "Английский язык"
+ },
+ {
+  "id": 47,
+  "name": "Faxing Facilities",
+  "groupName": "Services",
+  "ruTranslation": "Факс"
+ },
+ {
+  "id": 124,
+  "name": "Free local telephone calls",
+  "groupName": "Services",
+  "ruTranslation": "Бесплатные местные звонки"
+ },
+ {
+  "id": 54,
+  "name": "Free parking",
+  "groupName": "Parking",
+  "ruTranslation": "Бесплатная парковка"
+ },
+ {
+  "id": 137,
+  "name": "French",
+  "groupName": "Staff languages",
+  "ruTranslation": "Французский язык"
+ },
+ {
+  "id": 98,
+  "name": "Games Room",
+  "groupName": "Activities",
+  "ruTranslation": "Игровая комната"
+ },
+ {
+  "id": 109,
+  "name": "Garage",
+  "groupName": "Parking",
+  "ruTranslation": "Гараж"
+ },
+ {
+  "id": 36,
+  "name": "Garden",
+  "groupName": "General",
+  "ruTranslation": "Сад"
+ },
+ {
+  "id": 118,
+  "name": "Gift Shop",
+  "groupName": "General",
+  "ruTranslation": "Магазин подарков"
+ },
+ {
+  "id": 70,
+  "name": "Golf course (on site)",
+  "groupName": "Activities",
+  "ruTranslation": "Поле для гольфа"
+ },
+ {
+  "id": 40,
+  "name": "Gym \/ Fitness Centre",
+  "groupName": "Activities",
+  "ruTranslation": "Фитнес  зал"
+ },
+ {
+  "id": 2,
+  "name": "Hairdryer",
+  "groupName": "Room",
+  "ruTranslation": "Фен"
+ },
+ {
+  "id": 125,
+  "name": "Handicapped Room",
+  "groupName": "Room",
+  "ruTranslation": "Комната для инвалидов"
+ },
+ {
+  "id": 86,
+  "name": "Heated pool",
+  "groupName": "Activities",
+  "ruTranslation": "Бассейн с подогревом"
+ },
+ {
+  "id": 112,
+  "name": "Horse Riding",
+  "groupName": "Activities",
+  "ruTranslation": "Верховая езда"
+ },
+ {
+  "id": 49,
+  "name": "Hotel\/airport transfer",
+  "groupName": "Services",
+  "ruTranslation": "Трансфер"
+ },
+ {
+  "id": 123,
+  "name": "In-house movie",
+  "groupName": "General",
+  "ruTranslation": "Кинотеатр"
+ },
+ {
+  "id": 32,
+  "name": "In-room safe",
+  "groupName": "Room",
+  "ruTranslation": "Сейф в номере"
+ },
+ {
+  "id": 68,
+  "name": "Indoor pool",
+  "groupName": "Activities",
+  "ruTranslation": "Внутренний бассейн"
+ },
+ {
+  "id": 62,
+  "name": "Inhouse movies",
+  "groupName": "Room",
+  "ruTranslation": "Домашний кинотеатр"
+ },
+ {
+  "id": 24,
+  "name": "Internet Access",
+  "groupName": "Internet",
+  "ruTranslation": "Доступ в Интернет"
+ },
+ {
+  "id": 35,
+  "name": "Ironing board",
+  "groupName": "Room",
+  "ruTranslation": "Гладильная доска"
+ },
+ {
+  "id": 141,
+  "name": "Italian",
+  "groupName": "Staff languages",
+  "ruTranslation": "Итальянский язык"
+ },
+ {
+  "id": 57,
+  "name": "Jacuzzi",
+  "groupName": "Activities",
+  "ruTranslation": "Джакузи"
+ },
+ {
+  "id": 87,
+  "name": "Kids pool",
+  "groupName": "Activities",
+  "ruTranslation": "Детский бассейн"
+ },
+ {
+  "id": 53,
+  "name": "Kitchenette",
+  "groupName": "Room",
+  "ruTranslation": "Кухня"
+ },
+ {
+  "id": 89,
+  "name": "Launderette",
+  "groupName": "General",
+  "ruTranslation": "Платная прачечная"
+ },
+ {
+  "id": 13,
+  "name": "Laundry service",
+  "groupName": "Services",
+  "ruTranslation": "Прачечная"
+ },
+ {
+  "id": 107,
+  "name": "LGBT friendly",
+  "groupName": "General",
+  "ruTranslation": "Гомопозитивный"
+ },
+ {
+  "id": 81,
+  "name": "Library",
+  "groupName": "General",
+  "ruTranslation": "Библиотека"
+ },
+ {
+  "id": 52,
+  "name": "Lobby",
+  "groupName": "General",
+  "ruTranslation": "Лобби"
+ },
+ {
+  "id": 77,
+  "name": "Luggage room",
+  "groupName": "General",
+  "ruTranslation": "Комната для багажа"
+ },
+ {
+  "id": 126,
+  "name": "Luggage Service",
+  "groupName": "Services",
+  "ruTranslation": "Багажный сервис"
+ },
+ {
+  "id": 48,
+  "name": "Massage",
+  "groupName": "Activities",
+  "ruTranslation": "Массаж"
+ },
+ {
+  "id": 74,
+  "name": "Medical Service",
+  "groupName": "Services",
+  "ruTranslation": "Медицинское обслуживание"
+ },
+ {
+  "id": 20,
+  "name": "Meeting facilities",
+  "groupName": "General",
+  "ruTranslation": "Комнаты для переговоров"
+ },
+ {
+  "id": 60,
+  "name": "Microwave",
+  "groupName": "Room",
+  "ruTranslation": "Микроволновая печь"
+ },
+ {
+  "id": 16,
+  "name": "Mini bar",
+  "groupName": "Room",
+  "ruTranslation": "Мини-бар"
+ },
+ {
+  "id": 115,
+  "name": "Mini Golf",
+  "groupName": "Activities",
+  "ruTranslation": "Мини гольф"
+ },
+ {
+  "id": 114,
+  "name": "Mini-Supermarket",
+  "groupName": "General",
+  "ruTranslation": "Мини-супермаркет"
+ },
+ {
+  "id": 75,
+  "name": "Multilingual staff",
+  "groupName": "General",
+  "ruTranslation": "Многоязычный персонал"
+ },
+ {
+  "id": 105,
+  "name": "Nightclub",
+  "groupName": "Activities",
+  "ruTranslation": "Ночной клуб"
+ },
+ {
+  "id": 8,
+  "name": "Non-smoking rooms",
+  "groupName": "Room",
+  "ruTranslation": "Комнаты для некурящих"
+ },
+ {
+  "id": 37,
+  "name": "Outdoor pool",
+  "groupName": "Activities",
+  "ruTranslation": "Открытый бассейн"
+ },
+ {
+  "id": 76,
+  "name": "Parasols",
+  "groupName": "General",
+  "ruTranslation": "Жезлонги"
+ },
+ {
+  "id": 28,
+  "name": "Pets allowed",
+  "groupName": "General",
+  "ruTranslation": "Домашние животные разрешены"
+ },
+ {
+  "id": 80,
+  "name": "Playground",
+  "groupName": "Activities",
+  "ruTranslation": "Детская площадка"
+ },
+ {
+  "id": 128,
+  "name": "Porters",
+  "groupName": "Services",
+  "ruTranslation": "Носильщики"
+ },
+ {
+  "id": 146,
+  "name": "Private Bathroom",
+  "groupName": "Room",
+  "ruTranslation": "Уборная в номере"
+ },
+ {
+  "id": 102,
+  "name": "Private beach",
+  "groupName": "General",
+  "ruTranslation": "Частный пляж"
+ },
+ {
+  "id": 18,
+  "name": "Radio",
+  "groupName": "Room",
+  "ruTranslation": "Радио"
+ },
+ {
+  "id": 43,
+  "name": "Reception",
+  "groupName": "General",
+  "ruTranslation": "Ресепшн"
+ },
+ {
+  "id": 66,
+  "name": "Refrigerator",
+  "groupName": "Room",
+  "ruTranslation": "Холодильник"
+ },
+ {
+  "id": 96,
+  "name": "Rent a car in the hotel",
+  "groupName": "Parking",
+  "ruTranslation": "Каршеринг от отеля"
+ },
+ {
+  "id": 9,
+  "name": "Restaurant",
+  "groupName": "General",
+  "ruTranslation": "Ресторан"
+ },
+ {
+  "id": 25,
+  "name": "Room Service",
+  "groupName": "Services",
+  "ruTranslation": "Обслуживание номеров"
+ },
+ {
+  "id": 143,
+  "name": "Russian",
+  "groupName": "Staff languages",
+  "ruTranslation": "Русский язык"
+ },
+ {
+  "id": 3,
+  "name": "Safe",
+  "groupName": "Room",
+  "ruTranslation": "Сейф"
+ },
+ {
+  "id": 15,
+  "name": "Sauna",
+  "groupName": "Activities",
+  "ruTranslation": "Сауна"
+ },
+ {
+  "id": 104,
+  "name": "Secretary Service",
+  "groupName": "Services",
+  "ruTranslation": "Услуги секретаря"
+ },
+ {
+  "id": 121,
+  "name": "Security Guard",
+  "groupName": "General",
+  "ruTranslation": "Охрана"
+ },
+ {
+  "id": 10,
+  "name": "Separate shower and tub",
+  "groupName": "Room",
+  "ruTranslation": "Отдельный душ и ванна"
+ },
+ {
+  "id": 147,
+  "name": "Shared Bathroom",
+  "groupName": "Room",
+  "ruTranslation": "Общая ванная комната"
+ },
+ {
+  "id": 12,
+  "name": "Shops",
+  "groupName": "General",
+  "ruTranslation": "Магазины"
+ },
+ {
+  "id": 7,
+  "name": "Shower",
+  "groupName": "Room",
+  "ruTranslation": "Душ"
+ },
+ {
+  "id": 117,
+  "name": "Ski room",
+  "groupName": "General",
+  "ruTranslation": "Лыжная комната"
+ },
+ {
+  "id": 110,
+  "name": "Slippers",
+  "groupName": "Room",
+  "ruTranslation": "Домашние тапочки"
+ },
+ {
+  "id": 132,
+  "name": "Smoking room",
+  "groupName": "Hotel",
+  "ruTranslation": "Зона курения"
+ },
+ {
+  "id": 72,
+  "name": "Solarium",
+  "groupName": "Activities",
+  "ruTranslation": "Солярий"
+ },
+ {
+  "id": 65,
+  "name": "Spa",
+  "groupName": "Activities",
+  "ruTranslation": "Спа"
+ },
+ {
+  "id": 139,
+  "name": "Spanish",
+  "groupName": "Staff languages",
+  "ruTranslation": "Испанский язык"
+ },
+ {
+  "id": 103,
+  "name": "Squash courts",
+  "groupName": "Activities",
+  "ruTranslation": "Сквош"
+ },
+ {
+  "id": 95,
+  "name": "Steam Room",
+  "groupName": "General",
+  "ruTranslation": "Паровая комната"
+ },
+ {
+  "id": 85,
+  "name": "Sunbathing Terrace",
+  "groupName": "General",
+  "ruTranslation": "Солнечная терраса"
+ },
+ {
+  "id": 38,
+  "name": "Swimming Pool",
+  "groupName": "Activities",
+  "ruTranslation": "Бассейн"
+ },
+ {
+  "id": 92,
+  "name": "Table tennis",
+  "groupName": "Activities",
+  "ruTranslation": "Настольный теннис"
+ },
+ {
+  "id": 5,
+  "name": "Telephone",
+  "groupName": "Room",
+  "ruTranslation": "Телефон"
+ },
+ {
+  "id": 73,
+  "name": "Tennis courts",
+  "groupName": "Activities",
+  "ruTranslation": "Теннисные корты"
+ },
+ {
+  "id": 130,
+  "name": "Tour Desk",
+  "groupName": "General",
+  "ruTranslation": "Экскурсии"
+ },
+ {
+  "id": 45,
+  "name": "Tours",
+  "groupName": "Activities",
+  "ruTranslation": "Туры"
+ },
+ {
+  "id": 4,
+  "name": "TV",
+  "groupName": "Room",
+  "ruTranslation": "ТВ"
+ },
+ {
+  "id": 111,
+  "name": "Valet service",
+  "groupName": "Parking",
+  "ruTranslation": "Услуги парковщика"
+ },
+ {
+  "id": 99,
+  "name": "Video\/DVD Player",
+  "groupName": "Room",
+  "ruTranslation": "Видео\/DVD-плеер"
+ },
+ {
+  "id": 51,
+  "name": "Voice mail",
+  "groupName": "Room",
+  "ruTranslation": "Голосовая почта"
+ },
+ {
+  "id": 30,
+  "name": "Wake up service",
+  "groupName": "Services",
+  "ruTranslation": "Услуга пробуждения"
+ },
+ {
+  "id": 91,
+  "name": "Washing machine",
+  "groupName": "General",
+  "ruTranslation": "Стиральная машина"
+ },
+ {
+  "id": 129,
+  "name": "Water Sports",
+  "groupName": "Activities",
+  "ruTranslation": "Водные виды спорта"
+ },
+ {
+  "id": 108,
+  "name": "Water sports (motorized)",
+  "groupName": "Activities",
+  "ruTranslation": "Водные виды спорта (моторизованные)"
+ },
+ {
+  "id": 79,
+  "name": "Water sports (non-motorized)",
+  "groupName": "Activities",
+  "ruTranslation": "Водные виды спорта (не моторизованные)"
+ },
+ {
+  "id": 106,
+  "name": "Welcome drink",
+  "groupName": "General",
+  "ruTranslation": "Приветственный напиток"
+ },
+ {
+  "id": 82,
+  "name": "Wellness",
+  "groupName": "Activities",
+  "ruTranslation": "Оздоровление"
+ },
+ {
+  "id": 120,
+  "name": "Wheel chair access",
+  "groupName": "General",
+  "ruTranslation": "Инвалидные кресла"
+ },
+ {
+  "id": 59,
+  "name": "Wheelchair accessible",
+  "groupName": "General",
+  "ruTranslation": "Доступная среда"
+ },
+ {
+  "id": 83,
+  "name": "Wi-Fi Available",
+  "groupName": "Internet",
+  "ruTranslation": "Wi-Fi"
+ },
+ {
+  "id": 131,
+  "name": "Wi-Fi in public areas",
+  "groupName": "General",
+  "ruTranslation": "Wi-Fi в общественных областях"
+ },
+ {
+  "id": 133,
+  "name": "Wi-Fi in room",
+  "groupName": "Room",
+  "ruTranslation": "Wi-Fi в комнате"
+ }
+]

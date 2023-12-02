@@ -1,0 +1,957 @@
+[
+ {
+  "station_id": 2064188,
+  "station_name": "Анапа",
+  "iata_code": "AAQ"
+ },
+ {
+  "station_id": 2038230,
+  "station_name": "Абакан",
+  "iata_code": "ABA"
+ },
+ {
+  "station_id": 2064130,
+  "station_name": "Сочи",
+  "iata_code": "AER"
+ },
+ {
+  "station_id": 2064150,
+  "station_name": "Адлер",
+  "iata_code": "AER"
+ },
+ {
+  "station_id": 2704600,
+  "station_name": "Актобе",
+  "iata_code": "AKX"
+ },
+ {
+  "station_id": 2700002,
+  "station_name": "Алматы-1",
+  "iata_code": "ALA"
+ },
+ {
+  "station_id": 2700001,
+  "station_name": "Алматы-2",
+  "iata_code": "ALA"
+ },
+ {
+  "station_id": 2010400,
+  "station_name": "Архангельск Город",
+  "iata_code": "ARH"
+ },
+ {
+  "station_id": 2010441,
+  "station_name": "Архангельск",
+  "iata_code": "ARH"
+ },
+ {
+  "station_id": 2020600,
+  "station_name": "Астрахань",
+  "iata_code": "ASF"
+ },
+ {
+  "station_id": 2708877,
+  "station_name": "Аркалык",
+  "iata_code": "AYK"
+ },
+ {
+  "station_id": 5700000,
+  "station_name": "Баку-Пасс.",
+  "iata_code": "BAK"
+ },
+ {
+  "station_id": 2044800,
+  "station_name": "Барнаул",
+  "iata_code": "BAX"
+ },
+ {
+  "station_id": 8010100,
+  "station_name": "Берлин Главный",
+  "iata_code": "BER"
+ },
+ {
+  "station_id": 8010110,
+  "station_name": "Берлин Остбанхоф",
+  "iata_code": "BER"
+ },
+ {
+  "station_id": 8010111,
+  "station_name": "Берлин Лихтенберг",
+  "iata_code": "BER"
+ },
+ {
+  "station_id": 2900800,
+  "station_name": "Бухара-1",
+  "iata_code": "BHK"
+ },
+ {
+  "station_id": 2050300,
+  "station_name": "Благовещенск",
+  "iata_code": "BQS"
+ },
+ {
+  "station_id": 2708790,
+  "station_name": "Балхаш-2",
+  "iata_code": "BXH"
+ },
+ {
+  "station_id": 2000160,
+  "station_name": "Брянск-Орловский",
+  "iata_code": "BZK"
+ },
+ {
+  "station_id": 2000427,
+  "station_name": "Брянск",
+  "iata_code": "BZK"
+ },
+ {
+  "station_id": 2000420,
+  "station_name": "Брянск-Льговский",
+  "iata_code": "BZK"
+ },
+ {
+  "station_id": 2010290,
+  "station_name": "Череповец-1",
+  "iata_code": "CEE"
+ },
+ {
+  "station_id": 2040000,
+  "station_name": "Челябинск",
+  "iata_code": "CEK"
+ },
+ {
+  "station_id": 2700770,
+  "station_name": "Шымкент",
+  "iata_code": "CIT"
+ },
+ {
+  "station_id": 2060620,
+  "station_name": "Чебоксары",
+  "iata_code": "CSY"
+ },
+ {
+  "station_id": 2500410,
+  "station_name": "Даугавпилс-Пасс.",
+  "iata_code": "DGP"
+ },
+ {
+  "station_id": 2034620,
+  "station_name": "Дальнереченск-1",
+  "iata_code": "DLR"
+ },
+ {
+  "station_id": 6600000,
+  "station_name": "Душанбе-1",
+  "iata_code": "DYU"
+ },
+ {
+  "station_id": 2708930,
+  "station_name": "Жезказган",
+  "iata_code": "DZN"
+ },
+ {
+  "station_id": 2064040,
+  "station_name": "Ейск",
+  "iata_code": "EIK"
+ },
+ {
+  "station_id": 2708990,
+  "station_name": "Екибастуз-1",
+  "iata_code": "EKB"
+ },
+ {
+  "station_id": 8099400,
+  "station_name": "Эрфурт Центральный",
+  "iata_code": "ERF"
+ },
+ {
+  "station_id": 8015150,
+  "station_name": "Франкфурт-на-Одере",
+  "iata_code": "FRA"
+ },
+ {
+  "station_id": 8060317,
+  "station_name": "Франкфурт Южный",
+  "iata_code": "FRA"
+ },
+ {
+  "station_id": 5900000,
+  "station_name": "Бишкек-2",
+  "iata_code": "FRU"
+ },
+ {
+  "station_id": 5900001,
+  "station_name": "Бишкек",
+  "iata_code": "FRU"
+ },
+ {
+  "station_id": 2100100,
+  "station_name": "Гомель-Пасс.",
+  "iata_code": "GME"
+ },
+ {
+  "station_id": 2060001,
+  "station_name": "Нижний Новгород Моск.",
+  "iata_code": "GOJ"
+ },
+ {
+  "station_id": 2064180,
+  "station_name": "Грозный",
+  "iata_code": "GRV"
+ },
+ {
+  "station_id": 2704830,
+  "station_name": "Атырау",
+  "iata_code": "GUW"
+ },
+ {
+  "station_id": 1000001,
+  "station_name": "Хельсинки",
+  "iata_code": "HEL"
+ },
+ {
+  "station_id": 2050001,
+  "station_name": "Чита-2",
+  "iata_code": "HTA"
+ },
+ {
+  "station_id": 2050000,
+  "station_name": "Чита",
+  "iata_code": "HTA"
+ },
+ {
+  "station_id": 2010000,
+  "station_name": "Ярославль",
+  "iata_code": "IAR"
+ },
+ {
+  "station_id": 2010002,
+  "station_name": "Ярославль Пасс.",
+  "iata_code": "IAR"
+ },
+ {
+  "station_id": 2064049,
+  "station_name": "Назрань",
+  "iata_code": "IGT"
+ },
+ {
+  "station_id": 2060150,
+  "station_name": "Ижевск",
+  "iata_code": "IJK"
+ },
+ {
+  "station_id": 2054001,
+  "station_name": "Иркутск Пасс.",
+  "iata_code": "IKT"
+ },
+ {
+  "station_id": 2054002,
+  "station_name": "Иркутск Сортировочный",
+  "iata_code": "IKT"
+ },
+ {
+  "station_id": 2054000,
+  "station_name": "Иркутск",
+  "iata_code": "IKT"
+ },
+ {
+  "station_id": 2060593,
+  "station_name": "Йошкар-Ола",
+  "iata_code": "JOK"
+ },
+ {
+  "station_id": 2028001,
+  "station_name": "Кемерово Пасс",
+  "iata_code": "KEJ"
+ },
+ {
+  "station_id": 2708950,
+  "station_name": "Караганды Пасс",
+  "iata_code": "KGF"
+ },
+ {
+  "station_id": 2708960,
+  "station_name": "Караганды Сорт",
+  "iata_code": "KGF"
+ },
+ {
+  "station_id": 2708952,
+  "station_name": "Караганды",
+  "iata_code": "KGF"
+ },
+ {
+  "station_id": 2030310,
+  "station_name": "Когалым",
+  "iata_code": "KGP"
+ },
+ {
+  "station_id": 2034001,
+  "station_name": "Хабаровск-1",
+  "iata_code": "KHV"
+ },
+ {
+  "station_id": 2034000,
+  "station_name": "Хабаровск",
+  "iata_code": "KHV"
+ },
+ {
+  "station_id": 2038001,
+  "station_name": "Красноярск Пасс",
+  "iata_code": "KJA"
+ },
+ {
+  "station_id": 2004600,
+  "station_name": "Тверь",
+  "iata_code": "KLD"
+ },
+ {
+  "station_id": 2000350,
+  "station_name": "Калуга-2",
+  "iata_code": "KLF"
+ },
+ {
+  "station_id": 2010090,
+  "station_name": "Кострома-Новая",
+  "iata_code": "KMW"
+ },
+ {
+  "station_id": 2708800,
+  "station_name": "Кокшетау-1",
+  "iata_code": "KOV"
+ },
+ {
+  "station_id": 2708803,
+  "station_name": "Кокшетау",
+  "iata_code": "KOV"
+ },
+ {
+  "station_id": 2040600,
+  "station_name": "Курган",
+  "iata_code": "KRO"
+ },
+ {
+  "station_id": 2064800,
+  "station_name": "Краснодар-1",
+  "iata_code": "KRR"
+ },
+ {
+  "station_id": 2064788,
+  "station_name": "Краснодар",
+  "iata_code": "KRR"
+ },
+ {
+  "station_id": 2900750,
+  "station_name": "Карши",
+  "iata_code": "KSQ"
+ },
+ {
+  "station_id": 2024000,
+  "station_name": "Самара",
+  "iata_code": "KUF"
+ },
+ {
+  "station_id": 2060600,
+  "station_name": "Киров Пасс",
+  "iata_code": "KVX"
+ },
+ {
+  "station_id": 2034630,
+  "station_name": "Комсомольск-на-Амуре",
+  "iata_code": "KXK"
+ },
+ {
+  "station_id": 2034636,
+  "station_name": "Комсомольск-на-Амуре",
+  "iata_code": "KXK"
+ },
+ {
+  "station_id": 2060500,
+  "station_name": "Казань Пасс",
+  "iata_code": "KZN"
+ },
+ {
+  "station_id": 2060961,
+  "station_name": "Казань-2 (Восстание Пасс.)",
+  "iata_code": "KZN"
+ },
+ {
+  "station_id": 2060615,
+  "station_name": "Казань",
+  "iata_code": "KZN"
+ },
+ {
+  "station_id": 2704999,
+  "station_name": "Кызылорда",
+  "iata_code": "KZO"
+ },
+ {
+  "station_id": 6600910,
+  "station_name": "Худжанд",
+  "iata_code": "LBD"
+ },
+ {
+  "station_id": 2004001,
+  "station_name": "Санкт-Петербург-Главн.",
+  "iata_code": "LED"
+ },
+ {
+  "station_id": 2004003,
+  "station_name": "Санкт-Петербург-Витеб.",
+  "iata_code": "LED"
+ },
+ {
+  "station_id": 2004006,
+  "station_name": "Санкт-Петербург Ладож.",
+  "iata_code": "LED"
+ },
+ {
+  "station_id": 2004000,
+  "station_name": "Санкт-Петербург",
+  "iata_code": "LED"
+ },
+ {
+  "station_id": 2004004,
+  "station_name": "Санкт-Петербург-Финл.",
+  "iata_code": "LED"
+ },
+ {
+  "station_id": 2004005,
+  "station_name": "Санкт-Петербург-Балт.",
+  "iata_code": "LED"
+ },
+ {
+  "station_id": 2000170,
+  "station_name": "Смоленск Центральный",
+  "iata_code": "LNX"
+ },
+ {
+  "station_id": 2014130,
+  "station_name": "Липецк",
+  "iata_code": "LPK"
+ },
+ {
+  "station_id": 2064900,
+  "station_name": "Махачкала",
+  "iata_code": "MCX"
+ },
+ {
+  "station_id": 2065321,
+  "station_name": "Махачкала-Сорт.",
+  "iata_code": "MCX"
+ },
+ {
+  "station_id": 2004200,
+  "station_name": "Мурманск",
+  "iata_code": "MMK"
+ },
+ {
+  "station_id": 2000002,
+  "station_name": "Москва Ярославская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000001,
+  "station_name": "Москва Курская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000003,
+  "station_name": "Москва Казанская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000005,
+  "station_name": "Москва Павелецкая",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000007,
+  "station_name": "Москва Киевская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000000,
+  "station_name": "Москва",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2006004,
+  "station_name": "Москва Октябрьская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000006,
+  "station_name": "Москва Белорусская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000009,
+  "station_name": "Москва Савёловская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2000008,
+  "station_name": "Москва Рижская",
+  "iata_code": "MOW"
+ },
+ {
+  "station_id": 2040510,
+  "station_name": "Магнитогорск Пасс",
+  "iata_code": "MQF"
+ },
+ {
+  "station_id": 2064170,
+  "station_name": "Минеральные Воды",
+  "iata_code": "MRV"
+ },
+ {
+  "station_id": 2100001,
+  "station_name": "Минск-Пасс.",
+  "iata_code": "MSQ"
+ },
+ {
+  "station_id": 2100000,
+  "station_name": "Минск",
+  "iata_code": "MSQ"
+ },
+ {
+  "station_id": 2100150,
+  "station_name": "Могилев-1",
+  "iata_code": "MVQ"
+ },
+ {
+  "station_id": 2064055,
+  "station_name": "Нальчик",
+  "iata_code": "NAL"
+ },
+ {
+  "station_id": 2024525,
+  "station_name": "Набережные Челны",
+  "iata_code": "NBC"
+ },
+ {
+  "station_id": 2900970,
+  "station_name": "Нукус",
+  "iata_code": "NCU"
+ },
+ {
+  "station_id": 2048090,
+  "station_name": "Нерюнгри Пасс.",
+  "iata_code": "NER"
+ },
+ {
+  "station_id": 2030308,
+  "station_name": "Нижневартовск-1",
+  "iata_code": "NJC"
+ },
+ {
+  "station_id": 2064110,
+  "station_name": "Новороссийск",
+  "iata_code": "NOI"
+ },
+ {
+  "station_id": 2030309,
+  "station_name": "Ноябрьск-1",
+  "iata_code": "NOJ"
+ },
+ {
+  "station_id": 2030312,
+  "station_name": "Ноябрьск-2",
+  "iata_code": "NOJ"
+ },
+ {
+  "station_id": 2028160,
+  "station_name": "Новокузнецк",
+  "iata_code": "NOZ"
+ },
+ {
+  "station_id": 2700152,
+  "station_name": "Нур-Султан Нурлы Жол",
+  "iata_code": "NQZ"
+ },
+ {
+  "station_id": 2708001,
+  "station_name": "Нур-Султан ",
+  "iata_code": "NQZ"
+ },
+ {
+  "station_id": 2000140,
+  "station_name": "Орёл",
+  "iata_code": "OEL"
+ },
+ {
+  "station_id": 2064070,
+  "station_name": "Владикавказ",
+  "iata_code": "OGZ"
+ },
+ {
+  "station_id": 2044700,
+  "station_name": "Омск",
+  "iata_code": "OMS"
+ },
+ {
+  "station_id": 2000065,
+  "station_name": "Подольск",
+  "iata_code": "OSF"
+ },
+ {
+  "station_id": 2040480,
+  "station_name": "Орск",
+  "iata_code": "OSW"
+ },
+ {
+  "station_id": 2044001,
+  "station_name": "Новосибирск-Главный",
+  "iata_code": "OVB"
+ },
+ {
+  "station_id": 2044000,
+  "station_name": "Новосибирск",
+  "iata_code": "OVB"
+ },
+ {
+  "station_id": 2044003,
+  "station_name": "Новосибирск-Западный",
+  "iata_code": "OVB"
+ },
+ {
+  "station_id": 8700012,
+  "station_name": "Париж Восточный",
+  "iata_code": "PAR"
+ },
+ {
+  "station_id": 2030400,
+  "station_name": "Пермь-2",
+  "iata_code": "PEE"
+ },
+ {
+  "station_id": 2004300,
+  "station_name": "Петрозаводск-Пасс",
+  "iata_code": "PES"
+ },
+ {
+  "station_id": 2010240,
+  "station_name": "Печора",
+  "iata_code": "PEX"
+ },
+ {
+  "station_id": 2024120,
+  "station_name": "Пенза-1",
+  "iata_code": "PEZ"
+ },
+ {
+  "station_id": 2100073,
+  "station_name": "Елизово (Беларусь)",
+  "iata_code": "PKC"
+ },
+ {
+  "station_id": 2004500,
+  "station_name": "Псков-Пасс.",
+  "iata_code": "PKV"
+ },
+ {
+  "station_id": 5100177,
+  "station_name": "Познань-Главная",
+  "iata_code": "POZ"
+ },
+ {
+  "station_id": 2040500,
+  "station_name": "Петропавловск",
+  "iata_code": "PPK"
+ },
+ {
+  "station_id": 2708900,
+  "station_name": "Павлодар",
+  "iata_code": "PWQ"
+ },
+ {
+  "station_id": 1000100,
+  "station_name": "Лахти",
+  "iata_code": "QLF"
+ },
+ {
+  "station_id": 1000480,
+  "station_name": "Коувола",
+  "iata_code": "QVY"
+ },
+ {
+  "station_id": 2040210,
+  "station_name": "Оренбург",
+  "iata_code": "REN"
+ },
+ {
+  "station_id": 2500001,
+  "station_name": "Рига-Пасажиеру",
+  "iata_code": "RIX"
+ },
+ {
+  "station_id": 2064001,
+  "station_name": "Ростов-Главный",
+  "iata_code": "ROV"
+ },
+ {
+  "station_id": 2010226,
+  "station_name": "Ростов-Ярославский",
+  "iata_code": "ROV"
+ },
+ {
+  "station_id": 2064000,
+  "station_name": "Ростов",
+  "iata_code": "ROV"
+ },
+ {
+  "station_id": 2020000,
+  "station_name": "Саратов-1 Пасс.",
+  "iata_code": "RTW"
+ },
+ {
+  "station_id": 2010250,
+  "station_name": "Рыбинск-Пасс.",
+  "iata_code": "RYB"
+ },
+ {
+  "station_id": 2000120,
+  "station_name": "Рязань-1",
+  "iata_code": "RZN"
+ },
+ {
+  "station_id": 2000080,
+  "station_name": "Рязань-2",
+  "iata_code": "RZN"
+ },
+ {
+  "station_id": 2000125,
+  "station_name": "Рязань (все вокзалы)",
+  "iata_code": "RZN"
+ },
+ {
+  "station_id": 2704807,
+  "station_name": "Мангистау",
+  "iata_code": "SCO"
+ },
+ {
+  "station_id": 2010280,
+  "station_name": "Сыктывкар",
+  "iata_code": "SCW"
+ },
+ {
+  "station_id": 2030600,
+  "station_name": "Сургут",
+  "iata_code": "SGC"
+ },
+ {
+  "station_id": 2024700,
+  "station_name": "Саранск",
+  "iata_code": "SKX"
+ },
+ {
+  "station_id": 2064700,
+  "station_name": "Ставрополь",
+  "iata_code": "STW"
+ },
+ {
+  "station_id": 2030000,
+  "station_name": "Екатеринбург Пасс.",
+  "iata_code": "SVX"
+ },
+ {
+  "station_id": 8700027,
+  "station_name": "Страсбург-Вилль",
+  "iata_code": "SXB"
+ },
+ {
+  "station_id": 2900001,
+  "station_name": "Ташкент Пасс Центр.",
+  "iata_code": "TAS"
+ },
+ {
+  "station_id": 2900000,
+  "station_name": "Ташкент",
+  "iata_code": "TAS"
+ },
+ {
+  "station_id": 2900002,
+  "station_name": "Ташкент Южный",
+  "iata_code": "TAS"
+ },
+ {
+  "station_id": 2014700,
+  "station_name": "Тамбов-1",
+  "iata_code": "TBW"
+ },
+ {
+  "station_id": 2064270,
+  "station_name": "Таганрог-Пасс.",
+  "iata_code": "TGK"
+ },
+ {
+  "station_id": 2064287,
+  "station_name": "Таганрог",
+  "iata_code": "TGK"
+ },
+ {
+  "station_id": 2064600,
+  "station_name": "Таганрог-2",
+  "iata_code": "TGK"
+ },
+ {
+  "station_id": 2030100,
+  "station_name": "Тюмень",
+  "iata_code": "TJM"
+ },
+ {
+  "station_id": 2600001,
+  "station_name": "Таллин Пасс.",
+  "iata_code": "TLL"
+ },
+ {
+  "station_id": 2028150,
+  "station_name": "Томск-1",
+  "iata_code": "TOF"
+ },
+ {
+  "station_id": 2028170,
+  "station_name": "Томск-2",
+  "iata_code": "TOF"
+ },
+ {
+  "station_id": 2028156,
+  "station_name": "Томск",
+  "iata_code": "TOF"
+ },
+ {
+  "station_id": 2029025,
+  "station_name": "Томск Северный",
+  "iata_code": "TOF"
+ },
+ {
+  "station_id": 2708000,
+  "station_name": "Нур-Султан 1",
+  "iata_code": "TSE"
+ },
+ {
+  "station_id": 2000173,
+  "station_name": "Тула-3-Вяземская",
+  "iata_code": "TYA"
+ },
+ {
+  "station_id": 2000880,
+  "station_name": "Тула-1-Курская",
+  "iata_code": "TYA"
+ },
+ {
+  "station_id": 2000174,
+  "station_name": "Тула",
+  "iata_code": "TYA"
+ },
+ {
+  "station_id": 2010095,
+  "station_name": "Ухта",
+  "iata_code": "UCT"
+ },
+ {
+  "station_id": 2024600,
+  "station_name": "Уфа",
+  "iata_code": "UFA"
+ },
+ {
+  "station_id": 2054798,
+  "station_name": "Усть-Илимск",
+  "iata_code": "UIK"
+ },
+ {
+  "station_id": 2700890,
+  "station_name": "Усть-Каменогорск",
+  "iata_code": "UKK"
+ },
+ {
+  "station_id": 2024900,
+  "station_name": "Ульяновск Центр.",
+  "iata_code": "ULY"
+ },
+ {
+  "station_id": 2704810,
+  "station_name": "Уральск",
+  "iata_code": "URA"
+ },
+ {
+  "station_id": 2000150,
+  "station_name": "Курск",
+  "iata_code": "URS"
+ },
+ {
+  "station_id": 2010330,
+  "station_name": "Усинск",
+  "iata_code": "USK"
+ },
+ {
+  "station_id": 2054785,
+  "station_name": "Улан-Удэ Пасс.",
+  "iata_code": "UUD"
+ },
+ {
+  "station_id": 2068400,
+  "station_name": "Южно-Сахалинск",
+  "iata_code": "UUS"
+ },
+ {
+  "station_id": 2004682,
+  "station_name": "Выборг",
+  "iata_code": "VBR"
+ },
+ {
+  "station_id": 2010030,
+  "station_name": "Вологда-1",
+  "iata_code": "VGD"
+ },
+ {
+  "station_id": 2010041,
+  "station_name": "Вологда",
+  "iata_code": "VGD"
+ },
+ {
+  "station_id": 2010040,
+  "station_name": "Воркута",
+  "iata_code": "VKT"
+ },
+ {
+  "station_id": 2400001,
+  "station_name": "Вильнюс Центр",
+  "iata_code": "VNO"
+ },
+ {
+  "station_id": 2400000,
+  "station_name": "Вильнюс",
+  "iata_code": "VNO"
+ },
+ {
+  "station_id": 2020500,
+  "station_name": "Волгоград-1",
+  "iata_code": "VOG"
+ },
+ {
+  "station_id": 2014001,
+  "station_name": "Воронеж-1",
+  "iata_code": "VOZ"
+ },
+ {
+  "station_id": 2014000,
+  "station_name": "Воронеж",
+  "iata_code": "VOZ"
+ },
+ {
+  "station_id": 2034130,
+  "station_name": "Владивосток",
+  "iata_code": "VVO"
+ },
+ {
+  "station_id": 5100138,
+  "station_name": "Варшава Всходня",
+  "iata_code": "WAW"
+ },
+ {
+  "station_id": 2048019,
+  "station_name": "Якутский",
+  "iata_code": "YKS"
+ }
+]
