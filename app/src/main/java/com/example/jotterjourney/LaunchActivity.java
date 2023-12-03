@@ -126,11 +126,13 @@ public class LaunchActivity extends AppCompatActivity {
         hotelLinkButton = findViewById(R.id.hotelLinkButton);
         transportationRadioGroup = findViewById(R.id.transportationRadioGroup);
         clearDataButton=findViewById(R.id.clearDataButton);
+        taxiLinkButton.setVisibility(View.GONE);
+        hotelLinkButton.setVisibility(View.GONE);
+        showImageButton.setVisibility(View.GONE);
         ImageButton selectTripButton= findViewById(R.id.selectTripButton);
         Button countryInfoButton = findViewById(R.id.countryInfoButton);
         Button checkEventsButton= findViewById(R.id.checkEventsButton);
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
-        showImageButton.setVisibility(View.GONE);
 
         SharedPreferences preferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
         String value = preferences.getString("selectedTripId", null);
@@ -542,6 +544,7 @@ public class LaunchActivity extends AppCompatActivity {
                             setHotelDisplay(hotelInfo);
                         }
                         else{
+                            hotelLinkButton.setVisibility(View.GONE);
                             ImageView hotelImageView=findViewById(R.id.hotelImageView);
                             TextView hotelNameTextView=findViewById(R.id.hotelNameTextView);
                             TextView hotelAddressTextView=findViewById(R.id.hotelAddressTextView);
@@ -574,6 +577,7 @@ public class LaunchActivity extends AppCompatActivity {
                             setTransferDisplay(transferInfo);
                         }
                         else{
+                            taxiLinkButton.setVisibility(View.GONE);
                             TextView transferAddressLine=findViewById(R.id.transferAddressLine);
                             TextView transferPriceLine = findViewById(R.id.transferPriceLine);
                             transferAddressLine.setText("Трансфер\nв 20 странах мира");
@@ -714,8 +718,7 @@ public class LaunchActivity extends AppCompatActivity {
             pathLine = matcher.group(1);
             price = matcher.group(2);
             link = matcher.group(3);
-        } else {
-            Toast.makeText(this, "no link found", Toast.LENGTH_SHORT).show();
+            taxiLinkButton.setVisibility(View.VISIBLE);
         }
         transferAddressLine.setText(pathLine);
         transferPriceLine.setText("от " + price);
@@ -793,6 +796,7 @@ public class LaunchActivity extends AppCompatActivity {
             Pattern pattern = Pattern.compile("^(.*?): (.*), за (\\d+\\.\\d+) руб\\.\\s+Ссылка на Hotellook: (https://.*?)\\s+image: (https://.*?)$");
             Matcher matcher = pattern.matcher(hotelInfo);
             if (matcher.matches()) {
+                hotelLinkButton.setVisibility(View.VISIBLE);
                 String hotelName = matcher.group(1);
                 String address = matcher.group(2);
                 double price = Double.parseDouble(matcher.group(3));

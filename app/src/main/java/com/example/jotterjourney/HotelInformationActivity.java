@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -266,11 +268,21 @@ public class HotelInformationActivity extends AppCompatActivity {
             openHotelLink(hotelLink);
         });
 
-        GestureDetector gestureDetector = new GestureDetector(this, new SwipeGestureListener());
+        hotelInfoImageView.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(HotelInformationActivity.this, new SwipeGestureListener());
 
-        hotelInfoImageView.setOnTouchListener((v, event) -> {
-            gestureDetector.onTouchEvent(event);
-            return true;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+        hotelInfoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("got image click", "got image click");
+                showImageDialog();
+            }
         });
 
         bookedHotelButton.setOnClickListener(v -> {
@@ -293,6 +305,16 @@ public class HotelInformationActivity extends AppCompatActivity {
             }
             db.close();
         });
+    }
+    private void showImageDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HotelInformationActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(HotelInformationActivity.this);
+        View dialogView = inflater.inflate(R.layout.popup_image, null);
+        ImageView dialogImageView = dialogView.findViewById(R.id.showCityImageView);
+        Picasso.get().load(imageUrls.get(currentImageIndex.get())).into(dialogImageView);
+        builder.setView(dialogView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
     private void showMapMarkers() {
         if (mMap != null) {
@@ -540,18 +562,16 @@ public class HotelInformationActivity extends AppCompatActivity {
         }
     }
     private class SwipeGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+        private static final float ANGLE_THRESHOLD = 15;
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             float diffX = e2.getX() - e1.getX();
             float diffY = e2.getY() - e1.getY();
-
-            if (Math.abs(diffX) > Math.abs(diffY)
-                    && Math.abs(diffX) > SWIPE_THRESHOLD
-                    && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+            double angle = Math.atan2(diffY, diffX);
+            float angleDegrees = (float) Math.toDegrees(angle);
+            if (Math.abs(angleDegrees) > ANGLE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (diffX > 0) {
                     showPreviousImage();
                 } else {
@@ -563,7 +583,8 @@ public class HotelInformationActivity extends AppCompatActivity {
         }
     }
 
-    private void showPreviousImage() {
+
+        private void showPreviousImage() {
         if (currentImageIndex.get() > 0) {
             currentImageIndex.decrementAndGet();
             updateImage(hotelInfoImageView, imageUrls.get(currentImageIndex.get()));

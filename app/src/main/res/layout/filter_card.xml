@@ -26,7 +26,6 @@
         android:text="TextView"
         android:textColor="@color/accent_color"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/iconView"
         app:layout_constraintTop_toTopOf="@+id/iconView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

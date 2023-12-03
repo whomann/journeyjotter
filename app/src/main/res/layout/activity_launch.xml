@@ -32,12 +32,12 @@
         <ImageButton
             android:id="@+id/hotelLinkButton"
             android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="110dp"
             android:backgroundTint="@color/main_color"
             android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/hotelButton"
             app:layout_constraintTop_toBottomOf="@+id/textView11"
             app:srcCompat="@drawable/link" />
 
@@ -57,8 +57,8 @@
             android:id="@+id/adultImageView"
             android:layout_width="52dp"
             android:layout_height="48dp"
-            android:layout_marginStart="133dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="139dp"
+            android:layout_marginTop="24dp"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -69,8 +69,8 @@
             android:layout_width="48dp"
             android:layout_height="51dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="146dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="150dp"
             android:backgroundTint="@color/accent_color"
             android:hint="Взрослых"
             android:inputType="number"
@@ -88,7 +88,7 @@
             android:id="@+id/transportationRadioGroup"
             android:layout_width="255dp"
             android:layout_height="51dp"
-            android:layout_marginStart="85dp"
+            android:layout_marginStart="91dp"
             android:layout_marginTop="27dp"
             android:layout_marginEnd="88dp"
             android:orientation="horizontal"
@@ -147,14 +147,14 @@
             android:id="@+id/hotelButton"
             android:layout_width="100dp"
             android:layout_height="47dp"
-            android:layout_marginStart="157dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="3dp"
             android:backgroundTint="@color/accent_color"
             android:onClick="startHotelApp"
             android:text="выбрать"
             android:textColor="@color/main_color"
-            app:layout_constraintEnd_toStartOf="@+id/hotelLinkButton"
+            app:layout_constraintHorizontal_bias="0.384"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -163,7 +163,7 @@
             android:layout_width="100dp"
             android:layout_height="43dp"
             android:layout_marginTop="2dp"
-            android:layout_marginStart="157dp"
+            android:layout_marginStart="148dp"
             android:layout_marginEnd="155dp"
             android:backgroundTint="@color/accent_color"
             android:onClick="startTicketApp"
@@ -191,7 +191,7 @@
         <ImageButton
             android:id="@+id/taxiLinkButton"
             android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_height="47dp"
             android:layout_marginTop="6dp"
             android:layout_marginStart="0dp"
             android:backgroundTint="@color/main_color"
@@ -206,12 +206,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="157dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="163dp"
             android:backgroundTint="@color/accent_color"
             android:onClick="startGuidesApp"
             android:text="выбрать"
             android:textColor="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewLaunchGuides" />
@@ -222,27 +220,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="157dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="162dp"
             android:backgroundTint="@color/accent_color"
             android:onClick="startLandmarksApp"
             android:text="выбрать"
             android:textColor="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewLaunchLandmarks" />
+
         <Button
             android:id="@+id/checkEventsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="153dp"
+            android:layout_marginStart="157dp"
             android:layout_marginTop="5dp"
+            android:backgroundTint="@color/accent_color"
             android:onClick="checkEvents"
             android:text="Просмотр"
-            android:backgroundTint="@color/accent_color"
             android:textColor="@color/main_color"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewEventsLaunch"/>
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewEventsLaunch" />
 
         <TextView
             android:id="@+id/textView5"
@@ -264,7 +261,7 @@
             android:layout_width="117dp"
             android:layout_height="44dp"
             android:layout_marginTop="26dp"
-            android:layout_marginEnd="78dp"
+            android:layout_marginEnd="82dp"
             android:text="Дата возвращения"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
@@ -277,7 +274,7 @@
             android:id="@+id/textView2"
             android:layout_width="117dp"
             android:layout_height="44dp"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="67dp"
             android:layout_marginTop="29dp"
             android:text="Дата отправления"
             android:textAlignment="center"
@@ -322,7 +319,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="133dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="134dp"
             android:text="События"
             android:textAlignment="center"
@@ -433,7 +430,7 @@
             android:layout_width="97dp"
             android:layout_height="47dp"
             android:layout_marginEnd="89dp"
-            android:background="@color/main_color"
+            android:background="@drawable/transfer_bg"
             android:paddingTop="15dp"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
@@ -446,8 +443,8 @@
             android:id="@+id/departureDateTextView"
             android:layout_width="97dp"
             android:layout_height="47dp"
-            android:layout_marginStart="73dp"
-            android:background="@color/main_color"
+            android:layout_marginStart="77dp"
+            android:background="@drawable/transfer_bg"
             android:paddingTop="15dp"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
@@ -472,7 +469,7 @@
             android:id="@+id/selectDepartureDateButton"
             android:layout_width="45dp"
             android:layout_height="35dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="107dp"
             android:backgroundTint="@color/accent_color"
             android:onClick="showDatePickerDialog"
             android:text="+"
@@ -538,93 +535,98 @@
             app:layout_constraintStart_toStartOf="@+id/ticketBackgroundImageView"
             app:layout_constraintTop_toBottomOf="@+id/departureDateLine" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="288dp"
-            android:layout_height="299dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="65dp"
-            android:background="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-        <TextView
+        <ImageView
             android:id="@+id/textView16"
-            android:layout_width="414dp"
+            android:layout_width="380dp"
             android:layout_height="175dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="11dp"
-            android:background="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/transfer_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-        <ImageView
-            android:id="@+id/hotelImageView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/textView11"
             android:layout_width="288dp"
-            android:layout_height="165dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="@+id/textView11"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toTopOf="@+id/textView11"
-            app:srcCompat="@drawable/placeholder" />
-
-        <TextView
-            android:id="@+id/hotelNameTextView"
-            android:layout_width="268dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="19dp"
-            android:text="Отель не забронирован"
-            android:textAlignment="center"
-            android:textColor="@color/accent_color"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textView11"
-            app:layout_constraintHorizontal_bias="0.59"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/hotelImageView" />
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="65dp"
+            app:cardCornerRadius="30dp"
+            android:background="@color/main_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/hotelPriceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="78dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="75dp"
-            android:text="↓"
-            android:textAlignment="center"
-            android:textColor="@color/accent_color"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textView11"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/hotelAddressTextView" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/hotelAddressTextView"
-            android:layout_width="254dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="21dp"
-            android:text="Но пора это исправить"
-            android:textAlignment="center"
-            android:textColor="@color/accent_color"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView11"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/hotelNameTextView" />
+                <ImageView
+                    android:id="@+id/hotelImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/placeholder" />
+
+                <TextView
+                    android:id="@+id/hotelNameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="Отель не забронирован"
+                    android:textAlignment="center"
+                    android:textColor="@color/accent_color"
+                    app:layout_constraintTop_toBottomOf="@id/hotelImageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/hotelPriceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_height="wrap_content"
+                    android:text="↓"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/accent_color"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/hotelAddressTextView"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/hotelAddressTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Но пора это исправить"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginHorizontal="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/hotelNameTextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/accent_color"
+                    android:textSize="16sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/hotelPriceTextView"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
 
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="105dp"
             android:layout_height="175dp"
-            android:layout_marginStart="34dp"
-            android:layout_marginEnd="22dp"
-            app:layout_constraintEnd_toStartOf="@+id/transferAddressLine"
+            android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="@+id/textView16"
             app:layout_constraintTop_toTopOf="@+id/textView16"
             app:srcCompat="@drawable/taxi" />
@@ -634,26 +636,25 @@
             android:layout_width="221dp"
             android:layout_height="81dp"
             android:layout_marginTop="28dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginHorizontal="1dp"
             android:text="Трансфер\nв 20 странах мира"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView5"
             app:layout_constraintTop_toTopOf="@+id/textView16" />
 
         <TextView
             android:id="@+id/transferPriceLine"
             android:layout_width="218dp"
             android:layout_height="36dp"
-            android:layout_marginEnd="32dp"
             android:text="от 100 руб."
             android:textAlignment="center"
             android:textColor="@color/accent_color"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/transferAddressLine" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -727,11 +728,10 @@
 
         <ImageButton
             android:id="@+id/showImageButton"
-            android:layout_width="44dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="45dp"
-            android:backgroundTint="@color/white"
+            android:layout_width="45dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="44dp"
+            android:backgroundTint="@color/main_color"
             android:scaleType="fitCenter"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/countryInfoButton"

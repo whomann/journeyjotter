@@ -25,8 +25,8 @@
             android:id="@+id/backToHotelsPageButton"
             android:layout_width="54dp"
             android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
             android:background="@color/accent_color"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,8 @@
         <ImageView
             android:id="@+id/hotelInfoImageView"
             android:layout_width="0dp"
-            android:layout_height="253dp"
+            android:layout_height="262dp"
+            android:clickable="true"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -45,23 +46,23 @@
             app:srcCompat="@drawable/placeholder" />
 
         <Button
-        android:id="@+id/bookHotelButton"
-        android:layout_width="143dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/accent_color"
-        android:text="Забронировать"
-        android:textColor="@color/main_color"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hotelInfoPriceTextView" />
+            android:id="@+id/bookHotelButton"
+            android:layout_width="143dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/accent_color"
+            android:text="Забронировать"
+            android:textColor="@color/main_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoPriceTextView" />
 
         <Button
             android:id="@+id/bookedHotelButton"
             android:layout_width="144dp"
             android:layout_height="33dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="35dp"
             android:background="@color/accent_color"
             android:text="Забронирован"
             android:textColor="@color/main_color"
@@ -70,8 +71,9 @@
 
         <com.google.android.gms.maps.MapView
         android:id="@+id/hotelMapView"
-        android:layout_width="374dp"
-        android:layout_height="152dp"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:layout_marginHorizontal="35dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,9 +85,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Об отеле"
-            android:textAlignment="center"
+            android:elevation="2dp"
+            android:layout_marginHorizontal="35dp"
             android:textColor="@color/accent_color"
-            android:textSize="25dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/hotelMapView"
             tools:layout_editor_absoluteX="0dp" />
@@ -95,10 +98,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="Услуги в отеле"
-            android:textAlignment="center"
+            android:text="Удобства"
+            android:layout_marginHorizontal="35dp"
             android:textColor="@color/accent_color"
-            android:textSize="25dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/poisNamesTextView"
             tools:layout_editor_absoluteX="0dp" />
@@ -107,11 +110,11 @@
             android:id="@+id/poisLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="35dp"
             android:layout_marginTop="16dp"
-            android:text="Расстояние\nдо точек интереса"
-            android:textAlignment="center"
+            android:text="Расстояние до точек интереса"
             android:textColor="@color/accent_color"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -120,26 +123,27 @@
 
         <TextView
             android:id="@+id/hotelInfoTextView"
-            android:layout_width="316dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="35dp"
             android:layout_marginTop="10dp"
             android:text="Дистанция от центра: 15км\nЗаезд с: 15:00, Выезд: до 12:00\nОтель 114 комнат, 12 этажей"
             android:textColor="@color/accent_color"
-            android:textSize="18dp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <TextView
             android:id="@+id/hotelLanguagesTextView"
-            android:layout_width="316dp"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="35dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Персонал знает: "
             android:textColor="@color/accent_color"
-            android:textSize="18dp"
-            android:textStyle="bold"
+            android:textSize="16sp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hotelInfoTextView" />
@@ -148,7 +152,8 @@
         android:id="@+id/recyclerViewHotelInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
@@ -174,8 +179,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="235dp"
             android:layout_marginEnd="15dp"
+            android:elevation="2dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
@@ -184,7 +190,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hotelInfoImageView" />
+            app:layout_constraintTop_toTopOf="@id/hotelInfoImageView" />
 
         <TextView
         android:id="@+id/hotelInfoPriceTextView"
@@ -228,9 +234,9 @@
 
         <TextView
             android:id="@+id/poisNamesTextView"
-            android:layout_width="275dp"
+            android:layout_width="245dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="35dp"
             android:layout_marginTop="12dp"
             android:text="загрузка..."
             android:textColor="@color/accent_color"
@@ -245,23 +251,13 @@
             android:layout_marginTop="12dp"
             android:text="загрузка..."
             android:textAlignment="textEnd"
+            android:textStyle="bold"
             android:textColor="@color/accent_color"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.097"
             app:layout_constraintStart_toEndOf="@+id/poisNamesTextView"
             app:layout_constraintTop_toBottomOf="@+id/poisLabel" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="102dp"
-            android:layout_height="19dp"
-            android:layout_marginStart="156dp"
-            android:layout_marginBottom="4dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@+id/hotelInfoImageView"
-            app:layout_constraintStart_toStartOf="@+id/hotelInfoImageView"
-            app:srcCompat="@drawable/images" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -277,7 +273,7 @@
             android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="78dp"
+            android:layout_marginStart="76dp"
             android:layout_marginTop="8dp"
             android:text="JourneyJotter"
             android:textAlignment="center"
@@ -286,5 +282,23 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/backToHotelsPageButton"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="393dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="191dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/hotelInfoImageView"
+            app:srcCompat="@drawable/page" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="393dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookHotelButton"
+            app:srcCompat="@drawable/page" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
