@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_color"
+    android:background="@color/white"
     tools:context=".TicketActivity">
 
     <ImageButton
         android:id="@+id/searchButtonTicket"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/accent_color"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:background="@color/transparent_color"
+        android:elevation="1dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/search"
+        android:src="@drawable/search_button"
         android:text="Search"
         app:layout_constraintStart_toEndOf="@+id/noTransfersCheckBox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:elevation="1dp"
         android:id="@+id/recyclerViewGuides"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -36,24 +38,35 @@
 
     <Spinner
         android:id="@+id/ticketSortBy"
-        android:layout_width="131dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="22dp"
-        android:backgroundTint="@color/accent_color"
+        android:layout_width="170dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/custom_spinner_background"
+        android:backgroundTint="@color/white"
+        android:dropDownWidth="match_parent"
+        android:dropDownHorizontalOffset="0dp"
+        android:dropDownVerticalOffset="30dp"
+        android:elevation="1dp"
         android:entries="@array/sorting_options_ticket"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:popupBackground="@color/white"
+        android:popupTheme="@style/SpinnerPopupTheme"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/noTransfersCheckBox"
-        android:layout_width="148dp"
+        android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="22dp"
-        android:buttonTint="@color/accent_color"
-        android:text="без пересадок"
-        android:textColor="@color/accent_color"
-        android:textSize="16sp"
+        android:layout_marginTop="20dp"
+        android:elevation="1dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:buttonTint="@color/white"
+        android:text="прямой"
+        android:textColor="@color/white"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ticketSortBy"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,25 +77,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="179dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="184dp"
-        android:indeterminateTint="@color/accent_color"
+        android:elevation="1dp"
+        android:indeterminateTint="@color/white"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noTransfersCheckBox" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="131dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="29dp"
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="38dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="20dp"
+        android:elevation="1dp"
         android:layout_marginTop="16dp"
-        android:text="Сортировать по:"
-        android:textColor="@color/accent_color"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sort" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="match_parent"
+        android:layout_height="309dp"
+        android:elevation="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/planebg" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="202dp"
+        android:layout_height="256dp"
+        android:layout_marginTop="51dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView13"
+        app:srcCompat="@drawable/nothinghereplane" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

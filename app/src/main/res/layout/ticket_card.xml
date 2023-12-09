@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
     android:backgroundTint="@color/white"
-    app:cardCornerRadius="30dp"
+    app:cardCornerRadius="25dp"
     android:layout_marginStart="1dp"
     app:cardElevation="4dp">
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@drawable/ticket_gradient_background">
 
     <TextView
         android:id="@+id/airlinesTV"
@@ -25,6 +25,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="16dp"
         android:text="Aeroflot"
+        android:textColor="@color/white"
         android:textAlignment="textEnd"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -36,8 +37,9 @@
         android:layout_width="155dp"
         android:layout_height="19dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="61dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="67dp"
+        android:textColor="@color/white"
         android:text="15 ч 60 мин"
         android:textAlignment="center"
         android:textSize="16sp"
@@ -52,6 +54,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="12dp"
         android:text="Ticket #100"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,150 +65,125 @@
         android:layout_width="42dp"
         android:layout_height="21dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="13dp"
         android:text="VKO"
+        android:elevation="2dp"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/trainAdultsTV"
         app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="155dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="58dp"
-        android:background="@color/accent_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="155dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="184dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="58dp"
+            android:background="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
 
     <TextView
         android:id="@+id/trainDirectionTV"
         android:layout_width="42dp"
         android:layout_height="21dp"
         android:layout_marginEnd="22dp"
-        android:text="IST"
-        android:layout_marginTop="12dp"
+        android:text="SVO"
+        android:textColor="@color/white"
+        android:layout_marginTop="13dp"
         android:textAlignment="textEnd"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
 
-    <TextView
-        android:id="@+id/trainPriceTV"
-        android:layout_width="145dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="10dp"
-        android:text="45000 P"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainNumberTV" />
+        <TextView
+            android:id="@+id/trainPriceTV"
+            android:layout_width="145dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:text="45000 P"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainNumberTV" />
 
-    <TextView
-        android:id="@+id/trainAdultsTV"
-        android:layout_width="110dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="26dp"
-        android:text="за 2 человека"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainPriceTV" />
+        <TextView
+            android:id="@+id/trainAdultsTV"
+            android:layout_width="110dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="4dp"
+            android:text="за 2 человека"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainPriceTV" />
 
-    <Button
-        android:id="@+id/trainBoughtTicketButton"
-        android:layout_width="322dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="0dp"
-        android:backgroundTint="@color/accent_color"
-        android:text="куплено"
-        android:textColor="@color/main_color"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainBuyTicketButton" />
+        <TextView
+            android:id="@+id/trainDepartureDateTV"
+            android:layout_width="117dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="7dp"
+            android:text="15 ноя, 10:15"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-    <TextView
-        android:id="@+id/trainDepartureDateTV"
-        android:layout_width="117dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:text="15 ноя, 10:15"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/trainBuyTicketButton"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-    <Button
-        android:id="@+id/trainBuyTicketButton"
-        android:layout_width="94dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="18dp"
-        android:backgroundTint="@color/accent_color"
-        android:text="купить"
-        android:textColor="@color/main_color"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainPriceTV" />
-
-    <TextView
+        <TextView
         android:id="@+id/trainArrivalDateTV"
         android:layout_width="109dp"
         android:layout_height="19dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="7dp"
         android:layout_marginEnd="22dp"
         android:text="15 ноя, 10:15"
+        android:textColor="@color/white"
         android:textAlignment="textEnd"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-        <RelativeLayout
-            android:layout_width="180dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="20dp"
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="135dp"
+            android:layout_height="66dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="49dp"
+            android:layout_marginEnd="54dp"
+            android:layout_weight="0.3"
+            android:src="@drawable/flight_destination"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/view3"
+            android:layout_width="155dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="184dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="58dp"
+            android:background="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-            <ImageView
-                android:id="@+id/backgroundImage"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="-12dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="0dp"
-                android:layout_weight="0.3"
-                android:scaleType="fitCenter" />
-
-        </RelativeLayout>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="155dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="58dp"
-        android:background="@color/accent_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/trainBoughtTicketButton"/>
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainDepartureDateTV" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

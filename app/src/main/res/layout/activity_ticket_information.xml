@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".TicketInformationActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
+    <ImageButton
+        android:id="@+id/buyTicketButton"
+        android:layout_width="99dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="купить"
+        android:src="@drawable/cart"
+        android:scaleType="fitCenter"
+        android:textColor="@color/accent_color"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView14"
+        app:layout_constraintTop_toTopOf="@+id/imageView14" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toTopOf="@id/guidelineTicket"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/bottombar" />
+
+    <TextView
+        android:id="@+id/ticketPriceTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="15dp"
+        android:elevation="6dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Итого: 50000 руб"
+        android:textColor="@color/accent_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pricePerPersonTV" />
+
+    <ImageButton
+        android:id="@+id/boughtTicketIButton"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/white"
+        android:elevation="20dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyTicketButton"
+        app:srcCompat="@drawable/check" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/originTicketCardView"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/originDuration_TV">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/airlinesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Победа (DP)"
+                android:textSize="15sp"
+                android:textColor="@color/accent_color"
+                app:layout_constraintStart_toEndOf="@+id/airlinesImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/originDepartureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="15:00\n15 дек"
+                android:textSize="13sp"
+                android:textColor="@color/TextColor"
+                app:layout_constraintStart_toEndOf="@+id/transfersImageView"
+                app:layout_constraintTop_toBottomOf="@+id/airlinesTextView" />
+
+            <TextView
+                android:id="@+id/originArrivalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="15:00\n15 дек"
+                android:textColor="@color/TextColor"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/transfersImageView"
+                app:layout_constraintTop_toBottomOf="@+id/originTransfersTV" />
+
+            <TextView
+                android:id="@+id/originOriginLocationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="25dp"
+                android:textSize="13sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Москва\nВнуково, VKO"
+                android:textColor="@color/TextColor"
+                app:layout_constraintStart_toEndOf="@+id/originDepartureTime"
+                app:layout_constraintTop_toBottomOf="@+id/airlinesTextView" />
+
+            <TextView
+                android:id="@+id/originArrivalLocationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Афины\nЭлефтериос Венизелос, ATH"
+                android:textColor="@color/TextColor"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/originArrivalTime"
+                app:layout_constraintTop_toBottomOf="@+id/originTransfersTV" />
+
+            <ImageView
+                android:id="@+id/airlinesImageView"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                 />
+
+            <ImageView
+                android:id="@+id/transfersImageView"
+                android:layout_width="43dp"
+                android:layout_height="102dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/airlinesImageView"
+                app:srcCompat="@drawable/dir_transfers" />
+
+            <TextView
+                android:id="@+id/originTransfersTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="1 пересадка"
+                android:textColor="@color/accent_light"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/transfersImageView"
+                app:layout_constraintTop_toBottomOf="@+id/originDepartureTime" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/originArrivalLocationTV" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/topbar" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="46dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent_color"
+        app:layout_constraintStart_toStartOf="@+id/imageView12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/purpleleft" />
+
+    <TextView
+        android:id="@+id/ticketNumberTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Билет №1779"
+        android:textColor="@color/accent_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+    <TextView
+        android:id="@+id/originDirection_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Москва - Афины"
+        android:textColor="@color/accent_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+    <TextView
+        android:id="@+id/returnDirection_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Афины - Москва"
+        android:textColor="@color/accent_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/originTicketCardView" />
+
+
+    <TextView
+        android:id="@+id/originDuration_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="В пути 1д 14ч 15м"
+        android:textColor="@color/accent_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/originDirection_TV" />
+
+    <TextView
+        android:id="@+id/returnDuration_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="В пути 1д 14ч 15м"
+        android:textColor="@color/accent_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnDirection_TV" />
+
+    <TextView
+        android:id="@+id/pricePerPersonTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="31dp"
+        android:elevation="6dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="25000 руб за человека"
+        android:textColor="@color/accent_color"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView14" />
+
+    <TextView
+        android:id="@+id/totalDurationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Общая длительность: 45ч"
+        android:textColor="@color/accent_color"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnCardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/returnCardView"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnDuration_TV">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/returnAirlinesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Победа (DP)"
+                android:textColor="@color/accent_color"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/airlinesReturnImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/airlinesReturnImageView"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                 />
+
+            <ImageView
+                android:id="@+id/transfersReturnImageView"
+                android:layout_width="43dp"
+                android:layout_height="102dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:elevation="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/airlinesReturnImageView"
+                app:srcCompat="@drawable/dir_transfers" />
+
+            <TextView
+                android:id="@+id/returnDepartureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="15:00\n15 дек"
+                android:textColor="@color/TextColor"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/transfersReturnImageView"
+                app:layout_constraintTop_toBottomOf="@+id/returnAirlinesTextView" />
+
+            <TextView
+                android:id="@+id/returnOriginLocationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Афины\nЭлефтериос Венизелос, ATH"
+                android:textColor="@color/TextColor"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/returnDepartureTime"
+                app:layout_constraintTop_toBottomOf="@+id/returnAirlinesTextView" />
+
+            <TextView
+                android:id="@+id/returnTransfersTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="2 пересадки"
+                android:textColor="@color/accent_light"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/transfersReturnImageView"
+                app:layout_constraintTop_toBottomOf="@+id/returnDepartureTime" />
+
+            <TextView
+                android:id="@+id/returnArrivalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="15:00\n15 дек"
+                android:textColor="@color/TextColor"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/transfersReturnImageView"
+                app:layout_constraintTop_toBottomOf="@+id/returnTransfersTV" />
+
+            <TextView
+                android:id="@+id/returnArrivalLocationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Москва\nВнуково, VKO"
+                android:textColor="@color/TextColor"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/returnArrivalTime"
+                app:layout_constraintTop_toBottomOf="@+id/returnTransfersTV" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/returnArrivalLocationTV" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/loadingIV"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:elevation="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

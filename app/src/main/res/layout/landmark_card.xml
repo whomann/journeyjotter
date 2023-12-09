@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/main_color"
+        android:background="@color/white"
         android:padding="8dp">
 
         <ImageView
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/accent_color"
         android:text="в планы"
-        android:textColor="@color/main_color" />
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

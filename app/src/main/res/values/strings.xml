@@ -9,7 +9,7 @@
         <item>по расстоянию от центра</item>
     </string-array>
     <string-array name="sorting_options_ticket">
-        <item>Цене</item>
-        <item>Популярности</item>
+        <item>по цене</item>
+        <item>по популярности</item>
     </string-array>
 </resources>

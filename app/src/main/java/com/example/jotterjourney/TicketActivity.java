@@ -14,12 +14,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +57,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 public class TicketActivity extends AppCompatActivity {
-    private String aviasalesApiKey; private int selectedTripId; ProgressBar progressBar; CheckBox noTransfersCheckBox; RecyclerView recyclerView; Spinner sortBySpinner; private SQLiteDatabase db; private String ticketInfo,sortBy, departureLocation,targetLocation,returnDate,departureDate,targetLocationCode, departureLocationCode; private int adultsCount; ArrayList<ArrayList<Object>> ticketsList = new ArrayList<>();
+    ImageView imageView15; private String aviasalesApiKey; private int selectedTripId; ProgressBar progressBar; CheckBox noTransfersCheckBox; RecyclerView recyclerView; Spinner sortBySpinner; private SQLiteDatabase db; private String ticketInfo,sortBy, departureLocation,targetLocation,returnDate,departureDate,targetLocationCode, departureLocationCode; private int adultsCount; ArrayList<ArrayList<Object>> ticketsList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +70,14 @@ public class TicketActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.main_color));
+        getWindow().setStatusBarColor(Color.parseColor("#6f4d6e"));
         recyclerView=findViewById(R.id.recyclerViewGuides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         readAndLogDataFromSQLite(selectedTripId);
         sortBySpinner=findViewById(R.id.ticketSortBy);
+        imageView15=findViewById(R.id.imageView15);
+        imageView15.setVisibility(View.VISIBLE);
         noTransfersCheckBox=findViewById(R.id.noTransfersCheckBox);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -82,6 +86,7 @@ public class TicketActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.INVISIBLE);
         findViewById(R.id.searchButtonTicket).setOnClickListener(v->{
+            imageView15.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.VISIBLE);
             TicketActivity.TicketAdapter ticketAdapter = new TicketActivity.TicketAdapter(new ArrayList<>());
             recyclerView.setAdapter(ticketAdapter);
@@ -121,7 +126,7 @@ public class TicketActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             sortBy = sortBySpinner.getSelectedItem().toString();
-            if(sortBy.equals("Цене")){
+            if(sortBy.equals("по цене")){
                 sortBy="price";
             }
             else{
@@ -195,7 +200,7 @@ public class TicketActivity extends AppCompatActivity {
                         "&destination=" + targetLocationCode +
                         "&departure_at=" + departureDate +
                         "&return_at=" + returnDate +
-                        "&unique=false&sorting=" + sortBy + "&direct=false&cy=rub&limit=100&page=1&one_way=false&token="+aviasalesApiKey;
+                        "&unique=false&sorting=" + sortBy + "&direct=false&cy=rub&limit=1000&page=1&one_way=false&token="+aviasalesApiKey;
                 Log.d("Request: ", fullUrl);
 
                 URL url = new URL(fullUrl);
@@ -232,28 +237,36 @@ public class TicketActivity extends AppCompatActivity {
                     if (noTransfersCheckBox.isChecked() && (transfers > 0 || returnTransfers > 0)) {
                         continue;
                     }
-                    String flightNumber = flight.getString("flight_number");
-                    String link = flight.getString("link");
-                    int price = flight.getInt("price");
-                    String destinationAirport = flight.getString("destination_airport");
-                    String originAirport = flight.getString("origin_airport");
-                    String departureAt = flight.getString("departure_at");
-                    String airline = flight.getString("airline");
-                    String returnAt = flight.getString("return_at");
-                    int duration = flight.getInt("duration");
+                    else {
+                        String flightNumber = flight.getString("flight_number");
+                        String link = flight.getString("link");
+                        int price = flight.getInt("price");
+                        String destinationAirport = flight.getString("destination_airport");
+                        String originAirport = flight.getString("origin_airport");
+                        String departureAt = flight.getString("departure_at");
+                        String airline = flight.getString("airline");
+                        String returnAt = flight.getString("return_at");
+                        int duration = flight.getInt("duration");
+                        int durationTo = flight.getInt("duration_to");
+                        int durationBack = flight.getInt("duration_back");
 
-                    ArrayList<Object> flightInfo = new ArrayList<>();
-                    flightInfo.add(flightNumber);
-                    flightInfo.add(departureAt);
-                    flightInfo.add(originAirport);
-                    flightInfo.add(returnAt);
-                    flightInfo.add(destinationAirport);
-                    flightInfo.add(airline);
-                    flightInfo.add(price);
-                    flightInfo.add(duration);
-                    flightInfo.add(link);
+                        ArrayList<Object> flightInfo = new ArrayList<>();
+                        flightInfo.add(flightNumber);
+                        flightInfo.add(departureAt);
+                        flightInfo.add(originAirport);
+                        flightInfo.add(returnAt);
+                        flightInfo.add(destinationAirport);
+                        flightInfo.add(airline);
+                        flightInfo.add(price);
+                        flightInfo.add(duration);
+                        flightInfo.add(link);
+                        flightInfo.add(durationTo);
+                        flightInfo.add(durationBack);
+                        flightInfo.add(transfers);
+                        flightInfo.add(returnTransfers);
 
-                    ticketsList.add(flightInfo);
+                        ticketsList.add(flightInfo);
+                    }
                 }
 
                 return ticketsList;
@@ -267,6 +280,7 @@ public class TicketActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<ArrayList<Object>> ticketsList) {
             if (ticketsList != null) {
                 RecyclerView recyclerView = findViewById(R.id.recyclerViewGuides);
+                imageView15.setVisibility(View.GONE);
                 TicketAdapter ticketAdapter = new TicketAdapter(ticketsList);
                 recyclerView.setAdapter(ticketAdapter);
                 progressBar.setVisibility(View.GONE);
@@ -274,11 +288,13 @@ public class TicketActivity extends AppCompatActivity {
                 if(ticketsList.isEmpty()){
                     Toast.makeText(TicketActivity.this, "Билеты не найдены.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
+                    imageView15.setVisibility(View.VISIBLE);
                 }
             } else {
                 Log.e("No data available", "Error retrieving data");
                 Toast.makeText(TicketActivity.this, "Билеты не найдены.", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
+                imageView15.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -302,13 +318,6 @@ public class TicketActivity extends AppCompatActivity {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ticket_card, parent, false);
             return new TicketActivity.TicketAdapter.TicketViewHolder(view);
         }
-        private void openTicketLink(String link) {
-            if (link != null && !link.isEmpty()) {
-                Uri uri = Uri.parse(link);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        }
         public String convertTimestamp(String timestamp) {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault());
             SimpleDateFormat outputFormat = new SimpleDateFormat("d MMM, HH:mm", new Locale("ru", "RU"));
@@ -322,13 +331,22 @@ public class TicketActivity extends AppCompatActivity {
             }
         }
         public String formatDuration(int durationInMinutes) {
-            int hours = durationInMinutes / 60;
+            int days = durationInMinutes / (24 * 60);
+            int hours = (durationInMinutes % (24 * 60)) / 60;
             int minutes = durationInMinutes % 60;
 
             String formattedDuration;
 
-            if (hours > 0 && minutes > 0) {
+            if (days > 0 && hours > 0 && minutes > 0) {
+                formattedDuration = String.format("%d д %d ч %02d мин", days, hours, minutes);
+            } else if (days > 0 && hours > 0) {
+                formattedDuration = String.format("%d д %d ч", days, hours);
+            } else if (days > 0 && minutes > 0) {
+                formattedDuration = String.format("%d д %02d мин", days, minutes);
+            } else if (hours > 0 && minutes > 0) {
                 formattedDuration = String.format("%d ч %02d мин", hours, minutes);
+            } else if (days > 0) {
+                formattedDuration = String.format("%d д", days);
             } else if (hours > 0) {
                 formattedDuration = String.format("%d ч", hours);
             } else {
@@ -337,6 +355,7 @@ public class TicketActivity extends AppCompatActivity {
 
             return formattedDuration;
         }
+
         public String getAirlineNameByCode(String airlineCode) {
             try {
                 String jsonString = loadJsonFromAsset("airlines.json");
@@ -386,42 +405,6 @@ public class TicketActivity extends AppCompatActivity {
             int durationUnconverted = (int) ticketData.get(7);
             String duration = formatDuration(durationUnconverted);
             String airlineName=getAirlineNameByCode(airline);
-            String link = "https://www.aviasales.ru"+ticketData.get(8).toString();
-
-            String imageUrl = "https://cors.eu.org/http://pics.avs.io/800/200/" + airline + ".png";
-            Picasso.get().load(imageUrl).into(new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    if (bitmap != null) {
-                        BitmapDrawable drawable = new BitmapDrawable(
-                                holder.backgroundImage.getResources(),
-                                applyTransparency(bitmap, 0.1f)
-                        );
-                        holder.backgroundImage.setImageDrawable(drawable);
-                        holder.backgroundImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    } else {
-                        holder.backgroundImage.setImageResource(R.color.white);
-                    }
-                }
-
-                @Override
-                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                    holder.backgroundImage.setImageResource(R.color.white);
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                }
-            });
-
-
-            String adultsString;
-            if(adultsCount>1){
-                adultsString = "за "+adultsCount+" человека";
-            }
-            else{
-                adultsString="";
-            }
 
             holder.ticketNumberTV.setText("Билет №"+flightNumber);
             holder.airlinesTV.setText(airlineName);
@@ -431,37 +414,7 @@ public class TicketActivity extends AppCompatActivity {
             holder.targetIataTV2.setText(destinationAirport);
             holder.departureDateTV.setText(departureAt);
             holder.returnDateTV.setText(returnAt);
-            holder.adultsTV.setText(adultsString);
-
-            holder.buyTicketButton.setOnClickListener(v -> {
-                openTicketLink(link);
-            });
-            holder.boughtTicketButton.setOnClickListener(v -> {
-                String updatedTicketInfo = originAirport + " <-> " + destinationAirport + " ("+airlineName+").\nВылет туда: "+departureAt+",\nВылет обратно: "+returnAt;
-                int userId = selectedTripId;
-                SQLiteDatabase db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
-
-                ContentValues values = new ContentValues();
-                values.put("ticketInfo", updatedTicketInfo);
-                values.put("originIATA", originAirport);
-                values.put("targetIATA", destinationAirport);
-
-                int affectedRows = db.update("jjtrips1", values, "userId=?", new String[]{String.valueOf(userId)});
-                if (affectedRows > 0) {
-                    Log.d("Data updated successfully.", "Data updated successfully.");
-                } else {
-                    Log.e("Error updating data:", "No data updated.");
-                }
-                db.close();
-            });
-        }
-        private Bitmap applyTransparency(Bitmap source, float alpha) {
-            Bitmap transparentBitmap = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(transparentBitmap);
-            Paint paint = new Paint();
-            paint.setAlpha((int) (255 * alpha));
-            canvas.drawBitmap(source, 0, 0, paint);
-            return transparentBitmap;
+            holder.adultsTV.setText("за "+String.valueOf(adultsCount)+" человека");
         }
         @Override
         public int getItemCount() {
@@ -497,6 +450,42 @@ public class TicketActivity extends AppCompatActivity {
                 buyTicketButton = itemView.findViewById(R.id.trainBuyTicketButton);
                 boughtTicketButton = itemView.findViewById(R.id.trainBoughtTicketButton);
                 backgroundImage=itemView.findViewById(R.id.backgroundImage);
+
+                itemView.setOnClickListener(view -> {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ArrayList<Object> clickedTicketData = ticketDataList.get(position);
+                        Intent intent = new Intent(itemView.getContext(), TicketInformationActivity.class);
+                        intent.putExtra("flightNumber", clickedTicketData.get(0).toString().trim());
+                        String departureAtUnconverted = clickedTicketData.get(1).toString();
+                        intent.putExtra("departureAt", convertTimestamp(departureAtUnconverted).trim());
+                        intent.putExtra("durationTo", formatDuration((int) clickedTicketData.get(9)));
+                        intent.putExtra("durationBack", formatDuration((int) clickedTicketData.get(10)));
+                        intent.putExtra("originAirport", clickedTicketData.get(2).toString());
+                        String returnAtUnconverted = clickedTicketData.get(3).toString();
+                        intent.putExtra("returnAt", convertTimestamp(returnAtUnconverted).trim());
+                        intent.putExtra("targetAirport", clickedTicketData.get(4).toString().trim());
+                        String airline=clickedTicketData.get(5).toString().trim();
+                        intent.putExtra("airlineCode", airline);
+                        intent.putExtra("airlineName", getAirlineNameByCode(airline).trim());
+                        intent.putExtra("price", (int) clickedTicketData.get(6));
+                        intent.putExtra("adultsCount", adultsCount);
+                        int durationUnconverted = (int) clickedTicketData.get(7);
+                        intent.putExtra("duration", formatDuration(durationUnconverted));
+                        intent.putExtra("link", "https://www.aviasales.ru"+clickedTicketData.get(8).toString().trim());
+                        intent.putExtra("transfers", (int) clickedTicketData.get(11));
+                        intent.putExtra("returnTransfers", (int) clickedTicketData.get(12));
+                        intent.putExtra("departureLocation", departureLocation);
+                        intent.putExtra("targetLocation", targetLocation);
+                        intent.putExtra("selectedTripId",selectedTripId);
+                        intent.putExtra("returnAtUnconverted", clickedTicketData.get(3).toString());
+                        intent.putExtra("departureAtUnconverted", clickedTicketData.get(1).toString());
+                        intent.putExtra("durationToUnvonverted", (int) clickedTicketData.get(9));
+                        intent.putExtra("durationBackUnvonverted", (int) clickedTicketData.get(10));
+
+                        itemView.getContext().startActivity(intent);
+                    }
+                });
             }
         }
     }
