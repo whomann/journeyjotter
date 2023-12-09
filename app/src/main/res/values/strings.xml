@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">JourneyJotter</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string-array name="sorting_options">
-        <item>Сортировать по: цене</item>
-        <item>Сортировать по: рейтингу</item>
-        <item>Сортировать по: расстоянию от центра</item>
+        <item>по цене</item>
+        <item>по рейтингу</item>
+        <item>по расстоянию от центра</item>
     </string-array>
     <string-array name="sorting_options_ticket">
         <item>Цене</item>

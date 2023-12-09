@@ -14,63 +14,74 @@
         android:background="@color/white"
         tools:context=".HotelActivity">
 
+
         <Spinner
             android:id="@+id/sortSpinner"
-            android:layout_width="265dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="14dp"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:background="@drawable/custom_spinner_background"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toTopOf="parent"
+            android:spinnerMode="dropdown"
+            android:elevation="2dp"
+            android:popupBackground="@color/accent_color"
+            android:dropDownWidth="match_parent"
+            android:dropDownVerticalOffset="30dp"
+            android:dropDownHorizontalOffset="0dp"
             android:entries="@array/sorting_options"
-            android:textColor="@color/main_color"
-            app:layout_constraintStart_toEndOf="@+id/filterButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="12dp"
+            android:popupTheme="@style/SpinnerPopupTheme" />
 
         <ImageButton
             android:id="@+id/searchButton"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:scaleType="fitCenter"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@color/accent_color"
-            android:src="@drawable/search"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:background="@color/transparent_color"
+            android:src="@drawable/search_button"
             android:text="Search"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toEndOf="@+id/sortSpinner"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBar"
+            android:elevation="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="31dp"
-            android:indeterminateTint="@color/accent_color"
+            android:layout_marginTop="95dp"
+            android:indeterminateTint="@color/white"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapViewHotels" />
+            app:layout_constraintTop_toBottomOf="@+id/cardViewMap" />
 
         <ImageButton
             android:id="@+id/filterButton"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="32dp"
+            android:elevation="2dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
             android:scaleType="fitCenter"
-            android:backgroundTint="@color/accent_color"
+            android:background="@color/transparent_color"
             android:onClick="showFiltersPopup"
-            android:src="@drawable/more"
+            android:src="@drawable/more_button"
             android:text="Filters"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
+            android:elevation="2dp"
             android:layout_width="0dp"
             android:layout_height="37dp"
+            android:layout_marginHorizontal="25dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="1dp"
             android:scrollbars="none"
@@ -89,102 +100,112 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
                     android:text="хостел"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp" />
 
                 <Button
                     android:id="@+id/hotelTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="отель"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/apartmentTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="апартаменты"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/apartHotelTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="апарт-отель"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/guestHouseTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="гостевой дом"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/lodgeTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="лодж"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/villaTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="вилла"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/motelTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:text="мотель"
                     android:textColor="@color/accent_color"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/farmTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="@color/white"
                     android:textColor="@color/accent_color"
                     android:text="ферма"
-                    android:textSize="8sp" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
             android:layout_width="365dp"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapViewHotels" />
+            app:layout_constraintTop_toBottomOf="@+id/cardViewMap" />
 
         <Button
             android:id="@+id/nextPageButton"
@@ -193,25 +214,70 @@
             android:layout_marginStart="147dp"
             android:layout_marginEnd="147dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/accent_color"
+            android:backgroundTint="@color/white"
             android:text="Следующая страница"
             android:visibility="gone"
-            android:textColor="@color/main_color"
+            android:textColor="@color/accent_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapViewHotels"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewMap"
             android:layout_width="373dp"
             android:layout_height="143dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="8dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapViewHotels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
+
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:elevation="1dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/textView15"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:src="@drawable/sort"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/nothingHereImageView"
+            android:layout_width="match_parent"
+            android:elevation="1dp"
+            android:layout_marginHorizontal="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="170dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/nothinghere"
+            tools:layout_editor_absoluteX="141dp"
+            tools:layout_editor_absoluteY="354dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout

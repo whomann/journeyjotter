@@ -24,7 +24,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="6dp"
         android:text="TextView"
-        android:textColor="@color/accent_color"
+        android:textColor="@color/TextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/iconView"
         app:layout_constraintTop_toTopOf="@+id/iconView" />

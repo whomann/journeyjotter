@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -88,7 +90,7 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelActivity extends AppCompatActivity {
-    private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String BASE_URL = "https://cors.eu.org/http://engine.hotellook.com/api/v2/lookup.json"; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
+    ImageView nothingHereImageView; CardView cardViewMap;long nightsCount; private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String BASE_URL = "https://cors.eu.org/http://engine.hotellook.com/api/v2/lookup.json"; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +123,7 @@ public class HotelActivity extends AppCompatActivity {
 
         //region filters region
         filterFan = findViewById(R.id.filterFan);
+        nothingHereImageView=findViewById(R.id.nothingHereImageView);
         filterDisabled = findViewById(R.id.filterDisabled);
         filterPetsAllowed = findViewById(R.id.filterPetsAllowed);
         filterRestaurant = findViewById(R.id.filterRestaurant);
@@ -157,6 +160,8 @@ public class HotelActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         slider=findViewById(R.id.rangeSlider);
         mMapView = findViewById(R.id.mapViewHotels);
+        ImageView imageView7=findViewById(R.id.imageView7);
+        imageView7.setImageResource(R.drawable.bg);
         type="Нет";
         Button hostelButton = findViewById(R.id.hostelTypeButton);
         Button hotelButton = findViewById(R.id.hotelTypeButton);
@@ -167,6 +172,9 @@ public class HotelActivity extends AppCompatActivity {
         Button lodgeTypeButton=findViewById(R.id.lodgeTypeButton);
         Button guestHouseTypeButton=findViewById(R.id.guestHouseTypeButton);
         Button apartHotelTypeButton=findViewById(R.id.apartHotelTypeButton);
+        cardViewMap=findViewById(R.id.cardViewMap);
+        cardViewMap.setVisibility(View.GONE);
+        mMapView.setVisibility(View.GONE);
 
         View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
@@ -187,12 +195,12 @@ public class HotelActivity extends AppCompatActivity {
                         if (!selectedEnglishPropertyTypes.contains(correspondingKey)) {
                             selectedEnglishPropertyTypes.add(correspondingKey);
                             clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.accent_color));
-                            clickedButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.main_color));
+                            clickedButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
                             Log.d("SelectedType", correspondingKey);
                             Log.d("selectedEnglishPropertyTypes", String.valueOf(selectedEnglishPropertyTypes));
                         } else {
                             selectedEnglishPropertyTypes.remove(correspondingKey);
-                            clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.main_color));
+                            clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.white));
                             clickedButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.accent_color));
                         }
                     } else {
@@ -243,6 +251,10 @@ public class HotelActivity extends AppCompatActivity {
         window.setStatusBarColor(getResources().getColor(R.color.white));
 
         findViewById(R.id.searchButton).setOnClickListener(v -> {
+            imageView7.setImageResource(R.drawable.bginprogress);
+            nothingHereImageView.setVisibility(View.VISIBLE);
+            mMapView.setVisibility(View.GONE);
+            cardViewMap.setVisibility(View.GONE);
             filterMap.clear();
             selectedFilters.clear();
             listOfIDs.clear();
@@ -389,6 +401,9 @@ public class HotelActivity extends AppCompatActivity {
                 selectedFilters.add(filterPool.getText().toString());
             }
             //endregion
+            LocalDate returnDateString = LocalDate.parse(returnDate);
+            LocalDate departureDateString = LocalDate.parse(departureDate);
+            nightsCount = ChronoUnit.DAYS.between(departureDateString, returnDateString);
 
             if(Objects.equals(type, "Нет")){
                 currentPage=0;
@@ -447,9 +462,12 @@ public class HotelActivity extends AppCompatActivity {
         super.onDestroy();
         mMapView.onDestroy();
     }
-    private void showMapMarkers(ArrayList<ArrayList<Object>> arrayList){
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        double hotelLatValueMap=0.0, hotelLonValueMap=0.0;
+    private void showMapMarkers(final ArrayList<ArrayList<Object>> arrayList) {
+        mMapView.setVisibility(View.VISIBLE);
+        cardViewMap.setVisibility(View.VISIBLE);
+        final LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        double hotelLatValueMap = 0.0, hotelLonValueMap = 0.0;
+
         for (int i = 0; i < arrayList.size(); i++) {
             ArrayList<Object> hotelDataMap = arrayList.get(i);
             String hotelNameMap = hotelDataMap.get(7).toString();
@@ -464,13 +482,21 @@ public class HotelActivity extends AppCompatActivity {
             mMap.addMarker(markerOptions);
             builder.include(hotelLocation);
         }
-        if(hotelLatValueMap!=0.0 && hotelLonValueMap!=0.0) {
-            LatLngBounds bounds = builder.build();
-            int padding = 50;
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-            mMap.moveCamera(cameraUpdate);
+
+        if (hotelLatValueMap != 0.0 && hotelLonValueMap != 0.0) {
+            mMapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    LatLngBounds bounds = builder.build();
+                    int padding = 50;
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                    mMap.moveCamera(cameraUpdate);
+                    mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
         }
     }
+
     private void getTypes(Spinner typeSpinner) {
         String url = "https://cors.eu.org/http://yasen.hotellook.com/tp/public/available_selections.json?id=" + locationId + "&token=" + apiKey;
         Log.d("types url:", url);
@@ -568,6 +594,9 @@ public class HotelActivity extends AppCompatActivity {
     }
 
     private void loadNextPage(ArrayList<ArrayList<Object>> arrayList, boolean loadNextPage) {
+        mMapView.setVisibility(View.VISIBLE);
+        nothingHereImageView.setVisibility(View.GONE);
+        cardViewMap.setVisibility(View.VISIBLE);
         ArrayList<ArrayList<Object>> nextPageData = new ArrayList<>();
         Button nextPageButton = findViewById(R.id.nextPageButton);
         if(Objects.equals(type, "Нет")){
@@ -709,9 +738,7 @@ public class HotelActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             boolean skipHotel=false;
-            LocalDate returnDateString = LocalDate.parse(returnDate);
-            LocalDate departureDateString = LocalDate.parse(departureDate);
-            long nightsCount = ChronoUnit.DAYS.between(departureDateString, returnDateString);
+
             Log.d("number of nights", String.valueOf(nightsCount));
 
             if (response != null) {
@@ -927,7 +954,7 @@ public class HotelActivity extends AppCompatActivity {
             }
 
         private ArrayList<ArrayList<Object>> sortHotels(ArrayList<ArrayList<Object>> hotels, String sorting) {
-            if (sorting.equals("Сортировать по: цене")) {
+            if (sorting.equals("по цене")) {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
@@ -936,7 +963,7 @@ public class HotelActivity extends AppCompatActivity {
                         return Double.compare(price1, price2);
                     }
                 });
-            } else if (sorting.equals("Сортировать по: расстоянию от центра")) {
+            } else if (sorting.equals("по расстоянию от центра")) {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
@@ -945,7 +972,7 @@ public class HotelActivity extends AppCompatActivity {
                         return Double.compare(distance1, distance2);
                     }
                 });
-            } else if (sorting.equals("Сортировать по: рейтингу")) {
+            } else if (sorting.equals("по рейтингу")) {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
@@ -1234,6 +1261,7 @@ public class HotelActivity extends AppCompatActivity {
                                     RecyclerView recyclerView = findViewById(R.id.recyclerView);
                                     HotelAdapter hotelAdapter = new HotelAdapter(finalHotelList);
                                     recyclerView.setAdapter(hotelAdapter);
+                                    nothingHereImageView.setVisibility(View.GONE);
                                     ProgressBar progressBar = findViewById(R.id.progressBar);
                                     progressBar.setVisibility(View.GONE);
                                 } else {
@@ -1333,7 +1361,7 @@ public class HotelActivity extends AppCompatActivity {
         }
 
         private ArrayList<ArrayList<Object>> sortHotels(ArrayList<ArrayList<Object>> hotels, String sorting) {
-            if (sorting.equals("Сортировать по: цене")) {
+            if (sorting.equals("по цене")) {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
@@ -1342,7 +1370,7 @@ public class HotelActivity extends AppCompatActivity {
                         return Double.compare(price1, price2);
                     }
                 });
-            } else if (sorting.equals("Сортировать по: расстоянию от центра")) {
+            } else if (sorting.equals("по расстоянию от центра")) {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
@@ -1351,7 +1379,7 @@ public class HotelActivity extends AppCompatActivity {
                         return Double.compare(distance1, distance2);
                     }
                 });
-            } else if (sorting.equals("Сортировать по: рейтингу")) {
+            } else if (sorting.equals("по рейтингу")) {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
@@ -1499,7 +1527,7 @@ public class HotelActivity extends AppCompatActivity {
                 }
             });
             holder.hotelNameTextView.setText(hotelName);
-            holder.hotelRatingTextView.setText(String.valueOf((double) rating / 10));
+            holder.hotelRatingTextView.setText(String.valueOf((double) rating / 10 / 2));
             holder.hotelPriceTextView.setText("от "+price+ " руб.");
             holder.hotelDistanceTextView.setText(hotelDistance+" км");
         }
@@ -1557,6 +1585,7 @@ public class HotelActivity extends AppCompatActivity {
                         intent.putExtra("locationID", locationId);
                         intent.putExtra("selectedTripId", selectedTripId);
                         intent.putExtra("type", type);
+                        intent.putExtra("nightsCount", Integer.parseInt(String.valueOf(nightsCount)));
 
                         itemView.getContext().startActivity(intent);
                     }

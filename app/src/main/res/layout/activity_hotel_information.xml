@@ -18,15 +18,16 @@
             android:layout_height="48dp"
             android:background="@color/accent_color"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/backToHotelsPageButton"
             android:layout_width="54dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:background="@color/accent_color"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +51,7 @@
             android:layout_width="143dp"
             android:layout_height="33dp"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@color/accent_color"
             android:text="Забронировать"
             android:textColor="@color/main_color"
@@ -61,7 +62,7 @@
             android:id="@+id/bookedHotelButton"
             android:layout_width="144dp"
             android:layout_height="33dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="35dp"
             android:background="@color/accent_color"
             android:text="Забронирован"
@@ -126,9 +127,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="Дистанция от центра: 15км\nЗаезд с: 15:00, Выезд: до 12:00\nОтель 114 комнат, 12 этажей"
-            android:textColor="@color/accent_color"
+            android:textColor="@color/TextColor"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,9 +140,9 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="35dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="Персонал знает: "
-            android:textColor="@color/accent_color"
+            android:textColor="@color/TextColor"
             android:textSize="16sp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -162,30 +163,26 @@
             android:id="@+id/ratingTextViewHotel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="22dp"
-            android:background="@color/white"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="25dp"
             android:text="10"
-            android:textColor="@color/accent_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/hotelInfoImageView"
-            app:layout_constraintTop_toTopOf="@+id/hotelInfoImageView" />
+            android:textColor="@color/TextColor"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView" />
 
         <TextView
             android:id="@+id/hotelInfoNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="235dp"
+            android:layout_marginTop="240dp"
             android:layout_marginEnd="15dp"
             android:elevation="2dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/accent_color"
-            android:textSize="25sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -193,36 +190,30 @@
             app:layout_constraintTop_toTopOf="@id/hotelInfoImageView" />
 
         <TextView
-        android:id="@+id/hotelInfoPriceTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textColor="@color/accent_color"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView" />
+            android:id="@+id/hotelInfoPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:text="50000"
+            android:textColor="@color/accent_color"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintTop_toBottomOf="@+id/distanceTextView" />
 
         <TextView
             android:id="@+id/hotelInfoAddressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginTop="21dp"
             android:text="TextView"
             android:textAlignment="center"
-            android:textColor="@color/accent_color"
+            android:textColor="@color/TextColor"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.556"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/hotelInfoNameTextView" />
 
         <View
@@ -237,9 +228,9 @@
             android:layout_width="245dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:text="загрузка..."
-            android:textColor="@color/accent_color"
+            android:textColor="@color/TextColor"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/poisLabel" />
@@ -248,11 +239,11 @@
             android:id="@+id/poisDistanceTextView"
             android:layout_width="81dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:text="загрузка..."
             android:textAlignment="textEnd"
             android:textStyle="bold"
-            android:textColor="@color/accent_color"
+            android:textColor="@color/TextColor"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.097"
@@ -263,9 +254,9 @@
             android:id="@+id/imageView4"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/hotelInfoAddressTextView"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="17dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hotelInfoNameTextView"
             app:srcCompat="@drawable/mappinpurple" />
 
@@ -300,5 +291,82 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookHotelButton"
             app:srcCompat="@drawable/page" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView"
+            app:srcCompat="@drawable/rating" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/ratingTextViewHotel"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView"
+            app:srcCompat="@drawable/distance" />
+
+        <TextView
+            android:id="@+id/distanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="25dp"
+            android:text="10.5 km"
+            android:textColor="@color/TextColor"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/distanceTextView"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView"
+            app:srcCompat="@drawable/star" />
+
+        <TextView
+            android:id="@+id/starsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="25dp"
+            android:textSize="14sp"
+            android:layout_marginEnd="35dp"
+            android:textColor="@color/TextColor"
+            android:text="5"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toBottomOf="@+id/hotelInfoAddressTextView" />
+
+        <TextView
+            android:id="@+id/nigthsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginTop="37dp"
+            android:text="TextView"
+            android:textColor="#959197"
+            app:layout_constraintStart_toEndOf="@+id/hotelInfoPriceTextView"
+            app:layout_constraintTop_toBottomOf="@+id/distanceTextView" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/distanceTextView"
+            app:srcCompat="@drawable/money" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

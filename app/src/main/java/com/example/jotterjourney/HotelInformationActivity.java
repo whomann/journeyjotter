@@ -118,6 +118,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         int cntRooms = getIntent().getIntExtra("cntRooms", 0);
         int selectedTripId=getIntent().getIntExtra("selectedTripId",1);
         String type=getIntent().getStringExtra("type");
+        int nightsCount=getIntent().getIntExtra("nightsCount",0);
         ArrayList<Integer> poiList = getIntent().getIntegerArrayListExtra("poiDistance");
         Log.d("poiList", String.valueOf(poiList));
         if(stars==0){
@@ -146,6 +147,9 @@ public class HotelInformationActivity extends AppCompatActivity {
         TextView hotelInfoTextView=findViewById(R.id.hotelInfoTextView);
         ImageButton backToHotelsPageButton=findViewById(R.id.backToHotelsPageButton);
         RecyclerView recyclerViewHotelInfo=findViewById(R.id.recyclerViewHotelInfo);
+        TextView distanceTextView=findViewById(R.id.distanceTextView);
+        TextView starsTextView=findViewById(R.id.starsTextView);
+        TextView nigthsTextView=findViewById(R.id.nigthsTextView);
 
         recyclerViewHotelInfo.setLayoutManager(new LinearLayoutManager(this));
         mMapView = findViewById(R.id.hotelMapView);
@@ -249,11 +253,14 @@ public class HotelInformationActivity extends AppCompatActivity {
             propertyType="отель";
         }
         String starsSymbol = "\u2605";
+        nigthsTextView.setText("/ "+String.valueOf(nightsCount)+" ночей");
         hotelInfoAddressTextView.setText(address);
-        ratingTextViewHotel.setText(String.valueOf((double) rating / 10));
+        starsTextView.setText(String.valueOf(stars));
+        ratingTextViewHotel.setText(String.valueOf((double) rating / 10 / 2));
         hotelInfoPriceTextView.setText("от "+String.valueOf(price)+ " руб.");
-        hotelInfoNameTextView.setText(hotelName + " • "+starsSymbol.repeat(stars));
-        hotelInfoTextView.setText("Тип: "+propertyType.toLowerCase()+floorsString+"\nРасстояние от центра: "+hotelDistance+" км");
+        hotelInfoNameTextView.setText(hotelName); // + " • "+starsSymbol.repeat(stars)
+        distanceTextView.setText(String.valueOf(hotelDistance)+" км.");
+        hotelInfoTextView.setText("Тип: "+propertyType.toLowerCase()+floorsString);
         if (!imageUrls.isEmpty()) {
             updateImage(hotelInfoImageView, imageUrls.get(currentImageIndex.get()));
         } else {
