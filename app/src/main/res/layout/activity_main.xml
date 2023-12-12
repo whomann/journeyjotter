@@ -14,17 +14,19 @@
         android:background="@color/white"
         tools:context=".HotelActivity">
 
-
         <Spinner
             android:id="@+id/sortSpinner"
-            android:layout_width="230dp"
+            android:layout_width="0dp"
+            app:layout_constraintHorizontal_bias="0.5"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/custom_spinner_background"
             app:layout_constraintStart_toEndOf="@+id/textView15"
             app:layout_constraintTop_toTopOf="parent"
             android:spinnerMode="dropdown"
             android:elevation="2dp"
+            app:layout_constraintEnd_toStartOf="@id/searchButton"
             android:popupBackground="@color/accent_color"
             android:dropDownWidth="match_parent"
             android:dropDownVerticalOffset="30dp"
@@ -44,8 +46,8 @@
             android:background="@color/transparent_color"
             android:src="@drawable/search_button"
             android:text="Search"
-            app:layout_constraintHorizontal_bias="0.08"
-            app:layout_constraintStart_toEndOf="@+id/sortSpinner"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/filterButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
@@ -73,7 +75,8 @@
             android:onClick="showFiltersPopup"
             android:src="@drawable/more_button"
             android:text="Filters"
-            app:layout_constraintStart_toEndOf="@+id/searchButton"
+            android:layout_marginEnd="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <HorizontalScrollView
@@ -98,6 +101,7 @@
                 <Button
                     android:id="@+id/hostelTypeButton"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
@@ -110,6 +114,7 @@
                     android:id="@+id/hotelTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginStart="4dp"
                     android:backgroundTint="@color/white"
                     android:text="отель"
@@ -121,6 +126,7 @@
                     android:id="@+id/apartmentTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginStart="4dp"
                     android:backgroundTint="@color/white"
                     android:text="апартаменты"
@@ -133,6 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:backgroundTint="@color/white"
                     android:text="апарт-отель"
                     android:textColor="@color/accent_color"
@@ -144,6 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:backgroundTint="@color/white"
                     android:text="гостевой дом"
                     android:textColor="@color/accent_color"
@@ -153,6 +161,7 @@
                 <Button
                     android:id="@+id/lodgeTypeButton"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:backgroundTint="@color/white"
@@ -165,6 +174,7 @@
                     android:id="@+id/villaTypeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginStart="4dp"
                     android:backgroundTint="@color/white"
                     android:text="вилла"
@@ -178,6 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:backgroundTint="@color/white"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="мотель"
                     android:textColor="@color/accent_color"
                     android:textSize="10sp"
@@ -188,6 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/accent_color"
                     android:text="ферма"
@@ -200,7 +212,8 @@
             android:id="@+id/recyclerView"
             android:layout_marginTop="10dp"
             android:elevation="2dp"
-            android:layout_width="365dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -211,6 +224,7 @@
             android:id="@+id/nextPageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_marginStart="147dp"
             android:layout_marginEnd="147dp"
             android:layout_marginBottom="16dp"
@@ -224,11 +238,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewMap"
-            android:layout_width="373dp"
+            android:layout_width="match_parent"
             android:layout_height="143dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="8dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -261,7 +274,7 @@
             android:layout_marginTop="10dp"
             android:elevation="2dp"
             android:src="@drawable/sort"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -286,7 +299,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:paddingLeft="20dp"
-        android:background="#614961"
+        android:background="#5C4C5C"
         android:elevation="10dp">
 
         <androidx.core.widget.NestedScrollView
@@ -305,13 +318,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Подборка отелей"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginTop="20dp"
                     android:paddingVertical="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:paddingStart="16dp"
                     android:paddingTop="16dp"
-                    android:textColor="@color/main_color"
+                    android:textColor="@color/white"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
                 <Spinner
@@ -328,8 +342,9 @@
                     android:id="@+id/priceTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/main_color"
+                    android:textColor="@color/white"
                     android:text="Стоимость отеля\nза все время"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginTop="10dp"
                     android:paddingVertical="10dp"
                     android:textSize="20sp"
@@ -344,20 +359,22 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:valueFrom="1"
+                    android:fontFamily="@font/montserrat_bold"
                     android:valueTo="1000000"
                     android:paddingStart="16dp"
                     android:paddingRight="16dp"
                     android:layout_marginTop="15dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:thumbColor="@color/main_color"
+                    app:thumbColor="@color/white"
                     app:trackColorActive="@color/main_color"/>
                 <TextView
                     android:id="@+id/hotelsTitle"
-                    android:textColor="@color/main_color"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Отель"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_marginTop="10dp"
                     android:paddingVertical="10dp"
                     android:textSize="25sp"
@@ -369,16 +386,22 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/CheckIn24hr"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/hotelsTitle"
             app:layout_constraintStart_toStartOf="@+id/hotelsTitle"
             android:text="Круглосуточная регистрация" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterRestaurant"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/CheckIn24hr"
             app:layout_constraintStart_toStartOf="@+id/CheckIn24hr"
             android:text="Ресторан" />
@@ -387,6 +410,9 @@
             android:id="@+id/filterPublicWiFi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterRestaurant"
             app:layout_constraintStart_toStartOf="@+id/filterRestaurant"
             android:text="Wi-Fi в общественных областях" />
@@ -394,6 +420,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterPrivateBeach"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterPublicWiFi"
             app:layout_constraintStart_toStartOf="@+id/filterPublicWiFi"
@@ -401,7 +430,10 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterSmokingZones"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterPrivateBeach"
             app:layout_constraintStart_toStartOf="@+id/filterPrivateBeach"
@@ -409,7 +441,10 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterDisabled"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterSmokingZones"
             app:layout_constraintStart_toStartOf="@+id/filterSmokingZones"
@@ -418,6 +453,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterBar"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterDisabled"
             app:layout_constraintStart_toStartOf="@+id/filterDisabled"
@@ -426,7 +464,10 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterParking"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterBar"
             app:layout_constraintStart_toStartOf="@+id/filterBar"
             android:text="Автомобильная стоянка" />
@@ -434,6 +475,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterPetsAllowed"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterParking"
             app:layout_constraintStart_toStartOf="@+id/filterParking"
@@ -441,20 +485,24 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterRussian"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterPetsAllowed"
             app:layout_constraintStart_toStartOf="@+id/filterPetsAllowed"
             android:text="Русский язык" />
 
         <TextView
             android:id="@+id/roomsTitle"
-            android:textColor="@color/main_color"
+            android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:paddingVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Номер"
+            android:fontFamily="@font/montserrat_bold"
             android:textSize="25sp"
             android:textStyle="bold"
             android:paddingStart="16dp"
@@ -465,7 +513,10 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterFan"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:text="Фен"
             app:layout_constraintTop_toBottomOf="@+id/roomsTitle"
             app:layout_constraintStart_toStartOf="@+id/roomsTitle" />
@@ -473,6 +524,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterAirConditioner"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterFan"
             app:layout_constraintStart_toStartOf="@+id/filterFan"
@@ -480,7 +534,10 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterSafe"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterAirConditioner"
             app:layout_constraintStart_toStartOf="@+id/filterAirConditioner"
@@ -489,6 +546,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterTV"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterSafe"
             app:layout_constraintStart_toStartOf="@+id/filterSafe"
@@ -497,6 +557,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterBath"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterTV"
             app:layout_constraintStart_toStartOf="@+id/filterTV"
@@ -505,14 +568,20 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterShower"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterBath"
             app:layout_constraintStart_toStartOf="@+id/filterBath"
             android:text="Душ" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterCleaning"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterShower"
             app:layout_constraintStart_toStartOf="@+id/filterShower"
@@ -521,13 +590,19 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterDailyCleaning"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterCleaning"
             app:layout_constraintStart_toStartOf="@+id/filterCleaning"
             android:text="Ежедневная уборка" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterMiniBar"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterDailyCleaning"
@@ -536,7 +611,10 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterToiletInRoom"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterMiniBar"
             app:layout_constraintStart_toStartOf="@+id/filterMiniBar"
@@ -545,6 +623,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterCoffee"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterToiletInRoom"
             app:layout_constraintStart_toStartOf="@+id/filterToiletInRoom"
@@ -553,6 +634,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterSlippers"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterCoffee"
             app:layout_constraintStart_toStartOf="@+id/filterCoffee"
@@ -561,14 +645,20 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterSplitRoom"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterSlippers"
             app:layout_constraintStart_toStartOf="@+id/filterSlippers"
             android:text="Смежные номера" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterSharedBathroom"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterSplitRoom"
             app:layout_constraintStart_toStartOf="@+id/filterSplitRoom"
@@ -577,11 +667,12 @@
         <TextView
             android:id="@+id/servicesTitle"
             android:layout_marginTop="10dp"
-            android:textColor="@color/main_color"
+            android:textColor="@color/white"
             android:paddingVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Услуги"
+            android:fontFamily="@font/montserrat_bold"
             android:textSize="25sp"
             android:textStyle="bold"
             android:paddingStart="16dp"
@@ -591,8 +682,11 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterBusinessCenter"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/white"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/servicesTitle"
             app:layout_constraintStart_toStartOf="@+id/servicesTitle"
             android:text="Бизнес центр" />
@@ -600,6 +694,9 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterConcierge"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterBusinessCenter"
             app:layout_constraintStart_toStartOf="@+id/filterBusinessCenter"
@@ -609,19 +706,24 @@
             android:id="@+id/filterLaundry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterConcierge"
             app:layout_constraintStart_toStartOf="@+id/filterConcierge"
             android:text="Прачечная" />
 
         <TextView
             android:id="@+id/entertainmentTitle"
-            android:textColor="@color/main_color"
+            android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:paddingVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Развлечения"
+            android:fontFamily="@font/montserrat_bold"
             android:textSize="25sp"
+            android:buttonTint="@color/white"
             android:textStyle="bold"
             android:paddingStart="16dp"
             android:paddingTop="16dp"
@@ -631,7 +733,10 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterSpa"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/entertainmentTitle"
             app:layout_constraintStart_toStartOf="@+id/entertainmentTitle"
             android:text="Спа" />
@@ -640,13 +745,19 @@
             android:id="@+id/filterFitness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintTop_toBottomOf="@+id/filterSpa"
             app:layout_constraintStart_toStartOf="@+id/filterSpa"
             android:text="Фитнес  зал" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/filterPool"
+            android:buttonTint="@color/white"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/filterFitness"
             app:layout_constraintStart_toStartOf="@+id/filterFitness"

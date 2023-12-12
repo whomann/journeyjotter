@@ -70,7 +70,7 @@ public class TicketActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
-        getWindow().setStatusBarColor(Color.parseColor("#6f4d6e"));
+        getWindow().setStatusBarColor(Color.parseColor("#8b648c"));
         recyclerView=findViewById(R.id.recyclerViewGuides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
@@ -86,6 +86,7 @@ public class TicketActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.INVISIBLE);
         findViewById(R.id.searchButtonTicket).setOnClickListener(v->{
+            ticketsList.clear();
             imageView15.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.VISIBLE);
             TicketActivity.TicketAdapter ticketAdapter = new TicketActivity.TicketAdapter(new ArrayList<>());
@@ -225,13 +226,12 @@ public class TicketActivity extends AppCompatActivity {
         }
 
         private ArrayList<ArrayList<Object>> parseFlightData(String jsonResponse) {
+            CheckBox noTransfersCheckBox=findViewById(R.id.noTransfersCheckBox);
             try {
                 JSONObject jsonObject = new JSONObject(jsonResponse);
                 JSONArray dataArray = jsonObject.getJSONArray("data");
-
                 for (int i = 0; i < dataArray.length(); i++) {
                     JSONObject flight = dataArray.getJSONObject(i);
-
                     int transfers =  flight.getInt("transfers");
                     int returnTransfers =  flight.getInt("return_transfers");
                     if (noTransfersCheckBox.isChecked() && (transfers > 0 || returnTransfers > 0)) {

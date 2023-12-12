@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constLayout"
-    android:layout_width="332dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     android:layout_marginBottom="10dp"
     android:backgroundTint="@color/white"
     app:cardCornerRadius="30dp"
@@ -17,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@drawable/train_ticket_gradient_background">
 
         <ImageView
             android:id="@+id/eventIcon"
@@ -50,13 +51,14 @@
 
         <TextView
             android:id="@+id/eventTextView"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_marginEnd="22dp"
             android:text="All-Russian Fair of Gifts, Souvenirs, Products for the New Year Holiday"
             android:textColor="@color/accent_color"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -65,29 +67,37 @@
 
         <TextView
             android:id="@+id/eventAddressTextView"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_marginTop="2dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="21dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textSize="13sp"
             android:text="Volgograd Exhibition Centre, Volgograd, Volgograd Oblast 400078, Russian Federation"
             android:textColor="@color/TextColor"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventTextView"
             app:layout_constraintStart_toEndOf="@+id/eventIcon" />
 
         <TextView
             android:id="@+id/eventStart"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
+            android:layout_marginEnd="21dp"
             android:layout_marginTop="2dp"
+            android:fontFamily="@font/montserrat_regular"
             android:text="Начало: 18 декабря, 13:00"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/eventIcon"
             app:layout_constraintTop_toBottomOf="@+id/eventAddressTextView" />
 
         <ImageButton
             android:id="@+id/addEvent"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_width="40dp"
             android:layout_height="34dp"
             android:layout_marginStart="16dp"

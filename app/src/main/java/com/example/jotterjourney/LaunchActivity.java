@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.icu.util.Calendar;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,8 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,14 +60,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LaunchActivity extends AppCompatActivity {
-    private String photoTargetIata; ImageButton showImageButton; private String yandexTaxiApiKey, yandexClid; private int selectedTripId; RecyclerView recyclerViewEventsLaunch; TextView visaTextView; private String countryCode; RecyclerView recyclerViewLaunchGuides,recyclerViewLaunchLandmarks; private String hotelLink; ImageButton clearDataButton; Button guideButton, landmarksButton; RadioButton planeRadioButton,trainRadioButton; RadioGroup transportationRadioGroup; String transport; ImageButton hotelLinkButton,taxiLinkButton; String hotelInfo, yandexTaxiURL; TextView transferInfoTextView; String targetLocation, locationNameForTaxi, targetIATA, originIATA; Button orderTransfer; Button chooseTicketButton; EditText adultCountEditText; AutoCompleteTextView departureLocationSelect, targetLocationSelect; TextView departureDateTextView; TextView returnDateTextView; private int returnYear; private int returnMonth; private int returnDay; private String returnDate, departureDate; private SQLiteDatabase db; private int adultsCount; private String hotelLat, hotelLon;
+    private Map<String, String> cityToCountryCodeMap;private String photoTargetIata,englishTargetName; ImageButton showImageButton; private String yandexTaxiApiKey, yandexClid; private int selectedTripId; RecyclerView recyclerViewEventsLaunch; TextView visaTextView; private String countryCode; RecyclerView recyclerViewLaunchGuides,recyclerViewLaunchLandmarks; private String hotelLink; ImageButton clearDataButton; Button guideButton, landmarksButton; RadioButton planeRadioButton,trainRadioButton; RadioGroup transportationRadioGroup; String transport; ImageButton hotelLinkButton,taxiLinkButton; String hotelInfo, yandexTaxiURL; TextView transferInfoTextView; String targetLocation, locationNameForTaxi, targetIATA, originIATA; Button orderTransfer; Button chooseTicketButton; EditText adultCountEditText; AutoCompleteTextView departureLocationSelect, targetLocationSelect; TextView departureDateTextView; TextView returnDateTextView; private int returnYear; private int returnMonth; private int returnDay; private String returnDate, departureDate; private SQLiteDatabase db; private int adultsCount; private String hotelLat, hotelLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,7 +270,10 @@ public class LaunchActivity extends AppCompatActivity {
     private void showTripSelectionPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         SpannableString spannableTitle = new SpannableString("Выберите план путешествия");
+        TypefaceSpan typefaceSpan = new TypefaceSpan("montserrat_bold");
         spannableTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.accent_color)), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableTitle.setSpan(new StyleSpan(Typeface.BOLD), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableTitle.setSpan(typefaceSpan, 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setTitle(spannableTitle);
         Cursor cursor = db.rawQuery("SELECT userID FROM jjtrips1", null);
         List<Integer> tripIds = new ArrayList<>();
@@ -287,7 +295,8 @@ public class LaunchActivity extends AppCompatActivity {
         });
         SpannableString createNewPlan = new SpannableString("Создать новый план");
         int color = ContextCompat.getColor(this, R.color.accent_color);
-        createNewPlan.setSpan(new ForegroundColorSpan(color), 0, createNewPlan.length(), 0);
+        createNewPlan.setSpan(new StyleSpan(Typeface.BOLD), 0, createNewPlan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        createNewPlan.setSpan(new ForegroundColorSpan(color), 0, createNewPlan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setPositiveButton(createNewPlan, (dialog, which) -> {
             selectedTripId = generateNewTripId();
             insertDataIntoSQLite(selectedTripId);
@@ -318,29 +327,30 @@ public class LaunchActivity extends AppCompatActivity {
             visaTextView.setText("Виза: не нужна");
         }
     }
-    private String getCountryCode(String selectedCity){
-        JSONArray citiesArray = null;
+    private void initializeCityMap() {
+        cityToCountryCodeMap = new HashMap<>();
         try {
-            citiesArray = loadCodeJSONFromAsset(LaunchActivity.this, "cities.json");
-        } catch (IOException e) {
-            Log.d("error", String.valueOf(e));
-        } catch (JSONException e) {
-            Log.d("error parsing json", String.valueOf(e));
-        }
-        try {
+            JSONArray citiesArray = loadCodeJSONFromAsset(LaunchActivity.this, "cities.json");
             for (int i = 0; i < citiesArray.length(); i++) {
                 JSONObject city = citiesArray.getJSONObject(i);
                 String cityName = city.getString("name");
-                if (selectedCity.equals(cityName)) {
-                    countryCode = city.getString("country_code");
-                    Log.d("Selected Country Code", countryCode);
-                    break;
-                }
+                String countryCode = city.getString("country_code");
+                Log.d("City and Country Code", cityName + ": " + countryCode);
+                cityToCountryCodeMap.put(cityName, countryCode);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (IOException | JSONException e) {
+            Log.d("Error", String.valueOf(e));
         }
-        return countryCode;
+    }
+
+    private String getCountryCode(String selectedCity) {
+        if (cityToCountryCodeMap == null) {
+            initializeCityMap();
+        }
+        if (selectedCity == null || selectedCity.isEmpty()) {
+            return "";
+        }
+        return cityToCountryCodeMap.getOrDefault(selectedCity.trim(), "");
     }
     private JSONArray loadCodeJSONFromAsset(Context context, String fileName) throws IOException, JSONException {
         InputStream inputStream = context.getAssets().open(fileName);
@@ -425,7 +435,7 @@ public class LaunchActivity extends AppCompatActivity {
         departureLocationSelect.clearFocus();
         targetLocationSelect.clearFocus();
         String selectedCity = targetLocationSelect.getText().toString();
-        getCountryCode(selectedCity);
+        countryCode=getCountryCode(selectedCity);
         readAndLogDataFromSQLite(selectedTripId);
     }
     private LatLng getCoordinates(String address) {
@@ -562,7 +572,7 @@ public class LaunchActivity extends AppCompatActivity {
                         }
                         else{
                             ImageView ticketBackgroundImageView=findViewById(R.id.ticketBackgroundImageView);
-                            ticketBackgroundImageView.setImageResource(R.drawable.plane_background);
+                            ticketBackgroundImageView.setImageResource(R.drawable.plane_background1);
                             TextView departureLine=findViewById(R.id.departureLine);
                             TextView departureDateLine=findViewById(R.id.departureDateLine);
                             TextView returnLine=findViewById(R.id.returnLine);
@@ -747,7 +757,7 @@ public class LaunchActivity extends AppCompatActivity {
         TextView departureDateLine = findViewById(R.id.departureDateLine);
         TextView returnDateLine=findViewById(R.id.returnDateLine);
         ImageView ticketBackgroundImageView=findViewById(R.id.ticketBackgroundImageView);
-        ticketBackgroundImageView.setImageResource(R.drawable.train_background);
+        ticketBackgroundImageView.setImageResource(R.drawable.train_background1);
 
         if (matcher.matches()) {
             originTrainName = matcher.group(1);
@@ -774,7 +784,7 @@ public class LaunchActivity extends AppCompatActivity {
         TextView departureDateLine = findViewById(R.id.departureDateLine);
         TextView returnDateLine=findViewById(R.id.returnDateLine);
         ImageView ticketBackgroundImageView=findViewById(R.id.ticketBackgroundImageView);
-        ticketBackgroundImageView.setImageResource(R.drawable.plane_background);
+        ticketBackgroundImageView.setImageResource(R.drawable.plane_background1);
         Pattern pattern = Pattern.compile("^(.*?) <-> (.*?) \\((.*?)\\)\\.\nВылет туда: (.*?),\nВылет обратно: (.*?)$");
         Matcher matcher = pattern.matcher(ticketInfo);
         if (matcher.matches()) {
@@ -910,6 +920,7 @@ public class LaunchActivity extends AppCompatActivity {
         if(!targetLocationSelect.getText().toString().equals("")&&adultsCount!=0) {
             Intent intent = new Intent(this, LandmarksActivity.class);
             intent.putExtra("selectedTripId", selectedTripId);
+            intent.putExtra("englishTargetName",englishTargetName);
             startActivity(intent);
         }
         else{
@@ -942,7 +953,8 @@ public class LaunchActivity extends AppCompatActivity {
                 startActivity(intent);
             } else {
                 String selectedCity = targetLocationSelect.getText().toString();
-                getCountryCode(selectedCity);
+                countryCode=getCountryCode(selectedCity);
+                Log.d("selectedCity",selectedCity);
                 Log.d("country code", countryCode);
                 if (Objects.equals(countryCode, "RU") || Objects.equals(countryCode, "KZ") || Objects.equals(countryCode, "AZ") || Objects.equals(countryCode, "AM") || Objects.equals(countryCode, "BY") || Objects.equals(countryCode, "KG") || Objects.equals(countryCode, "TM") || Objects.equals(countryCode, "UZ") || Objects.equals(countryCode, "TJ")) {
                     Intent intent = new Intent(this, TrainTicketActivity.class);
@@ -1092,6 +1104,7 @@ public class LaunchActivity extends AppCompatActivity {
                     Log.d("Location response",response);
                     JSONObject destination = jsonResponse.getJSONObject("destination");
                     photoTargetIata= destination.getString("iata").trim();
+                    englishTargetName= destination.getString("name").trim();
                     Log.d("Iata Code", "Target Iata: " + photoTargetIata);
                     String imageUrl = "https://photo.hotellook.com/static/cities/960x720/"+photoTargetIata.toUpperCase()+".jpg";
                     Log.d("imageUrl", imageUrl);

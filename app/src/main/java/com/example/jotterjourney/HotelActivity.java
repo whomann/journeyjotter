@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -110,6 +111,7 @@ public class HotelActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         addPropertyTranslations();
+        getWindow().setStatusBarColor(Color.parseColor("#c2d5ff"));
         RecyclerView recyclerView = binding.recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -245,10 +247,6 @@ public class HotelActivity extends AppCompatActivity {
         });
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this::onMapReady);
-
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getResources().getColor(R.color.white));
 
         findViewById(R.id.searchButton).setOnClickListener(v -> {
             imageView7.setImageResource(R.drawable.bginprogress);
@@ -524,7 +522,7 @@ public class HotelActivity extends AppCompatActivity {
                     }
                 },
                 error -> {
-                    Toast.makeText(HotelActivity.this, "Failed to fetch types", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HotelActivity.this, "Ошибка соединения.", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Error: " + error.toString());
                 }
         );
@@ -585,6 +583,7 @@ public class HotelActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             Log.e(TAG, "Error parsing JSON", e);
+                            Toast.makeText(HotelActivity.this, "Ошибка соединения", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -610,22 +609,30 @@ public class HotelActivity extends AppCompatActivity {
                 int startIndex = currentPage;
                 int endIndex = currentPage + 50;
                 int arraySize=arrayList.size();
-                nextPageData = new ArrayList<>(arrayList.subList(startIndex, Math.min(endIndex, arraySize)));
-                nextPageData = filterHotelsWithEmptyPhotos(nextPageData);
-                Log.d("start index", String.valueOf(startIndex));
-                Log.d("end index", String.valueOf(endIndex));
-                Log.d("next page data", String.valueOf(nextPageData));
-                Log.d("next page data len", String.valueOf(nextPageData.size()));
-                currentPage += 50;
-                if((arraySize-endIndex)<50){
-                    nextPageButton.setVisibility(View.GONE);
+                if(arraySize!=0) {
+                    nextPageData = new ArrayList<>(arrayList.subList(startIndex, Math.min(endIndex, arraySize)));
+                    nextPageData = filterHotelsWithEmptyPhotos(nextPageData);
+                    Log.d("start index", String.valueOf(startIndex));
+                    Log.d("end index", String.valueOf(endIndex));
+                    Log.d("next page data", String.valueOf(nextPageData));
+                    Log.d("next page data len", String.valueOf(nextPageData.size()));
+                    currentPage += 50;
+                    if ((arraySize - endIndex) < 50) {
+                        nextPageButton.setVisibility(View.GONE);
+                    }
+                    else{
+                        ProgressBar progressBar= findViewById(R.id.progressBar);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
             }
         }
-        showMapMarkers(nextPageData);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        HotelAdapter hotelAdapter = new HotelAdapter(nextPageData);
-        recyclerView.setAdapter(hotelAdapter);
+        if(!nextPageData.isEmpty()) {
+            showMapMarkers(nextPageData);
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+            HotelAdapter hotelAdapter = new HotelAdapter(nextPageData);
+            recyclerView.setAdapter(hotelAdapter);
+        }
     }
 
     private ArrayList<ArrayList<Object>> filterHotelsWithEmptyPhotos(ArrayList<ArrayList<Object>> hotelDataList) {
@@ -924,10 +931,17 @@ public class HotelActivity extends AppCompatActivity {
                                     noTypeHotelsList = sortHotels(noTypeHotelsList, sorting);
                                     Log.d("SortedData NO Type:", String.valueOf(noTypeHotelsList));
                                     Log.d("SortedData NO Type len:", String.valueOf(noTypeHotelsList.size()));
-                                    loadNextPage(noTypeHotelsList, true);
-                                    ProgressBar progressBar = findViewById(R.id.progressBar);
-                                    progressBar.setVisibility(View.GONE);
-                                    retriesCount=0;
+                                    if(noTypeHotelsList.isEmpty()){
+                                        ProgressBar progressBar = findViewById(R.id.progressBar);
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(context, "Отели не найдены.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        loadNextPage(noTypeHotelsList, true);
+                                        ProgressBar progressBar = findViewById(R.id.progressBar);
+                                        progressBar.setVisibility(View.GONE);
+                                        retriesCount = 0;
+                                    }
                                 } else {
                                     jsonReader.skipValue();
                                 }
@@ -948,7 +962,7 @@ public class HotelActivity extends AppCompatActivity {
                     new FetchNoTypesTask().execute(String.valueOf(locationId), type, departureDate, returnDate);
                 }
                 else{
-                    Toast.makeText(context, "Ошибка сети, проверьте подключение и повторите попытку.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();
                 }
             }
             }
@@ -1254,16 +1268,20 @@ public class HotelActivity extends AppCompatActivity {
                                     Log.d("SortedData matching:", String.valueOf(finalHotelList));
                                     if(finalHotelList.isEmpty()){
                                         Toast.makeText(HotelActivity.this, "По таким критериям отели не найдены.", Toast.LENGTH_SHORT).show();
+                                        ProgressBar progressBar = findViewById(R.id.progressBar);
+                                        progressBar.setVisibility(View.GONE);
                                     }
-                                    showMapMarkers(finalHotelList);
-                                    Log.d("selectedEnglishPropertyTypes", String.valueOf(selectedEnglishPropertyTypes));
-                                    retriesCount=0;
-                                    RecyclerView recyclerView = findViewById(R.id.recyclerView);
-                                    HotelAdapter hotelAdapter = new HotelAdapter(finalHotelList);
-                                    recyclerView.setAdapter(hotelAdapter);
-                                    nothingHereImageView.setVisibility(View.GONE);
-                                    ProgressBar progressBar = findViewById(R.id.progressBar);
-                                    progressBar.setVisibility(View.GONE);
+                                    else {
+                                        showMapMarkers(finalHotelList);
+                                        Log.d("selectedEnglishPropertyTypes", String.valueOf(selectedEnglishPropertyTypes));
+                                        retriesCount = 0;
+                                        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                                        HotelAdapter hotelAdapter = new HotelAdapter(finalHotelList);
+                                        recyclerView.setAdapter(hotelAdapter);
+                                        nothingHereImageView.setVisibility(View.GONE);
+                                        ProgressBar progressBar = findViewById(R.id.progressBar);
+                                        progressBar.setVisibility(View.GONE);
+                                    }
                                 } else {
                                     jsonReader.skipValue();
                                 }
@@ -1493,7 +1511,7 @@ public class HotelActivity extends AppCompatActivity {
                         String typeId = item.getString("id");
                         if(propertyType.equals(typeId)){
                             propertyType = item.getString("name");
-                            holder.hotelTypeTextView.setText(propertyType.toLowerCase()+"  "+starsSymbol.repeat(stars));
+                            holder.hotelTypeTextView.setText(propertyType.toLowerCase());
                         }
                     }
                 } catch (JSONException e) {
@@ -1504,9 +1522,9 @@ public class HotelActivity extends AppCompatActivity {
             else{
                 String translatedPropertyType = propertyTranslations.get(propertyType);
                 if (translatedPropertyType != null) {
-                    holder.hotelTypeTextView.setText(translatedPropertyType+"  "+starsSymbol.repeat(stars));
+                    holder.hotelTypeTextView.setText(translatedPropertyType);
                 } else {
-                    holder.hotelTypeTextView.setText("другое  "+starsSymbol.repeat(stars));
+                    holder.hotelTypeTextView.setText("другое");
                 }
                 nextPageButton.setVisibility(View.GONE);
             }

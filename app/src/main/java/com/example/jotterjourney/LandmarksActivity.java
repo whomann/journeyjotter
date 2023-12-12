@@ -3,6 +3,7 @@ package com.example.jotterjourney;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,11 +26,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,12 +55,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
 public class LandmarksActivity extends AppCompatActivity {
-    private String googleMapsApiKey; private int selectedTripId; private String targetLocation; private SQLiteDatabase db; ProgressBar progressBarLandmarks;private GoogleMap mMap; ViewPager2 viewPager; private String nextPageToken=""; RecyclerView recyclerView; ArrayList<ArrayList<Object>> landmarksList=new ArrayList<>(); private MapView mMapView;
+    ImageView landmarkLoading, loadingLandmarkGif; HashMap<String, String> tagTranslations = new HashMap<>(); private String googleMapsApiKey,englishTargetName; private int selectedTripId; private String targetLocation; private SQLiteDatabase db; ProgressBar progressBarLandmarks;private GoogleMap mMap; ViewPager2 viewPager;  RecyclerView recyclerView; ArrayList<ArrayList<Object>> landmarksList=new ArrayList<>(); private MapView mMapView;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -74,7 +81,18 @@ public class LandmarksActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        landmarkLoading=findViewById(R.id.landmarkLoading);
+        loadingLandmarkGif=findViewById(R.id.loadingLandmarkGif);
+        loadingLandmarkGif.setVisibility(View.VISIBLE);
+        landmarkLoading.setVisibility(View.VISIBLE);
+        Glide.with(this).load(R.drawable.landmark_loading).into(loadingLandmarkGif);
+        addTagsTranslations();
+        ImageButton landmarksBack=findViewById(R.id.landmarksBack);
+        landmarksBack.setOnClickListener(v->{
+            onBackPressed();
+        });
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
+        englishTargetName=getIntent().getStringExtra("englishTargetName");
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         recyclerView = findViewById(R.id.recyclerViewLandmarks);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -86,6 +104,150 @@ public class LandmarksActivity extends AppCompatActivity {
         progressBarLandmarks.setVisibility(View.VISIBLE);
         readAndLogDataFromSQLite(selectedTripId);
     }
+
+    private void addTagsTranslations() {
+        tagTranslations.put("accounting", "бухгалтерия");
+        tagTranslations.put("airport", "аэропорт");
+        tagTranslations.put("amusement_park", "парк развлечений");
+        tagTranslations.put("aquarium", "аквариум");
+        tagTranslations.put("art_gallery", "художественная галерея");
+        tagTranslations.put("atm", "банкомат");
+        tagTranslations.put("bakery", "пекарня");
+        tagTranslations.put("bank", "банк");
+        tagTranslations.put("bar", "бар");
+        tagTranslations.put("beauty_salon", "салон красоты");
+        tagTranslations.put("bicycle_store", "магазин велосипедов");
+        tagTranslations.put("book_store", "книжный магазин");
+        tagTranslations.put("bowling_alley", "боулинг");
+        tagTranslations.put("bus_station", "автобусная станция");
+        tagTranslations.put("cafe", "кафе");
+        tagTranslations.put("campground", "кемпинг");
+        tagTranslations.put("car_dealer", "автосалон");
+        tagTranslations.put("car_rental", "прокат автомобилей");
+        tagTranslations.put("car_repair", "авторемонт");
+        tagTranslations.put("car_wash", "автомойка");
+        tagTranslations.put("casino", "казино");
+        tagTranslations.put("cemetery", "кладбище");
+        tagTranslations.put("church", "церковь");
+        tagTranslations.put("city_hall", "городская ратуша");
+        tagTranslations.put("clothing_store", "магазин одежды");
+        tagTranslations.put("convenience_store", "удобный магазин");
+        tagTranslations.put("courthouse", "суд");
+        tagTranslations.put("dentist", "стоматолог");
+        tagTranslations.put("department_store", "универмаг");
+        tagTranslations.put("doctor", "врач");
+        tagTranslations.put("drugstore", "аптека");
+        tagTranslations.put("electrician", "электрик");
+        tagTranslations.put("electronics_store", "магазин электроники");
+        tagTranslations.put("embassy", "посольство");
+        tagTranslations.put("fire_station", "пожарная станция");
+        tagTranslations.put("florist", "цветочный магазин");
+        tagTranslations.put("funeral_home", "похоронное бюро");
+        tagTranslations.put("furniture_store", "магазин мебели");
+        tagTranslations.put("gas_station", "заправка");
+        tagTranslations.put("gym", "тренажерный зал");
+        tagTranslations.put("hair_care", "парикмахерская");
+        tagTranslations.put("hardware_store", "хозяйственный магазин");
+        tagTranslations.put("hindu_temple", "храм индуизма");
+        tagTranslations.put("home_goods_store", "товары для дома");
+        tagTranslations.put("hospital", "больница");
+        tagTranslations.put("insurance_agency", "страховое агентство");
+        tagTranslations.put("jewelry_store", "ювелирный магазин");
+        tagTranslations.put("laundry", "прачечная");
+        tagTranslations.put("lawyer", "юрист");
+        tagTranslations.put("library", "библиотека");
+        tagTranslations.put("light_rail_station", "железнодорожный вокзал");
+        tagTranslations.put("liquor_store", "винный магазин");
+        tagTranslations.put("local_government_office", "офис местного правительства");
+        tagTranslations.put("locksmith", "слесарь");
+        tagTranslations.put("lodging", "жилье");
+        tagTranslations.put("meal_delivery", "доставка еды");
+        tagTranslations.put("meal_takeaway", "еда на вынос");
+        tagTranslations.put("mosque", "мечеть");
+        tagTranslations.put("movie_rental", "прокат фильмов");
+        tagTranslations.put("movie_theater", "кинотеатр");
+        tagTranslations.put("moving_company", "грузоперевозки");
+        tagTranslations.put("museum", "музей");
+        tagTranslations.put("night_club", "ночной клуб");
+        tagTranslations.put("painter", "художник");
+        tagTranslations.put("park", "парк");
+        tagTranslations.put("parking", "парковка");
+        tagTranslations.put("pet_store", "зоомагазин");
+        tagTranslations.put("pharmacy", "аптека");
+        tagTranslations.put("physiotherapist", "физиотерапевт");
+        tagTranslations.put("plumber", "сантехник");
+        tagTranslations.put("police", "полиция");
+        tagTranslations.put("post_office", "почта");
+        tagTranslations.put("primary_school", "начальная школа");
+        tagTranslations.put("real_estate_agency", "агентство недвижимости");
+        tagTranslations.put("restaurant", "ресторан");
+        tagTranslations.put("roofing_contractor", "кровельщик");
+        tagTranslations.put("rv_park", "автокемпинг");
+        tagTranslations.put("school", "школа");
+        tagTranslations.put("secondary_school", "средняя школа");
+        tagTranslations.put("shoe_store", "обувной магазин");
+        tagTranslations.put("shopping_mall", "торговый центр");
+        tagTranslations.put("spa", "спа");
+        tagTranslations.put("stadium", "стадион");
+        tagTranslations.put("storage", "хранение");
+        tagTranslations.put("store", "магазин");
+        tagTranslations.put("subway_station", "станция метро");
+        tagTranslations.put("supermarket", "супермаркет");
+        tagTranslations.put("synagogue", "синагога");
+        tagTranslations.put("taxi_stand", "остановка такси");
+        tagTranslations.put("tourist_attraction", "достопримечательность");
+        tagTranslations.put("train_station", "железнодорожная станция");
+        tagTranslations.put("transit_station", "транзитная станция");
+        tagTranslations.put("travel_agency", "турагентство");
+        tagTranslations.put("university", "университет");
+        tagTranslations.put("veterinary_care", "ветеринарная помощь");
+        tagTranslations.put("zoo", "заповедник");
+        tagTranslations.put("administrative_area_level_1", "административный уровень 1");
+        tagTranslations.put("administrative_area_level_2", "административный уровень 2");
+        tagTranslations.put("administrative_area_level_3", "административный уровень 3");
+        tagTranslations.put("administrative_area_level_4", "административный уровень 4");
+        tagTranslations.put("administrative_area_level_5", "административный уровень 5");
+        tagTranslations.put("administrative_area_level_6", "административный уровень 6");
+        tagTranslations.put("administrative_area_level_7", "административный уровень 7");
+        tagTranslations.put("archipelago", "архипелаг");
+        tagTranslations.put("colloquial_area", "разговорная зона");
+        tagTranslations.put("continent", "континент");
+        tagTranslations.put("country", "страна");
+        tagTranslations.put("establishment", "учреждение");
+        tagTranslations.put("finance", "финансы");
+        tagTranslations.put("floor", "этаж");
+        tagTranslations.put("food", "продукты");
+        tagTranslations.put("general_contractor", "генеральный подрядчик");
+        tagTranslations.put("geocode", "геокод");
+        tagTranslations.put("health", "здоровье");
+        tagTranslations.put("intersection", "пересечение");
+        tagTranslations.put("landmark", "ориентир");
+        tagTranslations.put("locality", "населенный пункт");
+        tagTranslations.put("natural_feature", "естественная среда");
+        tagTranslations.put("neighborhood", "район");
+        tagTranslations.put("place_of_worship", "место поклонения");
+        tagTranslations.put("plus_code", "плюс-код");
+        tagTranslations.put("point_of_interest", "точка интереса");
+        tagTranslations.put("political", "политика");
+        tagTranslations.put("post_box", "почтовый ящик");
+        tagTranslations.put("postal_code", "почтовый индекс");
+        tagTranslations.put("postal_code_prefix", "префикс почтового индекса");
+        tagTranslations.put("postal_code_suffix", "суффикс почтового индекса");
+        tagTranslations.put("postal_town", "почтовый город");
+        tagTranslations.put("premise", "помещение");
+        tagTranslations.put("room", "комната");
+        tagTranslations.put("route", "маршрут");
+        tagTranslations.put("street_address", "улица, дом");
+        tagTranslations.put("street_number", "номер дома");
+        tagTranslations.put("sublocality", "местность");
+        tagTranslations.put("sublocality_level_1", "местность, уровень 1");
+        tagTranslations.put("sublocality_level_2", "местность, уровень 2");
+        tagTranslations.put("sublocality_level_3", "местность, уровень 3");
+        tagTranslations.put("sublocality_level_4", "местность, уровень 4");
+        tagTranslations.put("sublocality_level_5", "местность, уровень 5");
+        tagTranslations.put("subpremise", "подпомещение");
+        tagTranslations.put("town_square", "городская площадь");
+    }
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
     }
@@ -93,6 +255,10 @@ public class LandmarksActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -115,11 +281,13 @@ public class LandmarksActivity extends AppCompatActivity {
                     @SuppressLint("Range") int userID = cursor.getInt(cursor.getColumnIndex("userID"));
                     targetLocation = cursor.getString(cursor.getColumnIndex("targetLocation"));
                     TextView landmarksLabel=findViewById(R.id.landmarksLabel);
-                    landmarksLabel.setText("Достопримечательности в городе "+targetLocation);
+                    landmarksLabel.setText(targetLocation);
                     Log.d("SQLite Data", "targetLocation " + targetLocation);
-                    String apiUrl="https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+"+targetLocation+"&key="+googleMapsApiKey+"&language=ru&fields=photos&pagetoken="+nextPageToken;
-                    Log.d("apiUrl",apiUrl);
-                    new PlaceDetailsAsyncTask(landmarksList).execute(apiUrl);
+                    String locationForApiUrl = (englishTargetName != null && !englishTargetName.isEmpty()) ? englishTargetName : targetLocation;
+                    String apiUrl="https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+"+locationForApiUrl+"&key="+googleMapsApiKey+"&language=ru&fields=photos&pagetoken=";
+                    Log.d("apiUrl 1",apiUrl);
+                    String nextPageToken="";
+                    new PlaceDetailsAsyncTask(landmarksList, nextPageToken,locationForApiUrl).execute(apiUrl);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -173,9 +341,13 @@ public class LandmarksActivity extends AppCompatActivity {
     public class PlaceDetailsAsyncTask extends AsyncTask<String, Void, Void> {
 
         private ArrayList<ArrayList<Object>> landmarksList;
+        private String nextPageToken;
+        private String locationForApiUrl;
 
-        public PlaceDetailsAsyncTask(ArrayList<ArrayList<Object>> landmarksList) {
+        public PlaceDetailsAsyncTask(ArrayList<ArrayList<Object>> landmarksList, String nextPageToken,String locationForApiUrl) {
             this.landmarksList = landmarksList;
+            this.nextPageToken = nextPageToken;
+            this.locationForApiUrl=locationForApiUrl;
         }
 
         @Override
@@ -190,6 +362,7 @@ public class LandmarksActivity extends AppCompatActivity {
                     Log.d("placeDetailsObject 1", String.valueOf(placeDetailsObject));
                     if (placeDetailsObject.has("next_page_token")) {
                         nextPageToken = placeDetailsObject.getString("next_page_token");
+                        Log.d("nextPageToken",nextPageToken);
                     }
                     if (placeDetailsObject.has("results")) {
                         JSONArray resultsArray = placeDetailsObject.getJSONArray("results");
@@ -197,7 +370,15 @@ public class LandmarksActivity extends AppCompatActivity {
                             JSONObject result = resultsArray.getJSONObject(i);
                             String name = result.optString("name", "");
                             String formattedAddress = result.optString("formatted_address", "");
-                            double rating = result.optDouble("rating", Double.NaN);
+                            int ratingCount = result.optInt("user_ratings_total", 0);
+
+                            ArrayList<String> typesList = new ArrayList<>();
+                            if (result.has("types")) {
+                                JSONArray typesArray = result.getJSONArray("types");
+                                for (int j = 0; j < typesArray.length(); j++) {
+                                    typesList.add(typesArray.getString(j));
+                                }
+                            }
 
                             String photoReference = null;
                             JSONArray photosArray = result.optJSONArray("photos");
@@ -219,9 +400,10 @@ public class LandmarksActivity extends AppCompatActivity {
                             placeDetails.add(name);
                             placeDetails.add(photoReference);
                             placeDetails.add(formattedAddress);
-                            placeDetails.add(rating);
+                            placeDetails.add(ratingCount);
                             placeDetails.add(latitude);
                             placeDetails.add(longitude);
+                            placeDetails.add(typesList);
                             landmarksList.add(placeDetails);
                         }
                     }
@@ -237,13 +419,13 @@ public class LandmarksActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            String apiUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+"+targetLocation+"&key="+googleMapsApiKey+"&language=ru&fields=photos&pagetoken=" + nextPageToken;
-            Log.d("apiUrl", apiUrl);
-            Log.d("landmarksList 1", String.valueOf(landmarksList));
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    new PlaceDetailsPageTwoAsyncTask(new ArrayList<>()).execute(apiUrl);
+                    String apiUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+"+locationForApiUrl+"&key="+googleMapsApiKey+"&language=ru&fields=photos&pagetoken=" + nextPageToken;
+                    Log.d("apiUrl2", apiUrl);
+                    Log.d("landmarksList 1", String.valueOf(landmarksList));
+                    new PlaceDetailsPageTwoAsyncTask(new ArrayList<>(),nextPageToken).execute(apiUrl);
                 }
             }, 3000);
         }
@@ -251,9 +433,11 @@ public class LandmarksActivity extends AppCompatActivity {
     public class PlaceDetailsPageTwoAsyncTask extends AsyncTask<String, Void, Void> {
 
         private ArrayList<ArrayList<Object>> landmarksListPageTwo;
+        String nextPageToken;
 
-        public PlaceDetailsPageTwoAsyncTask(ArrayList<ArrayList<Object>> landmarksListPageTwo) {
+        public PlaceDetailsPageTwoAsyncTask(ArrayList<ArrayList<Object>> landmarksListPageTwo, String nextPageToken) {
             this.landmarksListPageTwo = landmarksListPageTwo;
+            this.nextPageToken=nextPageToken;
         }
 
         @Override
@@ -272,7 +456,15 @@ public class LandmarksActivity extends AppCompatActivity {
                             JSONObject result = resultsArray.getJSONObject(i);
                             String name = result.optString("name", "");
                             String formattedAddress = result.optString("formatted_address", "");
-                            double rating = result.optDouble("rating", Double.NaN);
+                            int ratingCount = result.optInt("user_ratings_total", 0);
+
+                            ArrayList<String> typesList = new ArrayList<>();
+                            if (result.has("types")) {
+                                JSONArray typesArray = result.getJSONArray("types");
+                                for (int j = 0; j < typesArray.length(); j++) {
+                                    typesList.add(typesArray.getString(j));
+                                }
+                            }
 
                             String photoReference = null;
                             JSONArray photosArray = result.optJSONArray("photos");
@@ -294,9 +486,10 @@ public class LandmarksActivity extends AppCompatActivity {
                             placeDetailsPageTwo.add(name);
                             placeDetailsPageTwo.add(photoReference);
                             placeDetailsPageTwo.add(formattedAddress);
-                            placeDetailsPageTwo.add(rating);
+                            placeDetailsPageTwo.add(ratingCount);
                             placeDetailsPageTwo.add(latitude);
                             placeDetailsPageTwo.add(longitude);
+                            placeDetailsPageTwo.add(typesList);
                             landmarksListPageTwo.add(placeDetailsPageTwo);
                         }
 
@@ -310,24 +503,46 @@ public class LandmarksActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            Log.d("landmarks list 2", String.valueOf(landmarksListPageTwo));
-            landmarksList.addAll(landmarksListPageTwo);
+            if(!nextPageToken.equals("")) {
+                Log.d("landmarks list 2", String.valueOf(landmarksListPageTwo));
+                landmarksList.addAll(landmarksListPageTwo);
+            }
             Log.d("landmarksList result", String.valueOf(landmarksList));
             Log.d("landmarksList len", String.valueOf(landmarksList.size()));
             showMapMarkers(landmarksList);
             progressBarLandmarks.setVisibility(View.GONE);
-            LandmarkAdapter adapter = new LandmarkAdapter(landmarksList);
+            landmarkLoading.setVisibility(View.GONE);
+            loadingLandmarkGif.setVisibility(View.GONE);
+            landmarksList=sortAttractions(landmarksList);
+            Log.d("sortedlandmarksList", String.valueOf(landmarksList));
+            View mainLayout = findViewById(R.id.relativeLayout);
+            LandmarkAdapter adapter = new LandmarkAdapter(landmarksList,mainLayout);
             recyclerView.setAdapter(adapter);
             PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
             pagerSnapHelper.attachToRecyclerView(recyclerView);
         }
     }
+
+    private ArrayList<ArrayList<Object>> sortAttractions(ArrayList<ArrayList<Object>> attractions) {
+            Collections.sort(attractions, new Comparator<ArrayList<Object>>() {
+                @Override
+                public int compare(ArrayList<Object> attraction1, ArrayList<Object> attraction2) {
+                    int count1 = (int) attraction1.get(3);
+                    int count2 = (int) attraction2.get(3);
+                    return Integer.compare(count2, count1);
+                }
+            });
+        return attractions;
+    }
+
     public class LandmarkAdapter extends RecyclerView.Adapter<LandmarksActivity.LandmarkAdapter.LandmarksViewHolder> {
 
         private List<ArrayList<Object>> landmarksDataList;
+        private View mainLayout;
 
-        public LandmarkAdapter(List<ArrayList<Object>> landmarksDataList) {
+        public LandmarkAdapter(List<ArrayList<Object>> landmarksDataList, View mainLayout) {
             this.landmarksDataList = landmarksDataList;
+            this.mainLayout = mainLayout;
         }
 
         public void clearData() {
@@ -355,13 +570,53 @@ public class LandmarksActivity extends AppCompatActivity {
             ArrayList<Object> landmarkData = landmarksDataList.get(position);
             String title = landmarkData.get(0).toString();
             String address = landmarkData.get(2).toString();
-            String mainPhotoUrl = landmarkData.get(1) != null ? landmarkData.get(1).toString() : "file:///android_asset/placeholder.png";
-            if (!mainPhotoUrl.equals("file:///android_asset/placeholder.png")) {
-                int targetWidth = 850;
+            String placeholderPath="android.resource://" + holder.itemView.getContext().getPackageName() + "/drawable/placeholder";
+            String mainPhotoUrl = landmarkData.get(1) != null ? landmarkData.get(1).toString() : placeholderPath;
+            ArrayList<String> tagsList = (ArrayList<String>) landmarkData.get(6);
+            Log.d("tagsList", String.valueOf(tagsList));
+
+            int maxCardsToShow = 5;
+            for (int i = 1; i <= maxCardsToShow; i++) {
+                int cardId = getResources().getIdentifier("landmarkTag" + i, "id", getPackageName());
+                CardView cardView = mainLayout.findViewById(cardId);
+                if (i <= tagsList.size()) {
+                    cardView.setVisibility(View.VISIBLE);
+                    int textViewId = getResources().getIdentifier("attractionIcon" + i + "TV", "id", getPackageName());
+                    int imageViewId=getResources().getIdentifier("attractionIcon" + i, "id", getPackageName());
+                    TextView textView = cardView.findViewById(textViewId);
+                    ImageView imageView = cardView.findViewById(imageViewId);
+                    String tag = tagsList.get(i - 1);
+                    if (tagTranslations.containsKey(tag)) {
+                        textView.setText(tagTranslations.get(tag));
+                        int drawableResourceId = getResources().getIdentifier(tag.toLowerCase(), "drawable", getPackageName());
+                        if (drawableResourceId != 0) {
+                            imageView.setImageResource(drawableResourceId);
+                        }
+                        else if(tag.equals("administrative_area_level_1") || tag.equals("administrative_area_level_2")||tag.equals("administrative_area_level_3")||tag.equals("administrative_area_level_4")||tag.equals("administrative_area_level_5")||tag.equals("administrative_area_level_6")||tag.equals("administrative_area_level_7")){
+                                imageView.setImageResource(R.drawable.administrative_area_level);
+                        }
+                        else if(tag.equals("sublocality_level_1")||tag.equals("sublocality_level_2")||tag.equals("sublocality_level_3")||tag.equals("sublocality_level_4")||tag.equals("sublocality_level_5")){
+                            imageView.setImageResource(R.drawable.sublocality_level);
+                        }
+                        else {
+                            imageView.setImageResource(R.drawable.establishment);
+                        }
+                    } else {
+                        textView.setText(tag);
+                    }
+                } else {
+                    cardView.setVisibility(View.GONE);
+                }
+            }
+
+            if (!mainPhotoUrl.equals(placeholderPath)) {
+                int targetWidth = 750;
                 setImageViewAspectRatio(holder.landmarkImageView, targetWidth);
                 updateImage(holder.landmarkImageView, mainPhotoUrl);
             } else {
-                holder.landmarkImageView.setImageResource(R.drawable.placeholder);
+                int targetWidth = 750;
+                setImageViewAspectRatio(holder.landmarkImageView, targetWidth);
+                updateImage(holder.landmarkImageView, placeholderPath);
             }
 
             holder.landmarkTitle.setText(title);
@@ -387,6 +642,7 @@ public class LandmarksActivity extends AppCompatActivity {
                 int affectedRows = db.update("jjtrips1", values, "userId=?", new String[]{String.valueOf(userId)});
                 if (affectedRows > 0) {
                     Log.d("Data updated successfully.", "Data updated successfully.");
+                    Toast.makeText(LandmarksActivity.this, "Добавлено в планы!", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.e("Error updating data:", "No data updated.");
                 }

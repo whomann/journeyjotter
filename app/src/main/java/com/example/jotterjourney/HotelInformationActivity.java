@@ -78,7 +78,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.accent_color));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
         Map<String, String> propertyTranslations = new HashMap<>();
         propertyTranslations.put("apartmen_hotel", "апарт-отель");
         propertyTranslations.put("apartment", "апартаменты");

@@ -450,6 +450,11 @@
   "iata_code": "MOW"
  },
  {
+  "station_id": 2001025,
+  "station_name": "Москва Восточный",
+  "iata_code": "MOW"
+ },
+ {
   "station_id": 2000001,
   "station_name": "Москва Курская",
   "iata_code": "MOW"

@@ -3,14 +3,17 @@ package com.example.jotterjourney;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,6 +69,7 @@ public class TrainTicketActivity extends AppCompatActivity {
         buyReturnTicket=findViewById(R.id.buyReturnTicket);
         buyReturnTicket.setVisibility(View.GONE);
         progressBarTrainTickets=findViewById(R.id.progressBarTrainTickets);
+        getWindow().setStatusBarColor(Color.parseColor("#916a92"));
 
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         readAndLogDataFromSQLite(selectedTripId);
@@ -72,6 +78,7 @@ public class TrainTicketActivity extends AppCompatActivity {
         searchTrainTicketButton.setEnabled(false);
         departureSpinner = findViewById(R.id.departureStationSelect);
         targetSpinner = findViewById(R.id.targetStationSelect);
+
         buyReturnTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,10 +267,12 @@ public class TrainTicketActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(TrainTicketActivity.this, "Билеты не найдены, попробуйте другие станции.", Toast.LENGTH_SHORT).show();
+                    progressBarTrainTickets.setVisibility(View.GONE);
                 }
             } else {
                 Log.e("No data available", "Error retrieving data");
                 Toast.makeText(TrainTicketActivity.this, "Билеты не найдены, попробуйте другие станции.", Toast.LENGTH_SHORT).show();
+                progressBarTrainTickets.setVisibility(View.GONE);
             }
         }
     }
@@ -416,27 +425,21 @@ public class TrainTicketActivity extends AppCompatActivity {
             String arrivalStation = ticketData.get(6).toString();
             String link = ticketData.get(7).toString();
             String pricesString=ticketData.get(8).toString();
+            if(trainName.equals("null")){
+                trainName="";
+            }
             String formattedPrices = convertPricesString(pricesString);
             String departureStationName = getStationName(departureStation);
             String arrivalStationName = getStationName(arrivalStation);
             String formattedDepartureAt = formatDate(departureAt).toLowerCase();
             String formattedArriveAt = formatDate(arriveAt).toLowerCase();
-
-            String adultsString;
-            if(adultsCount>1){
-                adultsString = "за "+adultsCount+" человека:";
-            }
-            else{
-                adultsString="";
-            }
-
             holder.ticketNumberTV.setText(trainNumber+" "+trainName);
             holder.priceTV.setText(formattedPrices);
             holder.timeInTravelTV.setText(duration);
             holder.directionTV.setText(departureStationName+"   ➔   "+arrivalStationName);
             holder.departureDateTV.setText(formattedDepartureAt);
             holder.arrivalDateTV.setText(formattedArriveAt);
-            holder.adultsTV.setText(adultsString);
+            holder.adultsTV.setText("за "+adultsCount+" человека:");
 
             holder.buyTrainTicketButton.setOnClickListener(v -> {
                 openTrainTicketLink(link);
@@ -449,7 +452,7 @@ public class TrainTicketActivity extends AppCompatActivity {
                 else{
                     charForTicket = " туда";
                 }
-                String updatedTrainTicketInfo = "Билет"+charForTicket+": "+trainNumber+"\n"+departureStationName+" - "+arrivalStationName+" ("+formattedDepartureAt +")";
+                String updatedTrainTicketInfo = "Билет"+charForTicket+": "+trainNumber+"\n"+departureStationName +" - "+ arrivalStationName +" ("+formattedDepartureAt +")";
                 int userId = selectedTripId;
                 SQLiteDatabase db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
                 ContentValues values = new ContentValues();
@@ -477,6 +480,7 @@ public class TrainTicketActivity extends AppCompatActivity {
                     Log.e("Error updating data:", "No data updated.");
                 }
                 db.close();
+                Toast.makeText(TrainTicketActivity.this, "Билет куплен!", Toast.LENGTH_SHORT).show();
             });
         }
         private String formatDate(String dateTimeString) {
@@ -509,7 +513,7 @@ public class TrainTicketActivity extends AppCompatActivity {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-            return "Station Not Found";
+            return "Станция закрыта";
         }
         @Override
         public int getItemCount() {
@@ -525,19 +529,19 @@ public class TrainTicketActivity extends AppCompatActivity {
                     String priceName = parts[0].trim();
                     switch (priceName) {
                         case "plazcard":
-                            priceName = "Плацкарт";
+                            priceName = "плацкарт";
                             break;
                         case "coupe":
-                            priceName = "Купе";
+                            priceName = "купе";
                             break;
                         case "lux":
-                            priceName = "Люкс";
+                            priceName = "люкс";
                             break;
                         case "sedentary":
-                            priceName = "Сидячий";
+                            priceName = "сидячий";
                             break;
                         case "soft":
-                            priceName = "СВ";
+                            priceName = "св";
                             break;
                     }
                     String priceValue = parts[1].trim();

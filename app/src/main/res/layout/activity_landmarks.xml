@@ -12,23 +12,280 @@
         android:id="@+id/recyclerViewLandmarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@color/accent_color"
+        android:background="#D3C7D8"
+        android:paddingTop="55dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/landmarksLabel" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapViewLandmarks"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <View
+        android:id="@+id/viewBg"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#D3C7D8"
+        android:elevation="1dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/landmarksLabel2" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewLandmarks" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollLandmakrs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:elevation="5dp"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewBg">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:elevation="5dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/landmarkTag2"
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintStart_toEndOf="@id/landmarkTag1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/attractionIcon2TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:elevation="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tourist attraction"
+                        android:textColor="@color/TextColor"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/attractionIcon2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/archive"
+                        app:layout_constraintBottom_toTopOf="@id/attractionIcon2TV"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/landmarkTag3"
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintStart_toEndOf="@id/landmarkTag2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/attractionIcon3TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:elevation="4dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tourist attraction"
+                        android:textColor="@color/TextColor"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/attractionIcon3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/searchpurple"
+                        app:layout_constraintBottom_toTopOf="@id/attractionIcon3TV"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/landmarkTag1"
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/attractionIcon1TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:elevation="4dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tourist attraction"
+                        android:textColor="@color/TextColor"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/attractionIcon1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/drum"
+                        app:layout_constraintBottom_toTopOf="@id/attractionIcon1TV"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/landmarkTag4"
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/attractionIcon4TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:elevation="4dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tourist attraction"
+                        android:textColor="@color/TextColor"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/attractionIcon4"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/drum"
+                        app:layout_constraintBottom_toTopOf="@id/attractionIcon4TV"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/landmarkTag5"
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/attractionIcon5TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:elevation="4dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tourist attraction"
+                        android:textColor="@color/TextColor"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/attractionIcon5"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/drum"
+                        app:layout_constraintBottom_toTopOf="@id/attractionIcon5TV"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMapLandmarks"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView21">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapViewLandmarks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/progressBarLandmarks"
@@ -41,15 +298,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapViewLandmarks"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewMapLandmarks"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/landmarksLabel"
         android:layout_width="298dp"
+        android:elevation="2dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="179dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="7dp"
         android:layout_marginEnd="175dp"
         android:text="Достопримечательности"
         android:textAlignment="center"
@@ -61,20 +319,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/landmarksLabel2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="156dp"
-        android:text="На карте"
-        android:textAlignment="center"
-        android:textColor="@color/accent_color"
-        android:textSize="24sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewLandmarks" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/topbar1" />
+
+    <ImageButton
+        android:id="@+id/landmarksBack"
+        android:layout_width="34dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:backgroundTint="@color/transparent_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/purpleleft" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="На карте"
+        android:textColor="@color/TextColor"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollLandmakrs" />
+
+    <ImageView
+        android:id="@+id/landmarkLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="85dp" />
+
+    <ImageView
+        android:id="@+id/loadingLandmarkGif"
+        android:layout_width="158dp"
+        android:layout_height="156dp"
+        android:elevation="11dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
