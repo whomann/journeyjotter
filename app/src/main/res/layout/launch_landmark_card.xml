@@ -29,9 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:fontFamily="@font/montserrat_bold"
         android:textAlignment="center"
         android:textColor="@color/accent_color"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:textStyle="bold" />
 
     <TextView
@@ -39,13 +40,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Address"
+        android:fontFamily="@font/montserrat_regular"
         android:textAlignment="center"
         android:textColor="@color/accent_color"
-        android:textSize="14sp"/>
+        android:textSize="12sp"/>
 
         <Button
             android:id="@+id/launchLandmarkDeleteButton"
             android:layout_width="50dp"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_height="35dp"
             android:layout_marginLeft="63dp"
             android:layout_marginBottom="4dp"

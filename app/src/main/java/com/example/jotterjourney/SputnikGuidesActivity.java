@@ -150,6 +150,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                         } else {
                             Log.d("Response is missing expected fields",targetLocation);
                             Toast.makeText(SputnikGuidesActivity.this, "Экскурсии кончились!", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 } finally {
@@ -157,20 +158,28 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                 }
             } catch (IOException e) {
                 Log.e("Error performing HTTP request", String.valueOf(e));
+                Toast.makeText(SputnikGuidesActivity.this, "Ошибка соединения.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
             return null;
         }
         @Override
         protected void onPostExecute(Void unused) {
             Log.d("loc id", String.valueOf(regionId));
-            page = 1;
-            progressBar.setVisibility(View.VISIBLE);
-            GuidesAdapter guidesAdapter = new GuidesAdapter(new ArrayList<>());
-            recyclerView.setAdapter(guidesAdapter);
-            guidesAdapter.clearData();
-            nextSputnikPageButton.setVisibility(View.GONE);
-            previousSputnikPageButton.setVisibility(View.GONE);
-            new SputnikApiTask().execute();
+            if(regionId!=0) {
+                page = 1;
+                progressBar.setVisibility(View.VISIBLE);
+                GuidesAdapter guidesAdapter = new GuidesAdapter(new ArrayList<>());
+                recyclerView.setAdapter(guidesAdapter);
+                guidesAdapter.clearData();
+                nextSputnikPageButton.setVisibility(View.GONE);
+                previousSputnikPageButton.setVisibility(View.GONE);
+                new SputnikApiTask().execute();
+            }
+            else{
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(SputnikGuidesActivity.this, "Этот регион не поддерживается.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     private class SputnikApiTask extends AsyncTask<Void, Void, Void> {
@@ -286,7 +295,8 @@ public class SputnikGuidesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             if(guidesList.isEmpty()) {
-                Toast.makeText(SputnikGuidesActivity.this, "Больше экскурсий не нашлось.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SputnikGuidesActivity.this, "Экскурсий не нашлось.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
             else{
                 if(page>1){
@@ -388,6 +398,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                     Log.e("Error updating data:", "No data updated.");
                 }
                 db.close();
+                Toast.makeText(SputnikGuidesActivity.this, "Экскурсия забронирована!", Toast.LENGTH_SHORT).show();
             });
         }
         @Override

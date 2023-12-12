@@ -191,9 +191,13 @@ public class EventActivity extends AppCompatActivity {
                     return readStream(in);
                 } else {
                     Log.e("GetCityIdTask", "HTTP error: " + responseCode);
+                    Toast.makeText(EventActivity.this, "Ошибка соединения.", Toast.LENGTH_SHORT).show();
+                    progressBarEvent.setVisibility(View.GONE);
                 }
             } catch (IOException e) {
                 Log.e("GetCityIdTask", "Error making API request", e);
+                Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                progressBarEvent.setVisibility(View.GONE);
             }
             return null;
         }
@@ -219,9 +223,13 @@ public class EventActivity extends AppCompatActivity {
                     new PredictHQApiTask().execute(cityId);
                 } else {
                     Log.e("GetCityIdTask", "Failed to obtain city ID from API response.");
+                    Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                    progressBarEvent.setVisibility(View.GONE);
                 }
             } else {
                 Log.e("GetCityIdTask", "API response is null.");
+                Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                progressBarEvent.setVisibility(View.GONE);
             }
         }
 
@@ -273,6 +281,7 @@ public class EventActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     Log.e("PredictHQApiTask", "Error making API request", e);
+                    progressBarEvent.setVisibility(View.GONE);
                 }
                 return result;
             }
@@ -336,6 +345,7 @@ public class EventActivity extends AppCompatActivity {
                             Log.d("PredictHQApiTask", "No events found in the response.");
                             nextEventPage.setVisibility(View.INVISIBLE);
                             Toast.makeText(EventActivity.this, "Больше событий не найдено.", Toast.LENGTH_SHORT).show();
+                            progressBarEvent.setVisibility(View.GONE);
                         }
 
                     } catch (JSONException e) {
@@ -344,6 +354,8 @@ public class EventActivity extends AppCompatActivity {
                     }
                 } else {
                     Log.e("PredictHQApiTask", "API response is null.");
+                    Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                    progressBarEvent.setVisibility(View.GONE);
                 }
         }
     }
@@ -463,6 +475,7 @@ public class EventActivity extends AppCompatActivity {
                     Log.e("Error updating data:", "No data updated.");
                 }
                 db.close();
+                Toast.makeText(EventActivity.this, "Добавлено в планы!", Toast.LENGTH_SHORT).show();
             });
         }
         @Override

@@ -7,114 +7,166 @@
     android:background="@color/white"
     tools:context=".TrainTicketActivity">
 
-    <Spinner
-        android:id="@+id/departureStationSelect"
-        android:layout_width="132dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageButton
-        android:id="@+id/searchTrainTicketButton"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="28dp"
-        android:backgroundTint="@color/accent_color"
-        android:scaleType="fitCenter"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/trainTicketCardView"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/half_transparent_color"
+        android:elevation="4dp"
+        app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/departureStationSelect"
+                android:layout_width="0dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent_color"
+                android:elevation="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.35" />
+
+            <ImageButton
+                android:id="@+id/searchTrainTicketButton"
+                android:layout_width="50dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@color/accent_color"
+                android:elevation="3dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/search" />
+
+            <Spinner
+                android:id="@+id/targetStationSelect"
+                android:layout_width="0dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="@color/accent_color"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toStartOf="@+id/searchTrainTicketButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.35" />
+
+            <TextView
+                android:id="@+id/currentTicketTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:background="@color/transparent_color"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:elevation="3dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Станция отправления"
+                android:textAlignment="textStart"
+                android:textColor="@color/accent_color"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/currentTicketTextView2"
+                android:layout_width="168dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/transparent_color"
+                android:elevation="3dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Станция прибытия"
+                android:textAlignment="textStart"
+                android:textColor="@color/accent_color"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/arrowTextView"
+                app:layout_constraintStart_toStartOf="@+id/targetStationSelect"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/arrowTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@color/transparent_color"
+                android:elevation="3dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="->"
+                android:textColor="@color/accent_color"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/targetStationSelect"
+                app:layout_constraintStart_toEndOf="@+id/departureStationSelect"
+                app:layout_constraintTop_toBottomOf="@+id/currentTicketTextView"
+                app:layout_constraintHorizontal_bias="0.5"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/search" />
-
-    <Spinner
-        android:id="@+id/targetStationSelect"
-        android:layout_width="132dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/searchTrainTicketButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/departureStationSelect"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTicket"
-        android:layout_width="365dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchTrainTicketButton"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/currentTicketTextView"
-        android:layout_width="168dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="16dp"
-        android:text="Станция отправления"
-        android:textAlignment="textStart"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/currentTicketTextView2"
-        android:layout_width="168dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="16dp"
-        android:text="Станция прибытия"
-        android:textAlignment="textStart"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/currentTicketTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/trainbg" />
 
     <Button
         android:id="@+id/buyReturnTicket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:elevation="1dp"
         android:text="Купить билет обратно"
         android:backgroundTint="@color/accent_color"
-        android:textColor="@color/main_color"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/arrowTextView"
-        android:layout_width="39dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="6dp"
-        android:text="->"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/departureStationSelect"
-        app:layout_constraintTop_toBottomOf="@+id/currentTicketTextView" />
 
     <ProgressBar
         android:id="@+id/progressBarTrainTickets"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
-        android:indeterminateTint="@color/accent_color"
+        android:layout_marginTop="200dp"
+        android:elevation="1dp"
+        android:indeterminateTint="@color/white"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTicket"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainTicketCardView"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
