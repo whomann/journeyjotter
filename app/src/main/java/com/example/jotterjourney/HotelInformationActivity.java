@@ -7,10 +7,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
@@ -62,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelInformationActivity extends AppCompatActivity {
 
-    private String hotellookApiKey; ImageView hotelInfoImageView; ArrayList<String> imageUrls; AtomicInteger currentImageIndex; TextView poisNamesTextView,poisDistanceTextView,hotelLanguagesTextView; private double hotelLatValue; private double hotelLonValue; private String hotelName; private String hotelLink; RecyclerView recyclerViewHotelInfo; private GoogleMap mMap; private MapView mMapView;
+    private int hotelId; private String hotellookApiKey; ImageView hotelInfoImageView; ArrayList<String> imageUrls; AtomicInteger currentImageIndex; TextView poisNamesTextView,poisDistanceTextView,hotelLanguagesTextView; private double hotelLatValue; private double hotelLonValue; private String hotelName; private String hotelLink; RecyclerView recyclerViewHotelInfo; private GoogleMap mMap; private MapView mMapView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +119,9 @@ public class HotelInformationActivity extends AppCompatActivity {
         int cntFloors = getIntent().getIntExtra("cntFloors", 0);
         int cntRooms = getIntent().getIntExtra("cntRooms", 0);
         int selectedTripId=getIntent().getIntExtra("selectedTripId",1);
+        hotelId=getIntent().getIntExtra("hotelId",0);
         String type=getIntent().getStringExtra("type");
-        int nightsCount=getIntent().getIntExtra("nightsCount",0);
+        int nightsCount=getIntent().getIntExtra("nightsCount",1);
         ArrayList<Integer> poiList = getIntent().getIntegerArrayListExtra("poiDistance");
         Log.d("poiList", String.valueOf(poiList));
         if(stars==0){
@@ -140,7 +143,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         TextView hotelInfoNameTextView=findViewById(R.id.hotelInfoNameTextView);
         TextView hotelInfoAddressTextView=findViewById(R.id.hotelInfoAddressTextView);
         hotelInfoImageView=findViewById(R.id.hotelInfoImageView);
-        Button bookedHotelButton= findViewById(R.id.bookedHotelButton);
+        ImageButton bookmarkedHotelButton= findViewById(R.id.bookmarkedHotelButton);
         Button bookHotelButton=findViewById(R.id.bookHotelButton);
         TextView hotelInfoPriceTextView=findViewById(R.id.hotelInfoPriceTextView);
         TextView ratingTextViewHotel=findViewById(R.id.ratingTextViewHotel);
@@ -149,6 +152,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         RecyclerView recyclerViewHotelInfo=findViewById(R.id.recyclerViewHotelInfo);
         TextView distanceTextView=findViewById(R.id.distanceTextView);
         TextView starsTextView=findViewById(R.id.starsTextView);
+        Button bookedHotelButton=findViewById(R.id.bookedHotelButton);
         TextView nigthsTextView=findViewById(R.id.nigthsTextView);
 
         recyclerViewHotelInfo.setLayoutManager(new LinearLayoutManager(this));
@@ -252,13 +256,12 @@ public class HotelInformationActivity extends AppCompatActivity {
         if(propertyType.equals("0")){
             propertyType="отель";
         }
-        String starsSymbol = "\u2605";
         nigthsTextView.setText("/ "+String.valueOf(nightsCount)+" ночей");
         hotelInfoAddressTextView.setText(address);
         starsTextView.setText(String.valueOf(stars));
         ratingTextViewHotel.setText(String.valueOf((double) rating / 10 / 2));
         hotelInfoPriceTextView.setText("от "+String.valueOf(price)+ " руб.");
-        hotelInfoNameTextView.setText(hotelName); // + " • "+starsSymbol.repeat(stars)
+        hotelInfoNameTextView.setText(hotelName);
         distanceTextView.setText(String.valueOf(hotelDistance)+" км.");
         hotelInfoTextView.setText("Тип: "+propertyType.toLowerCase()+floorsString);
         if (!imageUrls.isEmpty()) {
@@ -273,6 +276,32 @@ public class HotelInformationActivity extends AppCompatActivity {
 
         bookHotelButton.setOnClickListener(v->{
             openHotelLink(hotelLink);
+        });
+        bookmarkedHotelButton.setOnClickListener(v->{
+            String updatedBookmarks = hotelId+"|";
+            int userId = selectedTripId;
+            SQLiteDatabase db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
+            ContentValues values = new ContentValues();
+            Cursor cursor = db.rawQuery("SELECT bookmarksList FROM jjtrips1 WHERE userId=?", new String[]{String.valueOf(userId)});
+            if (cursor != null && cursor.moveToFirst()) {
+                @SuppressLint("Range") String existingBookmarks = cursor.getString(cursor.getColumnIndex("bookmarksList"));
+                if (existingBookmarks == null) {
+                    existingBookmarks = "";
+                }
+                updatedBookmarks = existingBookmarks + updatedBookmarks;
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+            values.put("bookmarksList", updatedBookmarks);
+            int affectedRows = db.update("jjtrips1", values, "userId=?", new String[]{String.valueOf(userId)});
+            if (affectedRows > 0) {
+                Log.d("Data updated successfully, hotelId:", String.valueOf(hotelId));
+            } else {
+                Log.e("Error updating data:", "No data updated.");
+            }
+            db.close();
+            Toast.makeText(HotelInformationActivity.this, "Добавлено в избранные!", Toast.LENGTH_SHORT).show();
         });
 
         hotelInfoImageView.setOnTouchListener(new View.OnTouchListener() {
