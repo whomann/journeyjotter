@@ -52,6 +52,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -122,6 +124,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         hotelId=getIntent().getIntExtra("hotelId",0);
         String type=getIntent().getStringExtra("type");
         int nightsCount=getIntent().getIntExtra("nightsCount",1);
+
         ArrayList<Integer> poiList = getIntent().getIntegerArrayListExtra("poiDistance");
         Log.d("poiList", String.valueOf(poiList));
         if(stars==0){
@@ -256,7 +259,21 @@ public class HotelInformationActivity extends AppCompatActivity {
         if(propertyType.equals("0")){
             propertyType="отель";
         }
-        nigthsTextView.setText("/ "+String.valueOf(nightsCount)+" ночей");
+
+        String nightsString="";
+        if(nightsCount==1){
+            nightsString=" ночь";
+        }
+        else if(nightsCount>1&&nightsCount<5){
+            nightsString=" ночи";
+        }
+        else if(nightsCount>=5){
+            nightsString=" ночей";
+        }
+        else{
+            nightsString=" ночей";
+        }
+        nigthsTextView.setText("/ "+String.valueOf(nightsCount)+nightsString);
         hotelInfoAddressTextView.setText(address);
         starsTextView.setText(String.valueOf(stars));
         ratingTextViewHotel.setText(String.valueOf((double) rating / 10 / 2));

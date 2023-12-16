@@ -34,9 +34,6 @@
             android:name=".LandmarksActivity"
             android:exported="false" />
         <activity
-            android:name=".AudioGuidesActivity"
-            android:exported="false" />
-        <activity
             android:name=".TrainTicketActivity"
             android:exported="false" />
 

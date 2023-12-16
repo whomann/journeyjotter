@@ -183,10 +183,15 @@ public class HotelActivity extends AppCompatActivity {
         bookmarksButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, HotelBookmarksActivity.class);
             type = typeSpinner.getSelectedItem().toString();
+            if (type == null || type.equals("null") ||type.equals("") || type.isEmpty()) {
+                type="Нет";
+            }
+            intent.putExtra("type", type);
             intent.putExtra("locationId", (int) locationId);
             intent.putExtra("selectedTripId", (int) selectedTripId);
             intent.putExtra("returnDate", returnDate);
             intent.putExtra("departureDate", departureDate);
+            getNightsCount();
             intent.putExtra("nightsCount", nightsCount);
             intent.putExtra("adultsCount", adultsCount);
             startActivity(intent);
@@ -413,9 +418,7 @@ public class HotelActivity extends AppCompatActivity {
                 selectedFilters.add(filterPool.getText().toString());
             }
             //endregion
-            LocalDate returnDateString = LocalDate.parse(returnDate);
-            LocalDate departureDateString = LocalDate.parse(departureDate);
-            nightsCount = ChronoUnit.DAYS.between(departureDateString, returnDateString);
+            getNightsCount();
 
             if(Objects.equals(type, "Нет")){
                 currentPage=0;
@@ -433,6 +436,11 @@ public class HotelActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+    }
+    private void getNightsCount(){
+        LocalDate returnDateString = LocalDate.parse(returnDate);
+        LocalDate departureDateString = LocalDate.parse(departureDate);
+        nightsCount = ChronoUnit.DAYS.between(departureDateString, returnDateString);
     }
     private void addPropertyTranslations() {
         propertyTranslations.put("apartmen_hotel", "апарт-отель");
@@ -533,6 +541,7 @@ public class HotelActivity extends AppCompatActivity {
                         typeSpinner.setAdapter(adapter);
                         Log.d("types response: ", String.valueOf(response));
                         searchButton.setEnabled(true);
+                        bookmarksButton.setEnabled(true);
                     }
                 },
                 error -> {
@@ -590,7 +599,6 @@ public class HotelActivity extends AppCompatActivity {
                                 locationId = Integer.parseInt(firstLocation.getString("id"));
                                 Log.d(TAG, "Location ID: " + locationId);
                                 Spinner typeSpinner = findViewById(R.id.typeSpinner);
-                                bookmarksButton.setEnabled(true);
                                 getTypes(typeSpinner);
                             } else {
                                 Log.e(TAG, "No matching locations found.");
@@ -760,7 +768,6 @@ public class HotelActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             boolean skipHotel=false;
-
             Log.d("number of nights", String.valueOf(nightsCount));
 
             if (response != null) {

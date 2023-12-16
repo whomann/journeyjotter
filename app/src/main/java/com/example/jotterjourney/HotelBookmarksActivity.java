@@ -60,6 +60,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        nightsCount=1;
         Properties properties = new Properties();
         try (InputStream input = getResources().getAssets().open("secrets.properties")) {
             properties.load(input);
@@ -82,7 +83,6 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
         locationId=getIntent().getIntExtra("locationId", 0);
-        nightsCount=getIntent().getIntExtra("nightsCount",1);
         adultsCount=getIntent().getIntExtra("adultsCount", 1);
         returnDate = getIntent().getStringExtra("returnDate");
         departureDate = getIntent().getStringExtra("departureDate");
@@ -90,6 +90,10 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
         Log.d("selectedTripId", String.valueOf(selectedTripId));
         Log.d("locationId", String.valueOf(locationId));
+        Log.d("departureDate", String.valueOf(departureDate));
+        Log.d("returnDate", String.valueOf(returnDate));
+        Log.d("adultsCount", String.valueOf(adultsCount));
+        Log.d("type", String.valueOf(type));
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         readAndLogDataFromSQLite(selectedTripId);
     }
@@ -150,7 +154,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);
-                Log.d("no type hotels hotels", response);
+                Log.d("hotels hotels", response);
                 return response;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -161,8 +165,6 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             boolean skipHotel = false;
-            Log.d("number of nights", String.valueOf(nightsCount));
-
             if (response != null) {
                 try {
                     JsonReader jsonReader = new JsonReader(new StringReader(response));
@@ -225,7 +227,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
                                             break;
                                         case "pricefrom":
                                             int priceInt = jsonReader.nextInt();
-                                            priceFrom = (double) priceInt * 89 * nightsCount;
+                                            priceFrom = (double) priceInt * 89;
                                             break;
                                         case "rating":
                                             rating = jsonReader.nextInt();
@@ -544,7 +546,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
                         intent.putExtra("locationID", locationId);
                         intent.putExtra("selectedTripId", selectedTripId);
                         intent.putExtra("type", type);
-                        intent.putExtra("nightsCount", Integer.parseInt(String.valueOf(nightsCount)));
+                        intent.putExtra("nightsCount", nightsCount);
 
                         itemView.getContext().startActivity(intent);
                     }
