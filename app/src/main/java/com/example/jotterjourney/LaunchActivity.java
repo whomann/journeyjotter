@@ -461,9 +461,10 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     private void insertDataIntoSQLite(int selectedTripId) {
+        //db.execSQL("DROP TABLE IF EXISTS jjtrips1");
         String createTableSQL = "CREATE TABLE IF NOT EXISTS jjtrips1 (userID INTEGER PRIMARY KEY, departureDate TEXT, returnDate TEXT, " +
                 "adultsCount INTEGER, departureLocation TEXT, transferInfo TEXT, hotelLat REAL, hotelLon REAL, " +
-                "hotelInfo TEXT, targetLocation TEXT, ticketInfo TEXT, transport TEXT, locationNameForTaxi TEXT, originIATA TEXT, targetIATA TEXT, activitiesList TEXT,landmarksList TEXT, eventsList TEXT)";
+                "hotelInfo TEXT, targetLocation TEXT, ticketInfo TEXT, transport TEXT, locationNameForTaxi TEXT, originIATA TEXT, targetIATA TEXT, activitiesList TEXT,landmarksList TEXT, eventsList TEXT, bookmarksList TEXT)";
         db.execSQL(createTableSQL);
         Cursor cursor = db.rawQuery("SELECT 1 FROM jjtrips1 WHERE userId=?", new String[]{String.valueOf(selectedTripId)});
         if (!cursor.moveToFirst()) {
@@ -505,6 +506,7 @@ public class LaunchActivity extends AppCompatActivity {
                         String activitiesList = cursor.getString(cursor.getColumnIndex("activitiesList"));
                         String landmarksList=cursor.getString(cursor.getColumnIndex("landmarksList"));
                         String eventsList = cursor.getString(cursor.getColumnIndex("eventsList"));
+                        String bookmarksList=cursor.getString(cursor.getColumnIndex("bookmarksList"));
                         if(adultsCount==0){
                             adultsCount=1;
                         }
@@ -527,6 +529,7 @@ public class LaunchActivity extends AppCompatActivity {
                         Log.d("SQLite Data", "Activities List: " + activitiesList);
                         Log.d("SQLite Data", "Landmarks List: " + landmarksList);
                         Log.d("SQLite Data", "Events List: " + eventsList);
+                        Log.d("SQLite Data", "Bookmarks List: " + bookmarksList);
                         if (transport != null) {
                             if (transport.trim().equalsIgnoreCase("train")) {
                                 trainRadioButton.setChecked(true);

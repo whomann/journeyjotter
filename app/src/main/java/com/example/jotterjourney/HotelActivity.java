@@ -91,7 +91,7 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelActivity extends AppCompatActivity {
-    ImageView nothingHereImageView; CardView cardViewMap;long nightsCount; private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String BASE_URL = "https://cors.eu.org/http://engine.hotellook.com/api/v2/lookup.json"; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
+    ImageButton bookmarksButton; ImageView nothingHereImageView; CardView cardViewMap;long nightsCount; private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String BASE_URL = "https://cors.eu.org/http://engine.hotellook.com/api/v2/lookup.json"; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +99,8 @@ public class HotelActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
         drawerLayout = findViewById(R.id.drawerLayout);
+        bookmarksButton=findViewById(R.id.bookmarksButton);
+        bookmarksButton.setEnabled(false);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -177,6 +179,18 @@ public class HotelActivity extends AppCompatActivity {
         cardViewMap=findViewById(R.id.cardViewMap);
         cardViewMap.setVisibility(View.GONE);
         mMapView.setVisibility(View.GONE);
+
+        bookmarksButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HotelBookmarksActivity.class);
+            type = typeSpinner.getSelectedItem().toString();
+            intent.putExtra("locationId", (int) locationId);
+            intent.putExtra("selectedTripId", (int) selectedTripId);
+            intent.putExtra("returnDate", returnDate);
+            intent.putExtra("departureDate", departureDate);
+            intent.putExtra("nightsCount", nightsCount);
+            intent.putExtra("adultsCount", adultsCount);
+            startActivity(intent);
+        });
 
         View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
@@ -576,6 +590,7 @@ public class HotelActivity extends AppCompatActivity {
                                 locationId = Integer.parseInt(firstLocation.getString("id"));
                                 Log.d(TAG, "Location ID: " + locationId);
                                 Spinner typeSpinner = findViewById(R.id.typeSpinner);
+                                bookmarksButton.setEnabled(true);
                                 getTypes(typeSpinner);
                             } else {
                                 Log.e(TAG, "No matching locations found.");
@@ -1603,6 +1618,7 @@ public class HotelActivity extends AppCompatActivity {
                         intent.putExtra("locationID", locationId);
                         intent.putExtra("selectedTripId", selectedTripId);
                         intent.putExtra("type", type);
+                        intent.putExtra("hotelId", (int) clickedHotelData.get(0));
                         intent.putExtra("nightsCount", Integer.parseInt(String.valueOf(nightsCount)));
 
                         itemView.getContext().startActivity(intent);
