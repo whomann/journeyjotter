@@ -16,6 +16,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".HotelBookmarksActivity"
+            android:exported="false" />
+        <activity
             android:name=".TicketInformationActivity"
             android:exported="false" />
         <activity

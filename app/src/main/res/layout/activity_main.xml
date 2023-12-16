@@ -35,6 +35,20 @@
             android:layout_marginTop="12dp"
             android:popupTheme="@style/SpinnerPopupTheme" />
 
+
+        <ImageButton
+            android:id="@+id/bookmarksButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/transparent_color"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bookmark_button"
+            app:layout_constraintEnd_toStartOf="@+id/filterButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/searchButton"
             android:layout_width="32dp"
@@ -47,7 +61,7 @@
             android:src="@drawable/search_button"
             android:text="Search"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/filterButton"
+            app:layout_constraintEnd_toStartOf="@+id/bookmarksButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
@@ -66,16 +80,14 @@
         <ImageButton
             android:id="@+id/filterButton"
             android:layout_width="32dp"
-            android:elevation="2dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:scaleType="fitCenter"
-            android:background="@color/transparent_color"
-            android:onClick="showFiltersPopup"
-            android:src="@drawable/more_button"
-            android:text="Filters"
             android:layout_marginEnd="25dp"
+            android:background="@color/transparent_color"
+            android:elevation="2dp"
+            android:onClick="showFiltersPopup"
+            android:scaleType="fitCenter"
+            android:src="@drawable/more_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -262,9 +274,10 @@
             android:layout_height="270dp"
             android:elevation="1dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/bg"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:srcCompat="@drawable/bg" />
 
         <ImageView
             android:id="@+id/textView15"
