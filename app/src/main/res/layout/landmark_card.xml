@@ -61,7 +61,7 @@
             android:textSize="12sp"
             android:layout_marginTop="6dp"
             android:layout_height="45dp"
-            android:backgroundTint="@color/accent_color"
+            android:backgroundTint="@color/accent_color_2"
             android:text="в планы"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"

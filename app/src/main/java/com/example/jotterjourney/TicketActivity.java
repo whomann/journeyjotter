@@ -70,7 +70,7 @@ public class TicketActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
-        getWindow().setStatusBarColor(Color.parseColor("#8b648c"));
+        getWindow().setStatusBarColor(Color.parseColor("#01a7a0"));
         recyclerView=findViewById(R.id.recyclerViewGuides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);

@@ -357,11 +357,8 @@ public class HotelBookmarksActivity extends AppCompatActivity {
                 }
             } else {
                 Log.d("response is null", "network error");
-                ProgressBar progressBar = findViewById(R.id.progressBar);
-                progressBar.setVisibility(View.GONE);
                 if (retriesCount < 4) {
                     retriesCount += 1;
-                    progressBar.setVisibility(View.VISIBLE);
                     new SendHotelsRequestTask().execute();
                 } else {
                     Toast.makeText(HotelBookmarksActivity.this, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();

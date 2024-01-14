@@ -25,8 +25,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
@@ -69,7 +71,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LaunchActivity extends AppCompatActivity {
-    private Map<String, String> cityToCountryCodeMap;private String photoTargetIata,englishTargetName; ImageButton showImageButton; private String yandexTaxiApiKey, yandexClid; private int selectedTripId; RecyclerView recyclerViewEventsLaunch; TextView visaTextView; private String countryCode; RecyclerView recyclerViewLaunchGuides,recyclerViewLaunchLandmarks; private String hotelLink; ImageButton clearDataButton; Button guideButton, landmarksButton; RadioButton planeRadioButton,trainRadioButton; RadioGroup transportationRadioGroup; String transport; ImageButton hotelLinkButton,taxiLinkButton; String hotelInfo, yandexTaxiURL; TextView transferInfoTextView; String targetLocation, locationNameForTaxi, targetIATA, originIATA; Button orderTransfer; Button chooseTicketButton; EditText adultCountEditText; AutoCompleteTextView departureLocationSelect, targetLocationSelect; TextView departureDateTextView; TextView returnDateTextView; private int returnYear; private int returnMonth; private int returnDay; private String returnDate, departureDate; private SQLiteDatabase db; private int adultsCount; private String hotelLat, hotelLon;
+    ProgressBar progressBar3; private Map<String, String> cityToCountryCodeMap;private String photoTargetIata,englishTargetName; ImageButton showImageButton; private String yandexTaxiApiKey, yandexClid; private int selectedTripId; RecyclerView recyclerViewEventsLaunch; TextView visaTextView; private String countryCode; RecyclerView recyclerViewLaunchGuides,recyclerViewLaunchLandmarks; private String hotelLink; Button guideButton, landmarksButton; RadioButton planeRadioButton,trainRadioButton; RadioGroup transportationRadioGroup; String transport; ImageButton hotelLinkButton,taxiLinkButton; String hotelInfo, yandexTaxiURL; TextView transferInfoTextView; String targetLocation, locationNameForTaxi, targetIATA, originIATA; Button orderTransfer; Button chooseTicketButton; EditText adultCountEditText; AutoCompleteTextView departureLocationSelect, targetLocationSelect; TextView departureDateTextView; TextView returnDateTextView; private int returnYear; private int returnMonth; private int returnDay; private String returnDate, departureDate; private SQLiteDatabase db; private int adultsCount; private String hotelLat, hotelLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,8 @@ public class LaunchActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        progressBar3=findViewById(R.id.progressBar3);
+        progressBar3.setVisibility(View.INVISIBLE);
         transport="plane";
         showImageButton=findViewById(R.id.showImageButton);
         landmarksButton=findViewById(R.id.landmarksButton);
@@ -130,7 +134,6 @@ public class LaunchActivity extends AppCompatActivity {
         visaTextView=findViewById(R.id.visaTextView);
         hotelLinkButton = findViewById(R.id.hotelLinkButton);
         transportationRadioGroup = findViewById(R.id.transportationRadioGroup);
-        clearDataButton=findViewById(R.id.clearDataButton);
         taxiLinkButton.setVisibility(View.GONE);
         hotelLinkButton.setVisibility(View.GONE);
         showImageButton.setVisibility(View.GONE);
@@ -241,24 +244,6 @@ public class LaunchActivity extends AppCompatActivity {
                 Toast.makeText(LaunchActivity.this, "Выберите отель и точки отправления и назначения.", Toast.LENGTH_SHORT).show();
             }
         });
-        clearDataButton.setOnClickListener(view -> {
-             SharedPreferences shPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
-             SharedPreferences.Editor editor = shPreferences.edit();
-             editor.clear();
-             editor.apply();
-             db.execSQL("DROP TABLE IF EXISTS jjtrips1");
-             selectedTripId=1;
-             insertDataIntoSQLite(selectedTripId);
-             LandmarksLaunchAdapter landmarksLaunchAdapterClear = new LandmarksLaunchAdapter(new ArrayList<>());
-             recyclerViewLaunchLandmarks.setAdapter(landmarksLaunchAdapterClear);
-             landmarksLaunchAdapterClear.clearData();
-             ToursLaunchAdapter toursLaunchAdapterClear=new ToursLaunchAdapter(new ArrayList<>());
-             recyclerViewLaunchGuides.setAdapter(toursLaunchAdapterClear);
-             toursLaunchAdapterClear.clearData();
-             EventsLaunchAdapter eventsLaunchAdapterClear=new EventsLaunchAdapter(new ArrayList<>());
-             recyclerViewEventsLaunch.setAdapter(eventsLaunchAdapterClear);
-             eventsLaunchAdapterClear.clearData();
-        });
         new LoadDataAsyncTask().execute();
         readAndLogDataFromSQLite(selectedTripId);
     }
@@ -302,9 +287,34 @@ public class LaunchActivity extends AppCompatActivity {
             insertDataIntoSQLite(selectedTripId);
             readAndLogDataFromSQLite(selectedTripId);
         });
+
+        SpannableString deleteAllPlans = new SpannableString("Очистить");
+        deleteAllPlans.setSpan(new StyleSpan(Typeface.BOLD), 0, deleteAllPlans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        deleteAllPlans.setSpan(new ForegroundColorSpan(color), 0, deleteAllPlans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setNegativeButton(deleteAllPlans, (dialog, which) -> {
+            clearDatabase();
+        });
         builder.create().show();
     }
 
+    private void clearDatabase(){
+        SharedPreferences shPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shPreferences.edit();
+        editor.clear();
+        editor.apply();
+        db.execSQL("DROP TABLE IF EXISTS jjtrips1");
+        selectedTripId=1;
+        insertDataIntoSQLite(selectedTripId);
+        LandmarksLaunchAdapter landmarksLaunchAdapterClear = new LandmarksLaunchAdapter(new ArrayList<>());
+        recyclerViewLaunchLandmarks.setAdapter(landmarksLaunchAdapterClear);
+        landmarksLaunchAdapterClear.clearData();
+        ToursLaunchAdapter toursLaunchAdapterClear=new ToursLaunchAdapter(new ArrayList<>());
+        recyclerViewLaunchGuides.setAdapter(toursLaunchAdapterClear);
+        toursLaunchAdapterClear.clearData();
+        EventsLaunchAdapter eventsLaunchAdapterClear=new EventsLaunchAdapter(new ArrayList<>());
+        recyclerViewEventsLaunch.setAdapter(eventsLaunchAdapterClear);
+        eventsLaunchAdapterClear.clearData();
+    }
     private int generateNewTripId() {
         Cursor cursor = db.rawQuery("SELECT MAX(userID) FROM jjtrips1", null);
         int maxUserId = 0;
@@ -321,6 +331,7 @@ public class LaunchActivity extends AppCompatActivity {
         if(!Objects.equals(countryCodeLocal, departureCountryCodeLocal)){
             String apiUrl = "https://rough-sun-2523.fly.dev/api/" +departureCountryCodeLocal + "/" + countryCodeLocal;
             Log.d("visa url",apiUrl);
+            progressBar3.setVisibility(View.VISIBLE);
             new FetchStatusTask().execute(apiUrl);
         }
         else{
@@ -330,7 +341,7 @@ public class LaunchActivity extends AppCompatActivity {
     private void initializeCityMap() {
         cityToCountryCodeMap = new HashMap<>();
         try {
-            JSONArray citiesArray = loadCodeJSONFromAsset(LaunchActivity.this, "cities.json");
+            JSONArray citiesArray = loadCodeJSONFromAsset(LaunchActivity.this, "cities_sorted.json");
             for (int i = 0; i < citiesArray.length(); i++) {
                 JSONObject city = citiesArray.getJSONObject(i);
                 String cityName = city.getString("name");
@@ -862,7 +873,8 @@ public class LaunchActivity extends AppCompatActivity {
                 SQLiteDatabase db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
                 ContentValues values = new ContentValues();
                 String formattedDay = String.format("%02d", day);
-                String selectedDate = year + "-" + (month + 1) + "-" + formattedDay;
+                String formattedMonth = String.format("%02d", month + 1);
+                String selectedDate = year + "-" + formattedMonth + "-" + formattedDay;
                 if ("returnDate".equals(targetDateVariable)) {
                     returnDate = selectedDate;
                     returnDateTextView.setText(selectedDate);
@@ -1001,6 +1013,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String response) {
+            progressBar3.setVisibility(View.INVISIBLE);
             if (response != null) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
@@ -1124,7 +1137,7 @@ public class LaunchActivity extends AppCompatActivity {
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
-                JSONArray citiesArray = loadJSONFromAsset(LaunchActivity.this, "cities.json");
+                JSONArray citiesArray = loadJSONFromAsset(LaunchActivity.this, "cities_sorted.json");
                 List<String> autoCompleteOptions = new ArrayList<>();
                 for (int i = 0; i < citiesArray.length(); i++) {
                     JSONObject city = citiesArray.getJSONObject(i);

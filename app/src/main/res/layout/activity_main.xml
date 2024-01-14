@@ -295,15 +295,14 @@
         <ImageView
             android:id="@+id/nothingHereImageView"
             android:layout_width="match_parent"
-            android:elevation="1dp"
-            android:layout_marginHorizontal="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="170dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/nothinghere"
-            tools:layout_editor_absoluteX="141dp"
-            tools:layout_editor_absoluteY="354dp" />
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginTop="200dp"
+            android:elevation="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/nothinghere" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -312,7 +311,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:paddingLeft="20dp"
-        android:background="#5C4C5C"
+        android:background="#009783"
         android:elevation="10dp">
 
         <androidx.core.widget.NestedScrollView
@@ -380,7 +379,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:thumbColor="@color/white"
-                    app:trackColorActive="@color/main_color"/>
+                    app:trackColorActive="@color/accent_color_2"/>
                 <TextView
                     android:id="@+id/hotelsTitle"
                     android:textColor="@color/white"

@@ -133,7 +133,7 @@ public class EventActivity extends AppCompatActivity {
     private String getEnNameFromCitiesJson(String targetLocation) {
         progressBarEvent.setVisibility(View.VISIBLE);
         try {
-            InputStream is = getAssets().open("cities.json");
+            InputStream is = getAssets().open("cities_sorted.json");
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             StringBuilder stringBuilder = new StringBuilder();
             String line;
@@ -145,16 +145,13 @@ public class EventActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject cityObject = jsonArray.getJSONObject(i);
                 String cityName = cityObject.optString("name", null);
-
-                if (cityName != null && cityName.equals(targetLocation)) {
-                    JSONObject nameTranslations = cityObject.getJSONObject("name_translations");
-                    return nameTranslations.optString("en", null);
+                if (cityName.equals(targetLocation)) {
+                    return cityObject.optString("name_translations", null);
                 }
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
         return null;
     }
     public String formatDateTimeForAndroid(String inputDateTime) {

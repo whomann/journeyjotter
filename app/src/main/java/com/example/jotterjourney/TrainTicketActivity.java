@@ -69,7 +69,7 @@ public class TrainTicketActivity extends AppCompatActivity {
         buyReturnTicket=findViewById(R.id.buyReturnTicket);
         buyReturnTicket.setVisibility(View.GONE);
         progressBarTrainTickets=findViewById(R.id.progressBarTrainTickets);
-        getWindow().setStatusBarColor(Color.parseColor("#916a92"));
+        getWindow().setStatusBarColor(Color.parseColor("#01afa8"));
 
         db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
         readAndLogDataFromSQLite(selectedTripId);

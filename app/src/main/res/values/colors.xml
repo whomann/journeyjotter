@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_color">#E3C5E3</color>
-    <color name="accent_light">#E3C6E3</color>
-    <color name="accent_color">#A982AA</color>
+    <color name="main_color">#F6ECD5</color>
+    <color name="accent_color_2">#FAD88A</color>
+    <color name="accent_light">#ECFDFD</color>
+    <color name="accent_color">#08BAB3</color>
     <color name="half_transparent_color">#D7FFFFFF</color>
     <color name="transparent_color">#00FF4081</color>
-    <color name="statusBarColor">#FCF6FD</color>
-    <color name="purple_200">#C396FA</color>
+    <color name="statusBarColor">#FDFCF6</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="TextColor">#454545</color>
+    <color name="TextColor">#525252</color>
     <color name="purple_700">#6200EA</color>
     <color name="teal_200">#03DAC5</color>
+    <color name="purple_200">#C396FA</color>
 </resources>

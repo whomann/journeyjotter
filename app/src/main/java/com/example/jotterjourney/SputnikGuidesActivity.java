@@ -17,14 +17,17 @@ import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,6 +116,8 @@ public class SputnikGuidesActivity extends AppCompatActivity {
             }
         });
     }
+
+
     @SuppressLint("Range")
     private void readAndLogDataFromSQLite(int selectedTripId) {
         Cursor cursor = db.rawQuery("SELECT * FROM jjtrips1 WHERE userID = ?", new String[]{String.valueOf(selectedTripId)});
@@ -400,6 +405,47 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                 db.close();
                 Toast.makeText(SputnikGuidesActivity.this, "Экскурсия забронирована!", Toast.LENGTH_SHORT).show();
             });
+
+            holder.descriptionTextView.post(() -> {
+                int maxHeight = 90;
+                int height = holder.descriptionTextView.getLineHeight() * holder.descriptionTextView.getLineCount();
+                int maxHeightPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeight, holder.itemView.getResources().getDisplayMetrics());
+                ViewGroup.LayoutParams params = holder.descriptionTextView.getLayoutParams();
+                if (height > maxHeightPx) {
+                    params.height = maxHeightPx;
+                    holder.descriptionTextView.setLayoutParams(params);
+                    holder.descriptionTextView.setTag(true);
+                    showExpandIndicator(holder.descriptionTextView);
+                } else {
+                    hideExpandIndicator(holder.descriptionTextView);
+                }
+            });
+            holder.descriptionTextView.setOnClickListener(v -> {
+                toggleTextView(holder.descriptionTextView);
+            });
+        }
+
+        private void showExpandIndicator(TextView textView) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.downpurple);
+        }
+
+        private void hideExpandIndicator(TextView textView) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+
+        public void toggleTextView(TextView descriptionTextView) {
+            int originalHeight = descriptionTextView.getLineHeight() * descriptionTextView.getLineCount();
+            int maxHeight = 90;
+            int maxHeightPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeight, descriptionTextView.getResources().getDisplayMetrics());
+            ViewGroup.LayoutParams params = descriptionTextView.getLayoutParams();
+            if (params.height == ViewGroup.LayoutParams.WRAP_CONTENT || params.height == originalHeight) {
+                params.height = maxHeightPx;
+                hideExpandIndicator(descriptionTextView);
+            } else {
+                params.height = originalHeight;
+                showExpandIndicator(descriptionTextView);
+            }
+            descriptionTextView.setLayoutParams(params);
         }
         @Override
         public int getItemCount() {
