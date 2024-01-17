@@ -64,6 +64,7 @@ public class TrainTicketActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+
         arrowTextView=findViewById(R.id.arrowTextView);
         arrowTextView.setText("\u276F");
         buyReturnTicket=findViewById(R.id.buyReturnTicket);
@@ -428,18 +429,23 @@ public class TrainTicketActivity extends AppCompatActivity {
             if(trainName.equals("null")){
                 trainName="";
             }
-            String formattedPrices = convertPricesString(pricesString);
+
+            List<String> formattedPrices = convertPricesString(pricesString);
+            PriceAdapter priceAdapter = new PriceAdapter(formattedPrices);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            holder.trainTicketPricesRecyclerView.setLayoutManager(layoutManager);
+            holder.trainTicketPricesRecyclerView.setAdapter(priceAdapter);
+
             String departureStationName = getStationName(departureStation);
             String arrivalStationName = getStationName(arrivalStation);
             String formattedDepartureAt = formatDate(departureAt).toLowerCase();
             String formattedArriveAt = formatDate(arriveAt).toLowerCase();
             holder.ticketNumberTV.setText(trainNumber+" "+trainName);
-            holder.priceTV.setText(formattedPrices);
             holder.timeInTravelTV.setText(duration);
-            holder.directionTV.setText(departureStationName+"   ➔   "+arrivalStationName);
+            holder.directionTV.setText(departureStationName+"  -  "+arrivalStationName);
             holder.departureDateTV.setText(formattedDepartureAt);
             holder.arrivalDateTV.setText(formattedArriveAt);
-            holder.adultsTV.setText("за "+adultsCount+" человека:");
+            holder.adultsTV.setText("за "+adultsCount+" человека");
 
             holder.buyTrainTicketButton.setOnClickListener(v -> {
                 openTrainTicketLink(link);
@@ -483,6 +489,39 @@ public class TrainTicketActivity extends AppCompatActivity {
                 Toast.makeText(TrainTicketActivity.this, "Билет куплен!", Toast.LENGTH_SHORT).show();
             });
         }
+        private List<String> convertPricesString(String pricesString) {
+            String[] priceEntries = pricesString.replace("[", "").replace("]", "").split(",");
+            List<String> formattedPrices = new ArrayList<>();
+            for (String entry : priceEntries) {
+                String[] parts = entry.trim().split(":");
+                if (parts.length == 2) {
+                    String priceName = parts[0].trim();
+                    switch (priceName) {
+                        case "plazcard":
+                            priceName = "плацкарт";
+                            break;
+                        case "coupe":
+                            priceName = "купе";
+                            break;
+                        case "lux":
+                            priceName = "люкс";
+                            break;
+                        case "sedentary":
+                            priceName = "сидячий";
+                            break;
+                        case "soft":
+                            priceName = "св";
+                            break;
+                    }
+                    String priceValue = parts[1].trim();
+                    int priceInt = Integer.parseInt(priceValue);
+                    priceInt = priceInt * adultsCount;
+                    formattedPrices.add(String.format("%s: %s", priceName, priceInt));
+                }
+            }
+            return formattedPrices;
+        }
+
         private String formatDate(String dateTimeString) {
             try {
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("ru", "RU"));
@@ -519,43 +558,10 @@ public class TrainTicketActivity extends AppCompatActivity {
         public int getItemCount() {
             return ticketDataList.size();
         }
-        private String convertPricesString(String pricesString) {
-            String[] priceEntries = pricesString.replace("[", "").replace("]", "").split(",");
-            List<String> formattedPrices = new ArrayList<>();
-
-            for (String entry : priceEntries) {
-                String[] parts = entry.trim().split(":");
-                if (parts.length == 2) {
-                    String priceName = parts[0].trim();
-                    switch (priceName) {
-                        case "plazcard":
-                            priceName = "плацкарт";
-                            break;
-                        case "coupe":
-                            priceName = "купе";
-                            break;
-                        case "lux":
-                            priceName = "люкс";
-                            break;
-                        case "sedentary":
-                            priceName = "сидячий";
-                            break;
-                        case "soft":
-                            priceName = "св";
-                            break;
-                    }
-                    String priceValue = parts[1].trim();
-                    int priceInt= Integer.parseInt(priceValue);
-                    priceInt=priceInt*adultsCount;
-                    String formattedPrice = String.format("%s: %s ₽", priceName, priceInt);
-                    formattedPrices.add(formattedPrice);
-                }
-            }
-            return String.join("\n", formattedPrices);
-        }
 
         public class TrainTicketViewHolder extends RecyclerView.ViewHolder {
 
+            public RecyclerView trainTicketPricesRecyclerView;
             public TextView ticketNumberTV;
             public TextView priceTV;
             public TextView timeInTravelTV;
@@ -568,6 +574,8 @@ public class TrainTicketActivity extends AppCompatActivity {
 
             public TrainTicketViewHolder(View itemView) {
                 super(itemView);
+                trainTicketPricesRecyclerView=itemView.findViewById(R.id.trainTicketPricesRecyclerView);
+
                 ticketNumberTV = itemView.findViewById(R.id.trainNumberTV);
                 priceTV = itemView.findViewById(R.id.trainPriceTV);
                 timeInTravelTV = itemView.findViewById(R.id.trainTimeInTravelTV);
@@ -577,6 +585,63 @@ public class TrainTicketActivity extends AppCompatActivity {
                 adultsTV = itemView.findViewById(R.id.trainAdultsTV);
                 buyTrainTicketButton = itemView.findViewById(R.id.trainBuyTicketButton);
                 boughtTrainTicketButton = itemView.findViewById(R.id.trainBoughtTicketButton);
+            }
+        }
+        public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHolder> {
+
+            private List<String> formattedPrices;
+
+            public PriceAdapter(List<String> formattedPrices) {
+                this.formattedPrices = formattedPrices;
+            }
+
+            @NonNull
+            @Override
+            public PriceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ticket_price_element, parent, false);
+                return new PriceViewHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull PriceViewHolder holder, int position) {
+                String[] parts = formattedPrices.get(position).split(": ");
+                if (parts.length == 2) {
+                    holder.priceTextView.setText(parts[1]);
+                }
+                holder.iconImageView.setImageResource(getIconResourceForPriceType(formattedPrices.get(position)));
+            }
+
+            @Override
+            public int getItemCount() {
+                return formattedPrices.size();
+            }
+
+            public class PriceViewHolder extends RecyclerView.ViewHolder {
+                ImageView iconImageView;
+                TextView priceTextView;
+
+                public PriceViewHolder(@NonNull View itemView) {
+                    super(itemView);
+                    iconImageView=itemView.findViewById(R.id.elementTrainTicketIcon);
+                     priceTextView = itemView.findViewById(R.id.elementTicketPriceTextView);
+                }
+            }
+
+            private int getIconResourceForPriceType(String formattedPrice) {
+                String priceType = formattedPrice.split(":")[0].trim();
+
+                switch (priceType) {
+                    case "плацкарт":
+                        return R.drawable.platzcart;
+                    case "купе":
+                        return R.drawable.coupe;
+                    case "люкс":
+                        return R.drawable.lux;
+                    case "св":
+                        return R.drawable.soft;
+                    default:
+                        return R.drawable.sedentary;
+                }
             }
         }
     }

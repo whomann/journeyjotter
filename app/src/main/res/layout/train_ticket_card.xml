@@ -2,155 +2,185 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginTop="5dp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
     android:layout_marginEnd="1dp"
-    android:backgroundTint="@color/main_color"
     app:cardCornerRadius="30dp"
     android:layout_marginStart="1dp"
+    android:background="@color/white"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/train_ticket_gradient_background">
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/trainNumberTV"
-        android:layout_width="match_parent"
-        android:fontFamily="@font/montserrat_bold"
-        android:textColor="@color/TextColor"
-        android:layout_height="32dp"
-        android:layout_marginHorizontal="26dp"
-        android:layout_marginTop="14dp"
-        android:text="100В: Ласточка"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageView21"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toEndOf="@+id/trainTimeInTravelTV"
+            app:layout_constraintTop_toBottomOf="@+id/trainDirectionTV"
+            app:srcCompat="@drawable/separator" />
 
-    <TextView
-        android:id="@+id/trainDirectionTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:textColor="@color/TextColor"
-        android:text="Москва Павелецкая -> Санкт-Петербург Ладожская"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainPriceTV" />
+        <TextView
+            android:id="@+id/trainNumberTV"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="19dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="100В: Ласточка"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/trainBuyTicketButton"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:backgroundTint="@color/accent_color"
-        android:text="купить"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
+        <TextView
+            android:id="@+id/trainDirectionTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Москва Павелецкая -> Санкт-Петербург Ладожская"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainNumberTV" />
 
-    <TextView
-        android:id="@+id/trainPriceTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:textColor="@color/TextColor"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="0dp"
-        android:text="10000 P"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainAdultsTV" />
+        <Button
+            android:id="@+id/trainBuyTicketButton"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginStart="32dp"
+            android:backgroundTint="@color/accent_color"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="купить"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainTicketPricesRecyclerView" />
 
-    <TextView
-        android:id="@+id/trainDepartureDateTV"
-        android:layout_width="117dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="4dp"
-        android:text="15 ноя, 10:15"
-        android:fontFamily="@font/montserrat_regular"
-        android:textColor="@color/TextColor"
-        android:textSize="13sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainDirectionTV" />
+        <TextView
+            android:id="@+id/trainDepartureDateTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="15 ноя, 10:15"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
 
-    <TextView
-        android:id="@+id/trainTimeInTravelTV"
-        android:layout_width="155dp"
-        android:layout_height="19dp"
-        android:elevation="2dp"
-        android:layout_marginTop="4dp"
-        android:text="15 ч 60 мин"
-        android:textAlignment="center"
-        android:fontFamily="@font/montserrat_regular"
-        android:textColor="@color/TextColor"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/trainArrivalDateTV"
-        app:layout_constraintHorizontal_bias="0.592"
-        app:layout_constraintStart_toEndOf="@+id/trainDepartureDateTV"
-        app:layout_constraintTop_toBottomOf="@+id/trainDirectionTV" />
+        <TextView
+            android:id="@+id/trainArrivalDateTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="15 ноя, 10:15"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
 
-    <TextView
-        android:id="@+id/trainArrivalDateTV"
-        android:layout_width="114dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="28dp"
-        android:text="15 ноя, 10:15"
-        android:fontFamily="@font/montserrat_regular"
-        android:textColor="@color/TextColor"
-        android:textAlignment="textEnd"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainDirectionTV" />
+        <TextView
+            android:id="@+id/trainTimeInTravelTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:elevation="2dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:paddingHorizontal="20dp"
+            android:text="15 ч 60 мин"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainDirectionTV" />
 
-    <Button
-        android:id="@+id/trainBoughtTicketButton"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:layout_marginEnd="23dp"
-        android:backgroundTint="@color/accent_color"
-        android:text="куплено"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainTimeInTravelTV" />
+        <Button
+            android:id="@+id/trainBoughtTicketButton"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/accent_color"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="куплено"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainTicketPricesRecyclerView" />
 
-    <TextView
-        android:id="@+id/trainAdultsTV"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_regular"
-        android:textColor="@color/TextColor"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="4dp"
-        android:text="за 2 человека"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainNumberTV" />
+        <TextView
+            android:id="@+id/trainAdultsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="за 2 человека"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainTicketPricesRecyclerView" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/trainBuyTicketButton"/>
+            app:layout_constraintTop_toBottomOf="@+id/trainBuyTicketButton" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trainTicketPricesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="13dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="35dp"
+            android:scaleType="fitXY"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            app:layout_constraintEnd_toStartOf="@+id/trainTimeInTravelTV"
+            app:layout_constraintTop_toBottomOf="@+id/trainDirectionTV"
+            app:srcCompat="@drawable/separator" />
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="14dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainDepartureDateTV"
+            app:layout_constraintWidth_percent="0.72"
+            app:srcCompat="@drawable/separator" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -53,4 +53,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/right" />
+
+    <ImageView
+        android:id="@+id/noEventsImageView"
+        android:layout_width="282dp"
+        android:layout_height="322dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/no_events" />
 </androidx.constraintlayout.widget.ConstraintLayout>

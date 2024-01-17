@@ -107,17 +107,16 @@
             android:id="@+id/hotelPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="50000 rub."
-            android:fontFamily="@font/montserrat_bold"
-            android:layout_marginTop="4dp"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintTop_toBottomOf="@id/hotelName"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hotelName" />
 
         <ImageButton
             android:id="@+id/previousImageButton"
@@ -143,20 +142,21 @@
 
         <TextView
             android:id="@+id/hotelType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/montserrat_bold"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:text="отель"
-            android:fontFamily="@font/montserrat_bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="10dp"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/hotelName"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/hotelPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hotelName" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"

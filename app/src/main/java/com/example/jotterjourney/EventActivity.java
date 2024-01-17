@@ -54,7 +54,7 @@ import org.json.JSONObject;
 
 
 public class EventActivity extends AppCompatActivity {
-    private String predictHqApiKey; private SQLiteDatabase db; private int selectedTripId; private boolean isOnCreate; private String cityId; private ImageButton previousEventPage, nextEventPage; private ProgressBar progressBarEvent; private RecyclerView recyclerView; private String targetIATA, returnDate,departureDate; ArrayList<ArrayList<Object>> eventList = new ArrayList<>(); private int offset;
+    ImageView noEventsImageView; private String predictHqApiKey; private SQLiteDatabase db; private int selectedTripId; private boolean isOnCreate; private String cityId; private ImageButton previousEventPage, nextEventPage; private ProgressBar progressBarEvent; private RecyclerView recyclerView; private String targetIATA, returnDate,departureDate; ArrayList<ArrayList<Object>> eventList = new ArrayList<>(); private int offset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,8 @@ public class EventActivity extends AppCompatActivity {
             actionBar.hide();
         }
         isOnCreate=true;
+        noEventsImageView=findViewById(R.id.noEventsImageView);
+        noEventsImageView.setVisibility(View.GONE);
         recyclerView=findViewById(R.id.recyclerViewEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList.clear();
@@ -87,6 +89,7 @@ public class EventActivity extends AppCompatActivity {
         nextEventPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                noEventsImageView.setVisibility(View.GONE);
                 offset+=50;
                 progressBarEvent.setVisibility(View.VISIBLE);
                 eventList.clear();
@@ -99,6 +102,7 @@ public class EventActivity extends AppCompatActivity {
         previousEventPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                noEventsImageView.setVisibility(View.GONE);
                 offset-=50;
                 progressBarEvent.setVisibility(View.VISIBLE);
                 eventList.clear();
@@ -189,11 +193,13 @@ public class EventActivity extends AppCompatActivity {
                 } else {
                     Log.e("GetCityIdTask", "HTTP error: " + responseCode);
                     Toast.makeText(EventActivity.this, "Ошибка соединения.", Toast.LENGTH_SHORT).show();
+                    noEventsImageView.setVisibility(View.VISIBLE);
                     progressBarEvent.setVisibility(View.GONE);
                 }
             } catch (IOException e) {
                 Log.e("GetCityIdTask", "Error making API request", e);
                 Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                noEventsImageView.setVisibility(View.VISIBLE);
                 progressBarEvent.setVisibility(View.GONE);
             }
             return null;
@@ -217,15 +223,18 @@ public class EventActivity extends AppCompatActivity {
                 cityId = parseCityId(result);
                 if (cityId != null) {
                     Log.d("cityId", cityId);
+                    noEventsImageView.setVisibility(View.GONE);
                     new PredictHQApiTask().execute(cityId);
                 } else {
                     Log.e("GetCityIdTask", "Failed to obtain city ID from API response.");
                     Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                    noEventsImageView.setVisibility(View.VISIBLE);
                     progressBarEvent.setVisibility(View.GONE);
                 }
             } else {
                 Log.e("GetCityIdTask", "API response is null.");
                 Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
+                noEventsImageView.setVisibility(View.VISIBLE);
                 progressBarEvent.setVisibility(View.GONE);
             }
         }
@@ -279,6 +288,7 @@ public class EventActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     Log.e("PredictHQApiTask", "Error making API request", e);
                     progressBarEvent.setVisibility(View.GONE);
+                    noEventsImageView.setVisibility(View.VISIBLE);
                 }
                 return result;
             }
@@ -341,7 +351,8 @@ public class EventActivity extends AppCompatActivity {
                         } else {
                             Log.d("PredictHQApiTask", "No events found in the response.");
                             nextEventPage.setVisibility(View.INVISIBLE);
-                            Toast.makeText(EventActivity.this, "Больше событий не найдено.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EventActivity.this, "События не найдены", Toast.LENGTH_SHORT).show();
+                            noEventsImageView.setVisibility(View.VISIBLE);
                             progressBarEvent.setVisibility(View.GONE);
                         }
 
@@ -353,6 +364,7 @@ public class EventActivity extends AppCompatActivity {
                     Log.e("PredictHQApiTask", "API response is null.");
                     Toast.makeText(EventActivity.this, "События не найдены.", Toast.LENGTH_SHORT).show();
                     progressBarEvent.setVisibility(View.GONE);
+                    noEventsImageView.setVisibility(View.VISIBLE);
                 }
         }
     }

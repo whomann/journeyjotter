@@ -65,21 +65,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hotelInfoPriceTextView" />
 
-        <com.google.android.gms.maps.MapView
-        android:id="@+id/hotelMapView"
-        android:layout_width="match_parent"
-        android:layout_height="158dp"
-        android:layout_marginHorizontal="35dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookedHotelButton" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mapViewCard"
+            android:layout_width="match_parent"
+            android:layout_height="158dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            android:layout_marginHorizontal="35dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookedHotelButton">
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/hotelMapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:text="Об отеле"
             android:elevation="2dp"
             android:fontFamily="@font/montserrat_bold"
@@ -87,7 +94,7 @@
             android:textColor="@color/accent_color"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/hotelMapView"
+            app:layout_constraintTop_toBottomOf="@+id/mapViewCard"
             tools:layout_editor_absoluteX="0dp" />
 
         <TextView
@@ -196,10 +203,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="29dp"
             android:fontFamily="@font/montserrat_bold"
             android:text="50000"
-            android:textColor="@color/accent_color"
+            android:textColor="@color/accent_color_2"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView10"
@@ -292,18 +299,6 @@
             app:srcCompat="@drawable/page" />
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="140dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookHotelButton"
-            app:srcCompat="@drawable/page" />
-
-        <ImageView
             android:id="@+id/imageView6"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -364,8 +359,8 @@
             android:id="@+id/nigthsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="37dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="TextView"
             android:textColor="#959197"
@@ -385,9 +380,9 @@
         <ImageButton
             android:id="@+id/bookmarkedHotelButton"
             android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/accent_color"
+            android:layout_height="46dp"
+            android:layout_marginTop="26dp"
+            android:backgroundTint="@color/accent_color_2"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@+id/bookedHotelButton"
             app:layout_constraintHorizontal_bias="0.5"

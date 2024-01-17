@@ -160,7 +160,7 @@ public class HotelActivity extends AppCompatActivity {
         Spinner typeSpinner = findViewById(R.id.typeSpinner);
         Spinner sortSpinner = findViewById(R.id.sortSpinner);
         HorizontalScrollView horizontalScrollView=findViewById(R.id.horizontalScrollView);
-        Button nextPageButton = findViewById(R.id.nextPageButton);
+        ImageButton nextPageButton = findViewById(R.id.nextPageButton);
         searchButton = findViewById(R.id.searchButton);
         slider=findViewById(R.id.rangeSlider);
         mMapView = findViewById(R.id.mapViewHotels);
@@ -620,7 +620,7 @@ public class HotelActivity extends AppCompatActivity {
         nothingHereImageView.setVisibility(View.GONE);
         cardViewMap.setVisibility(View.VISIBLE);
         ArrayList<ArrayList<Object>> nextPageData = new ArrayList<>();
-        Button nextPageButton = findViewById(R.id.nextPageButton);
+        ImageButton nextPageButton = findViewById(R.id.nextPageButton);
         if(Objects.equals(type, "Нет")){
             nextPageButton.setVisibility(View.VISIBLE);
         }
@@ -1457,7 +1457,7 @@ public class HotelActivity extends AppCompatActivity {
         }
         @Override
         public void onBindViewHolder(@NonNull HotelViewHolder holder, int position) {
-            Button nextPageButton = findViewById(R.id.nextPageButton);
+            ImageButton nextPageButton = findViewById(R.id.nextPageButton);
 
             ArrayList<Object> hotelData = hotelDataList.get(position);
             String facilities = TextUtils.join(", ", (List<String>) hotelData.get(1));
