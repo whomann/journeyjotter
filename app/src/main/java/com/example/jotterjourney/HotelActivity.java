@@ -610,8 +610,13 @@ public class HotelActivity extends AppCompatActivity {
                         }
                     }
                 },
-                error -> Log.e(TAG, "Error getting location ID: " + error.getMessage())
-        );
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Error getting location ID: " + error.getMessage());
+                        Toast.makeText(HotelActivity.this, "CORS proxy is down", Toast.LENGTH_SHORT).show();
+                    }
+                });
         Volley.newRequestQueue(this).add(request);
     }
 

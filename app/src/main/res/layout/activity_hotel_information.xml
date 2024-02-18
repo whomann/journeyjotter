@@ -39,31 +39,34 @@
 
         <Button
             android:id="@+id/bookHotelButton"
-            android:layout_width="133dp"
+            android:layout_width="0dp"
             android:layout_height="33dp"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="28dp"
             android:background="@color/accent_color"
             android:fontFamily="@font/montserrat_bold"
             android:text="Забронировать"
             android:textColor="@color/white"
             android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/bookmarkedHotelButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hotelInfoPriceTextView" />
 
-        <Button
+        <ImageButton
             android:id="@+id/bookedHotelButton"
-            android:layout_width="133dp"
-            android:layout_height="33dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="26dp"
             android:layout_marginEnd="35dp"
-            android:background="@color/accent_color"
+            android:backgroundTint="@color/accent_color"
+            android:elevation="1dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Забронирован"
+            android:scaleType="fitCenter"
             android:textColor="@color/white"
-            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hotelInfoPriceTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/nigthsTextView"
+            app:srcCompat="@drawable/checkwhite" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/mapViewCard"
@@ -232,8 +235,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerViewHotelInfo" />
 
-
-        <!-- Guideline for 5% right margin -->
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineEnd"
             android:layout_width="wrap_content"
@@ -241,7 +242,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.67" />
 
-        <!-- TextView for names (takes 60% of the screen) -->
         <TextView
             android:id="@+id/poisNamesTextView"
             android:layout_width="0dp"
@@ -257,7 +257,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/poisLabel" />
 
-        <!-- TextView for distance -->
         <TextView
             android:id="@+id/poisDistanceTextView"
             android:layout_width="0dp"
@@ -265,9 +264,11 @@
             android:layout_marginTop="10dp"
             android:text="загрузка..."
             android:elevation="3dp"
-            android:backgroundTint="@color/white"
+            android:outlineSpotShadowColor="@android:color/transparent"
+            android:background="@color/white"
             android:layout_marginEnd="0dp"
             android:paddingEnd="20dp"
+            android:outlineProvider="none"
             android:fontFamily="@font/montserrat_bold"
             android:textAlignment="textEnd"
             android:textStyle="bold"
@@ -276,6 +277,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineEnd"
             app:layout_constraintTop_toBottomOf="@+id/poisLabel" />
+
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="25dp"
@@ -381,12 +383,11 @@
             android:id="@+id/bookmarkedHotelButton"
             android:layout_width="45dp"
             android:layout_height="46dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="26dp"
             android:backgroundTint="@color/accent_color_2"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@+id/bookedHotelButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/bookHotelButton"
             app:layout_constraintTop_toBottomOf="@+id/nigthsTextView"
             app:srcCompat="@drawable/bookmarkwhite" />
     </androidx.constraintlayout.widget.ConstraintLayout>

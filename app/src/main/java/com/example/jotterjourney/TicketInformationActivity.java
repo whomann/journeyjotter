@@ -54,7 +54,7 @@ public class TicketInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_information);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.accent_color_2));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();

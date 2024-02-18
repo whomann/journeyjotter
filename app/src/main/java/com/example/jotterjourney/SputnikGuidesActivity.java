@@ -466,7 +466,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
             public TextView languageTextView;
             public TextView guidePriceTextView;
             public Button buyGuideButton;
-            public Button boughtGuideButton;
+            public ImageButton boughtGuideButton;
 
             public GuidesViewHolder(View itemView) {
                 super(itemView);

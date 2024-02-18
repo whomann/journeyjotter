@@ -155,7 +155,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         RecyclerView recyclerViewHotelInfo=findViewById(R.id.recyclerViewHotelInfo);
         TextView distanceTextView=findViewById(R.id.distanceTextView);
         TextView starsTextView=findViewById(R.id.starsTextView);
-        Button bookedHotelButton=findViewById(R.id.bookedHotelButton);
+        ImageButton bookedHotelButton=findViewById(R.id.bookedHotelButton);
         TextView nigthsTextView=findViewById(R.id.nigthsTextView);
 
         recyclerViewHotelInfo.setLayoutManager(new LinearLayoutManager(this));

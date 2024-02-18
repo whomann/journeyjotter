@@ -397,6 +397,13 @@ public class TicketActivity extends AppCompatActivity {
             String departureAtUnconverted = ticketData.get(1).toString();
             String departureAt = convertTimestamp(departureAtUnconverted);
             String originAirport = ticketData.get(2).toString();
+            int transfersCount= (int) ticketData.get(11);
+            if(transfersCount==0){
+                holder.transfersIcon.setImageResource(R.drawable.notransfers);
+            }
+            else{
+                holder.transfersIcon.setImageResource(R.drawable.transfers);
+            }
             String returnAtUnconverted = ticketData.get(3).toString();
             String returnAt = convertTimestamp(returnAtUnconverted);
             String destinationAirport = ticketData.get(4).toString();
@@ -406,7 +413,7 @@ public class TicketActivity extends AppCompatActivity {
             String duration = formatDuration(durationUnconverted);
             String airlineName=getAirlineNameByCode(airline);
 
-            holder.ticketNumberTV.setText("Билет №"+flightNumber);
+            holder.ticketNumberTV.setText("№"+flightNumber);
             holder.airlinesTV.setText(airlineName);
             holder.priceTV.setText(String.valueOf(price)+" \u20BD \n");
             holder.timeInTravelTV.setText(duration);
@@ -434,10 +441,12 @@ public class TicketActivity extends AppCompatActivity {
             public TextView adultsTV;
             public Button buyTicketButton;
             ImageView backgroundImage;
+            ImageView transfersIcon;
             public Button boughtTicketButton;
 
             public TicketViewHolder(View itemView) {
                 super(itemView);
+                transfersIcon=itemView.findViewById(R.id.transfersIcon);
                 ticketNumberTV = itemView.findViewById(R.id.trainNumberTV);
                 airlinesTV = itemView.findViewById(R.id.airlinesTV);
                 priceTV = itemView.findViewById(R.id.trainPriceTV);
