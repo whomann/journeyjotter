@@ -66,7 +66,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelInformationActivity extends AppCompatActivity {
 
-    private int hotelId; private String hotellookApiKey; ImageView hotelInfoImageView; ArrayList<String> imageUrls; AtomicInteger currentImageIndex; TextView poisNamesTextView,poisDistanceTextView,hotelLanguagesTextView; private double hotelLatValue; private double hotelLonValue; private String hotelName; private String hotelLink; RecyclerView recyclerViewHotelInfo; private GoogleMap mMap; private MapView mMapView;
+    private String corsApiKey="";private String proxy_api="";private int hotelId; private String hotellookApiKey; ImageView hotelInfoImageView; ArrayList<String> imageUrls; AtomicInteger currentImageIndex; TextView poisNamesTextView,poisDistanceTextView,hotelLanguagesTextView; private double hotelLatValue; private double hotelLonValue; private String hotelName; private String hotelLink; RecyclerView recyclerViewHotelInfo; private GoogleMap mMap; private MapView mMapView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +79,8 @@ public class HotelInformationActivity extends AppCompatActivity {
         try (InputStream input = getResources().getAssets().open("secrets.properties")) {
             properties.load(input);
             hotellookApiKey = properties.getProperty("hotellookApiKey");
+            proxy_api=properties.getProperty("PROXY_URL");
+            corsApiKey=properties.getProperty("PROXY_API");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -445,6 +447,8 @@ public class HotelInformationActivity extends AppCompatActivity {
             okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
             okhttp3.Request request = new okhttp3.Request.Builder()
                     .url(urlString)
+                    .addHeader("x-cors-api-key", corsApiKey)
+                    .addHeader("Origin", "http://localhost/")
                     .build();
 
             try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -464,7 +468,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String locationId = params[0];
-            String hotelRequestApi = "https://cors.eu.org/http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+hotellookApiKey;
+            String hotelRequestApi = proxy_api+"http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+hotellookApiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);

@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -140,6 +141,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 URL url = new URL("https://api.sputnik8.com/v1/cities?api_key="+sputnikApiKey+"&username="+sputnikUsername);
+                Log.d("url", "https://api.sputnik8.com/v1/cities?api_key="+sputnikApiKey+"&username="+sputnikUsername);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
                     InputStreamReader reader = new InputStreamReader(urlConnection.getInputStream());
@@ -193,6 +195,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 URL url = new URL("https://api.sputnik8.com/v1/products?city_id="+regionId+"&limit=20&page="+page+"&api_key="+sputnikApiKey+"&username="+sputnikUsername);
+                Log.d("url", "https://api.sputnik8.com/v1/products?city_id="+regionId+"&limit=20&page="+page+"&api_key="+sputnikApiKey+"&username="+sputnikUsername);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
                     InputStream in = urlConnection.getInputStream();
@@ -219,78 +222,87 @@ public class SputnikGuidesActivity extends AppCompatActivity {
             double reviewRating=0.0;
 
             while (jsonReader.hasNext()) {
-                String fieldName = jsonReader.nextName();
-                switch (fieldName) {
-                    case "title":
-                        title = jsonReader.nextString();
-                        break;
-                    case "languages":
-                        jsonReader.beginArray();
-                        while (jsonReader.hasNext()) {
-                            language = jsonReader.nextString();
-                        }
-                        jsonReader.endArray();
-                        break;
-                    case "description":
-                        description = jsonReader.nextString();
-                        break;
-                    case "url":
-                        url = jsonReader.nextString();
-                        break;
-                    case "main_photo":
-                        if (jsonReader.peek() == JsonToken.NULL) {
-                            jsonReader.nextNull();
-                            mainPhotoUrl = "https://i.imgur.com/lqaLd4a.png";
-                        } else {
-                            jsonReader.beginObject();
-                            mainPhotoUrl = "https://i.imgur.com/lqaLd4a.png";
+                try {
+                    String fieldName = jsonReader.nextName();
+                    switch (fieldName) {
+                        case "title":
+                            title = jsonReader.nextString();
+                            break;
+                        case "languages":
+                            jsonReader.beginArray();
                             while (jsonReader.hasNext()) {
-                                String photoFieldName = jsonReader.nextName();
-                                if (photoFieldName.equals("big")) {
-                                    mainPhotoUrl = jsonReader.nextString();
-                                } else {
-                                    jsonReader.skipValue();
-                                }
+                                language = jsonReader.nextString();
                             }
-                            jsonReader.endObject();
-                        }
-                        break;
-                    case "customers_review_rating":
-                        reviewRating = jsonReader.nextDouble();
-                        break;
-                    case "what_included":
-                        whatIncluded = jsonReader.nextString();
-                        break;
-                    case "begin_place":
-                        if (jsonReader.peek() == JsonToken.NULL) {
-                            jsonReader.nextNull();
-                            Log.d("begin_place_address", "NULL");
-                        } else {
-                            jsonReader.beginObject();
-                            beginPlaceAddress = "";
-                            while (jsonReader.hasNext()) {
-                                String placeFieldName = jsonReader.nextName();
-                                if (placeFieldName.equals("address")) {
-                                    beginPlaceAddress = jsonReader.nextString();
-                                } else {
-                                    jsonReader.skipValue();
+                            jsonReader.endArray();
+                            break;
+                        case "description":
+                            description = jsonReader.nextString();
+                            break;
+                        case "url":
+                            url = jsonReader.nextString();
+                            break;
+                        case "main_photo":
+                            if (jsonReader.peek() == JsonToken.NULL) {
+                                jsonReader.nextNull();
+                                mainPhotoUrl = "https://i.imgur.com/lqaLd4a.png";
+                            } else {
+                                jsonReader.beginObject();
+                                mainPhotoUrl = "https://i.imgur.com/lqaLd4a.png";
+                                while (jsonReader.hasNext()) {
+                                    String photoFieldName = jsonReader.nextName();
+                                    if (photoFieldName.equals("big")) {
+                                        mainPhotoUrl = jsonReader.nextString();
+                                    } else {
+                                        jsonReader.skipValue();
+                                    }
                                 }
+                                jsonReader.endObject();
                             }
-                            jsonReader.endObject();
-                        }
-                        break;
-                    case "places_to_see":
-                        placesToSee = jsonReader.nextString();
-                        break;
-                    case "duration":
-                        duration = jsonReader.nextString();
-                        break;
-                    case "price":
-                        price = jsonReader.nextString();
-                        break;
-                    default:
-                        jsonReader.skipValue();
-                        break;
+                            break;
+                        case "customers_review_rating":
+                            reviewRating = jsonReader.nextDouble();
+                            break;
+                        case "what_included":
+                            if (jsonReader.peek() == JsonToken.NULL) {
+                                jsonReader.nextNull();
+                                whatIncluded = "";
+                            } else {
+                                whatIncluded = jsonReader.nextString();
+                            }
+                            break;
+                        case "begin_place":
+                            if (jsonReader.peek() == JsonToken.NULL) {
+                                jsonReader.nextNull();
+                                Log.d("begin_place_address", "NULL");
+                            } else {
+                                jsonReader.beginObject();
+                                beginPlaceAddress = "";
+                                while (jsonReader.hasNext()) {
+                                    String placeFieldName = jsonReader.nextName();
+                                    if (placeFieldName.equals("address")) {
+                                        beginPlaceAddress = jsonReader.nextString();
+                                    } else {
+                                        jsonReader.skipValue();
+                                    }
+                                }
+                                jsonReader.endObject();
+                            }
+                            break;
+                        case "places_to_see":
+                            placesToSee = jsonReader.nextString();
+                            break;
+                        case "duration":
+                            duration = jsonReader.nextString();
+                            break;
+                        case "price":
+                            price = jsonReader.nextString();
+                            break;
+                        default:
+                            jsonReader.skipValue();
+                            break;
+                    }
+                } catch (IllegalStateException e) {
+                    jsonReader.skipValue();
                 }
             }
             jsonReader.endObject();
@@ -371,7 +383,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
             holder.ratingTextView.setText(reviewRating);
             holder.descriptionTextView.setText(description);
             holder.placesToSeeTextView.setText(placesToSee);
-            holder.whatIncludedTextView.setText(whatIncluded);
+//            holder.whatIncludedTextView.setText(whatIncluded);
             holder.beginPlaceTextView.setText("Начальная точка: "+beginPlaceAddress);
             holder.languageTextView.setText(language);
             holder.guidePriceTextView.setText(price+"\nза человека");
@@ -478,7 +490,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                 beginPlaceTextView = itemView.findViewById(R.id.beginPlaceTextView);
                 languageTextView = itemView.findViewById(R.id.languageTextView);
                 guidePriceTextView = itemView.findViewById(R.id.guidePriceTextView);
-                whatIncludedTextView = itemView.findViewById(R.id.whatIsIncludedTextView);
+                //whatIncludedTextView = itemView.findViewById(R.id.whatIsIncludedTextView);
                 buyGuideButton = itemView.findViewById(R.id.buyGuideButton);
                 boughtGuideButton = itemView.findViewById(R.id.boughtGuideButton);
             }

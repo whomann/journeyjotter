@@ -101,30 +101,14 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="15dp"
-                android:textColor="@color/TextColor"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="• Нижний парк\r\n• Фонтаны Петергофа\r\n• Самый северный небоскреб «Лахта-центр» (462 метра)\r\n• Западный скоростной диаметр\r\n• Футбольный стадион «Газпром Арена»."
                 android:textAlignment="textStart"
+                android:textColor="@color/TextColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-            <TextView
-                android:id="@+id/whatIsIncludedTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="11dp"
-                android:layout_marginEnd="15dp"
-                android:textColor="@color/TextColor"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="• Билет на «Метеор» в одну или обе стороны (в зависимости от выбранного билета)\r\n• Входные билеты в Нижний парк (при выборе билета \&quot;Метеор + билет в парк\&quot;)\r\n• Экскурсия по парку и осмотр фонтанов (при выборе билета \&quot;Метеор + билет в парк + экскурсия\"
-                android:textAlignment="gravity"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
             <TextView
                 android:id="@+id/beginPlaceTextView"
@@ -223,32 +207,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
             <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Что включено"
-                android:textColor="@color/accent_color"
-                android:textSize="19sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/placesToSeeTextView" />
-
-            <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Что вас ждет"
                 android:textColor="@color/accent_color"
                 android:textSize="19sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/whatIsIncludedTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/placesToSeeTextView" />
 
             <View
                 android:layout_width="match_parent"

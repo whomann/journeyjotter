@@ -5,27 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,16 +36,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class TicketInformationActivity extends AppCompatActivity {
 
-    ImageView loadingContainer,loadingIV; TextView originOriginLocationTV, returnArrivalLocationTV, returnOriginLocationTV, originArrivalLocationTV; private String flightNumber,departureAt,targetAirportName, originAirportName,originAirport,returnAt,airlineCode,airlineName,targetAirport,duration,durationTo,durationBack,link, targetLocation, departureLocation; private int price,transfers,returnTransfers,adultsCount, selectedTripId;
+    private String corsApiKey="";private String proxy_api="";ImageView loadingContainer,loadingIV; TextView originOriginLocationTV, returnArrivalLocationTV, returnOriginLocationTV, originArrivalLocationTV; private String flightNumber,departureAt,targetAirportName, originAirportName,originAirport,returnAt,airlineCode,airlineName,targetAirport,duration,durationTo,durationBack,link, targetLocation, departureLocation; private int price,transfers,returnTransfers,adultsCount, selectedTripId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +56,14 @@ public class TicketInformationActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
+        }
+        Properties properties = new Properties();
+        try (InputStream input = getResources().getAssets().open("secrets.properties")) {
+            properties.load(input);
+            proxy_api=properties.getProperty("PROXY_URL");
+            corsApiKey=properties.getProperty("PROXY_API");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         loadingContainer=findViewById(R.id.loadingContainer);
         loadingContainer.setVisibility(View.VISIBLE);
@@ -186,8 +192,8 @@ public class TicketInformationActivity extends AppCompatActivity {
         }
 
         new GetAirportInfoTask().execute();
-        loadAirlineLogo(airlineCode, airlinesReturnImageView);
-        loadAirlineLogo(airlineCode, airlinesImageView);
+        loadAirlineLogo(this, airlineCode, airlinesReturnImageView);
+        loadAirlineLogo(this, airlineCode, airlinesImageView);
     }
     @Override
     public void onBackPressed() {
@@ -243,10 +249,31 @@ public class TicketInformationActivity extends AppCompatActivity {
         db.close();
         Toast.makeText(this, "Билет куплен!", Toast.LENGTH_SHORT).show();
     }
-    private void loadAirlineLogo(String airlineCode, ImageView imageView){
-        String imageUrl = "https://cors.eu.org/http://pics.avs.io/200/200/" + airlineCode + ".png";
-        Picasso.get().load(imageUrl).into(imageView);
+    private void loadAirlineLogo(Context context, String airlineCode, ImageView imageView) {
+        String imageUrl = proxy_api + "http://pics.avs.io/200/200/" + airlineCode + ".png";
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @NotNull
+                    @Override
+                    public Response intercept(@NotNull Chain chain) throws IOException {
+                        Request originalRequest = chain.request();
+                        Request.Builder requestBuilder = originalRequest.newBuilder()
+                                .header("x-cors-api-key", corsApiKey)
+                                .header("Origin", "http://localhost/");
+                        Request newRequest = requestBuilder.build();
+                        return chain.proceed(newRequest);
+                    }
+                })
+                .build();
+
+        Picasso picasso = new Picasso.Builder(context)
+                .downloader(new OkHttp3Downloader(client))
+                .build();
+
+        picasso.load(imageUrl).into(imageView);
     }
+
     private void openTicketLink(String link) {
         if (link != null && !link.isEmpty()) {
             Uri uri = Uri.parse(link);

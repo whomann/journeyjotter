@@ -51,7 +51,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelBookmarksActivity extends AppCompatActivity {
 
-    ImageView hotelLoading,noBookmarksImageView; View loadingBookmarksView; RecyclerView recyclerView; private String type;Context context = this;private int locationId,nightsCount,adultsCount,selectedTripId; private int retriesCount=0; private SQLiteDatabase db; ArrayList<ArrayList<Object>> bookmarkedHotelsList = new ArrayList<>();  private String apiKey, returnDate, departureDate; ArrayList<Integer> bookmarksListIds = new ArrayList<>();
+    private String corsApiKey=""; private String proxy_api="";ImageView hotelLoading,noBookmarksImageView; View loadingBookmarksView; RecyclerView recyclerView; private String type;Context context = this;private int locationId,nightsCount,adultsCount,selectedTripId; private int retriesCount=0; private SQLiteDatabase db; ArrayList<ArrayList<Object>> bookmarkedHotelsList = new ArrayList<>();  private String apiKey, returnDate, departureDate; ArrayList<Integer> bookmarksListIds = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +65,8 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         try (InputStream input = getResources().getAssets().open("secrets.properties")) {
             properties.load(input);
             apiKey = properties.getProperty("hotellookApiKey");
+            proxy_api=properties.getProperty("PROXY_URL");
+            corsApiKey=properties.getProperty("PROXY_API");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,6 +134,8 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url(urlString)
+                .addHeader("x-cors-api-key", corsApiKey)
+                .addHeader("Origin", "http://localhost/")
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -150,7 +154,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
     private class SendHotelsRequestTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            String hotelRequestApi = "https://cors.eu.org/http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
+            String hotelRequestApi = proxy_api + "http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -165,6 +169,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             boolean skipHotel = false;
+            Log.d("bookmark response", response);
             if (response != null) {
                 try {
                     JsonReader jsonReader = new JsonReader(new StringReader(response));
@@ -354,6 +359,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.d("Error reading JSON", String.valueOf(e));
                 }
             } else {
                 Log.d("response is null", "network error");

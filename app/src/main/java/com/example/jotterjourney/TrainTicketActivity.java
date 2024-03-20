@@ -49,10 +49,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 public class TrainTicketActivity extends AppCompatActivity {
 
-    ProgressBar progressBarTrainTickets; private int selectedTripId;TextView arrowTextView; Boolean isReturnBought = false; Button buyReturnTicket; RecyclerView recyclerView; ArrayList<ArrayList<Object>> trainsList = new ArrayList<>(); Spinner departureSpinner, targetSpinner; ImageButton searchTrainTicketButton;  private SQLiteDatabase db; private String returnDate, departureDate, targetLocation, departureLocation, departureLocationCode, targetLocationCode, ticketInfo; private int adultsCount;
+    private String corsApiKey="";private String proxy_api="";ProgressBar progressBarTrainTickets; private int selectedTripId;TextView arrowTextView; Boolean isReturnBought = false; Button buyReturnTicket; RecyclerView recyclerView; ArrayList<ArrayList<Object>> trainsList = new ArrayList<>(); Spinner departureSpinner, targetSpinner; ImageButton searchTrainTicketButton;  private SQLiteDatabase db; private String returnDate, departureDate, targetLocation, departureLocation, departureLocationCode, targetLocationCode, ticketInfo; private int adultsCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,14 @@ public class TrainTicketActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
+        }
+        Properties properties = new Properties();
+        try (InputStream input = getResources().getAssets().open("secrets.properties")) {
+            properties.load(input);
+            proxy_api=properties.getProperty("PROXY_URL");
+            corsApiKey=properties.getProperty("PROXY_API");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         arrowTextView=findViewById(R.id.arrowTextView);
@@ -96,7 +105,7 @@ public class TrainTicketActivity extends AppCompatActivity {
                 String departureStationId = extractStationId(departureOption);
 
                 String callbackName = "handleResponse" + System.currentTimeMillis();
-                String apiUrl = "https://cors.eu.org/https://suggest.travelpayouts.com/search?service=tutu_trains&term=" + targetStationId + "&term2=" + departureStationId + "&callback=" + callbackName;
+                String apiUrl = proxy_api+"https://suggest.travelpayouts.com/search?service=tutu_trains&term=" + targetStationId + "&term2=" + departureStationId + "&callback=" + callbackName;
                 Log.d("tutu url", apiUrl);
                 isReturnBought = true;
                 new SendTrainRequestTask().execute(apiUrl);
@@ -115,7 +124,7 @@ public class TrainTicketActivity extends AppCompatActivity {
                 String departureOption = departureSpinner.getSelectedItem().toString();
                 String departureStationId = extractStationId(departureOption);
                 String callbackName = "handleResponse" + System.currentTimeMillis();
-                String apiUrl = "https://cors.eu.org/https://suggest.travelpayouts.com/search?service=tutu_trains&term=" + departureStationId + "&term2=" + targetStationId + "&callback=" + callbackName;
+                String apiUrl = proxy_api+"https://suggest.travelpayouts.com/search?service=tutu_trains&term=" + departureStationId + "&term2=" + targetStationId + "&callback=" + callbackName;
                 Log.d("tutu url", apiUrl);
                 new SendTrainRequestTask().execute(apiUrl);
             }
@@ -164,6 +173,8 @@ public class TrainTicketActivity extends AppCompatActivity {
             try {
                 URL url = new URL(params[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("x-cors-api-key", corsApiKey);
+                connection.setRequestProperty("Origin", "http://localhost/");
                 connection.setRequestMethod("GET");
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
