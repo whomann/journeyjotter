@@ -134,8 +134,6 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url(urlString)
-                .addHeader("x-cors-api-key", corsApiKey)
-                .addHeader("Origin", "http://localhost/")
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -154,7 +152,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
     private class SendHotelsRequestTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            String hotelRequestApi = proxy_api + "http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
+            String hotelRequestApi = "https://cors.eu.org/http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -169,7 +167,6 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             boolean skipHotel = false;
-            Log.d("bookmark response", response);
             if (response != null) {
                 try {
                     JsonReader jsonReader = new JsonReader(new StringReader(response));

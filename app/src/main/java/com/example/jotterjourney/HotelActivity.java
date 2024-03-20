@@ -96,7 +96,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://cors.eu.org/http://engine.hotellook.com/api/v2/lookup.json";
-    private static final String TARGET_API_URL = "http://engine.hotellook.com/api/v2/lookup.json";
+    private static final String TARGET_API_URL = "https://engine.hotellook.com/api/v2/lookup.json";
     private String proxy_api=""; private String corsApiKey="";ImageButton bookmarksButton; ImageView nothingHereImageView; CardView cardViewMap;long nightsCount; private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -526,7 +526,7 @@ public class HotelActivity extends AppCompatActivity {
     }
 
     private void getTypes(Spinner typeSpinner) {
-        String url = proxy_api+"http://yasen.hotellook.com/tp/public/available_selections.json?id=" + locationId + "&token=" + apiKey;
+        String url = proxy_api+"https://yasen.hotellook.com/tp/public/available_selections.json?id=" + locationId + "&token=" + apiKey;
         Log.d("types url:", url);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -801,7 +801,7 @@ public class HotelActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             String locationId = params[0];
 
-            String hotelRequestApi = proxy_api+"http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+apiKey;
+            String hotelRequestApi = "https://cors.eu.org/https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+apiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -1075,8 +1075,6 @@ public class HotelActivity extends AppCompatActivity {
             okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
             okhttp3.Request request = new okhttp3.Request.Builder()
                     .url(urlString)
-                    .addHeader("x-cors-api-key", corsApiKey)
-                    .addHeader("Origin", "http://localhost/")
                     .build();
 
             try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -1102,7 +1100,7 @@ public class HotelActivity extends AppCompatActivity {
             String departureDate = params[2];
             String returnDate = params[3];
 
-            String hotelRequestApi = proxy_api+"http://yasen.hotellook.com/tp/public/widget_location_dump.json?currency=rub&language=ru&limit=100&id=" + locationId +
+            String hotelRequestApi = proxy_api+"https://yasen.hotellook.com/tp/public/widget_location_dump.json?currency=rub&language=ru&limit=100&id=" + locationId +
                     "&type=" + type + "&check_in=" + departureDate + "&check_out=" + returnDate + "&token="+apiKey;
 
             Log.d("Hotels:", hotelRequestApi);
@@ -1183,7 +1181,7 @@ public class HotelActivity extends AppCompatActivity {
                 for (String idString : idStrings) {
                     listOfIDs.add(Integer.parseInt(idString));
                 }
-                String hotelRequestApi = proxy_api+"http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+apiKey;
+                String hotelRequestApi = "https://cors.eu.org/https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+apiKey;
                 Log.d("Matching hotels:", hotelRequestApi);
                 try {
                     String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -1396,8 +1394,6 @@ public class HotelActivity extends AppCompatActivity {
                 okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
                 okhttp3.Request request = new okhttp3.Request.Builder()
                         .url(urlString)
-                        .addHeader("x-cors-api-key", corsApiKey)
-                        .addHeader("Origin", "http://localhost/")
                         .build();
                 try (okhttp3.Response response = client.newCall(request).execute()) {
                     if (!response.isSuccessful()) {

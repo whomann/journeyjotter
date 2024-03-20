@@ -468,7 +468,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String locationId = params[0];
-            String hotelRequestApi = proxy_api+"http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+hotellookApiKey;
+            String hotelRequestApi = proxy_api+"https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+hotellookApiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);

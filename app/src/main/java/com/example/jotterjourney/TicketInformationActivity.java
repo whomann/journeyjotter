@@ -250,7 +250,7 @@ public class TicketInformationActivity extends AppCompatActivity {
         Toast.makeText(this, "Билет куплен!", Toast.LENGTH_SHORT).show();
     }
     private void loadAirlineLogo(Context context, String airlineCode, ImageView imageView) {
-        String imageUrl = proxy_api + "http://pics.avs.io/200/200/" + airlineCode + ".png";
+        String imageUrl = proxy_api + "https://pics.avs.io/200/200/" + airlineCode + ".png";
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
