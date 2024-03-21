@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/loadingIV"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:elevation="6dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

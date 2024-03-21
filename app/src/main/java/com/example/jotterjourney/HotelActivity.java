@@ -53,6 +53,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.jotterjourney.databinding.ActivityMainBinding;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -92,12 +93,15 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Scanner;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import okhttp3.OkHttpClient;
 
 public class HotelActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://cors.eu.org/http://engine.hotellook.com/api/v2/lookup.json";
     private static final String TARGET_API_URL = "https://engine.hotellook.com/api/v2/lookup.json";
-    private String proxy_api=""; private String corsApiKey="";ImageButton bookmarksButton; ImageView nothingHereImageView; CardView cardViewMap;long nightsCount; private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
+    ImageView loadingScreenImage; View loadingScreenBg; private String proxy_api=""; private String corsApiKey="";ImageButton bookmarksButton; ImageView nothingHereImageView; CardView cardViewMap;long nightsCount; private String apiKey; Map<String, String> propertyTranslations = new HashMap<>(); private List<String> selectedEnglishPropertyTypes = new ArrayList<>(); private int selectedTripId; private double minPrice, maxPrice; RangeSlider slider; private ActivityMainBinding binding; private SQLiteDatabase db; private static final String TAG = "LocationId"; private int locationId; private int adultsCount; private int retriesCount; private String returnDate; private String departureDate; private String type; private ImageButton searchButton; Map<String, Integer> filterMap = new HashMap<>(); private String hotelInfo; private String targetLocation; List<String> selectedFilters = new ArrayList<>(); List<Integer> listOfIDs = new ArrayList<>(); ArrayList<ArrayList<Object>> hotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> matchingHotelsList = new ArrayList<>(); ArrayList<ArrayList<Object>> noTypeHotelsList = new ArrayList<>();  ArrayList<ArrayList<Object>> finalHotelList = new ArrayList<>(); private String hotelLat, hotelLon; private DrawerLayout drawerLayout; Context context = this; private static final int CONNECTION_TIMEOUT = 10000; private static final int READ_TIMEOUT = 15000; private GoogleMap mMap; private MapView mMapView; private int currentPage = 0; private int batchSize = 50; private CheckBox filterRussian, filterPool, filterFitness, filterLaundry, filterSpa, filterConcierge, filterBusinessCenter, filterSharedBathroom, filterSplitRoom, filterCoffee, filterSlippers, filterMiniBar, filterToiletInRoom, filterPublicWiFi, filterDailyCleaning, filterCleaning, filterSafe, filterTV, filterBath, filterShower, filterDisabled, filterPetsAllowed, filterFan, filterRestaurant, filterAirConditioner, filterCheckIn24hr, filterParking, filterBar, filterSmokingZones, filterPrivateBeach;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +111,11 @@ public class HotelActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         bookmarksButton=findViewById(R.id.bookmarksButton);
         bookmarksButton.setEnabled(false);
+        loadingScreenBg=findViewById(R.id.loadingScreenBg);
+        loadingScreenImage=findViewById(R.id.loadingScreenImage);
+        loadingScreenBg.setVisibility(View.VISIBLE);
+        loadingScreenImage.setVisibility(View.VISIBLE);
+        Glide.with(this).load(R.drawable.loadingscreen).into(loadingScreenImage);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -121,7 +130,7 @@ public class HotelActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         addPropertyTranslations();
-        getWindow().setStatusBarColor(Color.parseColor("#c2d5ff"));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.accent_color_2));
         RecyclerView recyclerView = binding.recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -172,8 +181,6 @@ public class HotelActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         slider=findViewById(R.id.rangeSlider);
         mMapView = findViewById(R.id.mapViewHotels);
-        ImageView imageView7=findViewById(R.id.imageView7);
-        imageView7.setImageResource(R.drawable.bg);
         type="Нет";
         Button hostelButton = findViewById(R.id.hostelTypeButton);
         Button hotelButton = findViewById(R.id.hotelTypeButton);
@@ -276,7 +283,6 @@ public class HotelActivity extends AppCompatActivity {
         mMapView.getMapAsync(this::onMapReady);
 
         findViewById(R.id.searchButton).setOnClickListener(v -> {
-            imageView7.setImageResource(R.drawable.bginprogress);
             nothingHereImageView.setVisibility(View.VISIBLE);
             mMapView.setVisibility(View.GONE);
             cardViewMap.setVisibility(View.GONE);
@@ -550,6 +556,8 @@ public class HotelActivity extends AppCompatActivity {
                         Log.d("types response: ", String.valueOf(response));
                         searchButton.setEnabled(true);
                         bookmarksButton.setEnabled(true);
+                        loadingScreenBg.setVisibility(View.GONE);
+                        loadingScreenImage.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
@@ -801,7 +809,7 @@ public class HotelActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             String locationId = params[0];
 
-            String hotelRequestApi = "https://cors.eu.org/https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+apiKey;
+            String hotelRequestApi = proxy_api+"https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -814,229 +822,240 @@ public class HotelActivity extends AppCompatActivity {
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(String response) {
-            boolean skipHotel=false;
+            boolean skipHotel = false;
             Log.d("number of nights", String.valueOf(nightsCount));
 
             if (response != null) {
+                if (response.startsWith("HTTP Error: 403")) {
+                    Toast.makeText(context, "Произошла ошибка сервера", Toast.LENGTH_SHORT).show();
+                    ProgressBar progressBar = findViewById(R.id.progressBar);
+                    progressBar.setVisibility(View.GONE);
+                }
+                else {
                     try {
                         JsonReader jsonReader = new JsonReader(new StringReader(response));
                         jsonReader.beginObject();
                         while (jsonReader.hasNext()) {
-                                String name = jsonReader.nextName();
-                                if (name.equals("hotels")) {
-                                    jsonReader.beginArray();
+                            String name = jsonReader.nextName();
+                            if (name.equals("hotels")) {
+                                jsonReader.beginArray();
+                                while (jsonReader.hasNext()) {
+                                    jsonReader.beginObject();
+                                    int hotelId = -1;
+                                    int cntRooms = 1;
+                                    int cntFloors = 1;
+                                    List<String> facilities = new ArrayList<>();
+                                    List<String> photos = new ArrayList<>();
+                                    ArrayList<Integer> poiDistance = new ArrayList<>();
+                                    double latitude = 0.0;
+                                    double longitude = 0.0;
+                                    String address = "";
+                                    double distance = 0.0;
+                                    String hotelName = "n/a", propertyType = "hotel";
+                                    int stars = 3, rating = 0;
+                                    String link = "";
+                                    double priceFrom = 0.0;
                                     while (jsonReader.hasNext()) {
-                                        jsonReader.beginObject();
-                                        int hotelId = -1;
-                                        int cntRooms = 1;
-                                        int cntFloors=1;
-                                        List<String> facilities = new ArrayList<>();
-                                        List<String> photos = new ArrayList<>();
-                                        ArrayList<Integer> poiDistance = new ArrayList<>();
-                                        double latitude = 0.0;
-                                        double longitude = 0.0;
-                                        String address = "";
-                                        double distance = 0.0;
-                                        String hotelName = "n/a", propertyType = "hotel";
-                                        int stars = 3, rating = 0;
-                                        String link = "";
-                                        double priceFrom = 0.0;
-                                        while (jsonReader.hasNext()) {
-                                            skipHotel = false;
-                                            String hotelProperty = jsonReader.nextName();
-                                            switch (hotelProperty) {
-                                                case "id":
-                                                    int idValue = jsonReader.nextInt();
-                                                    if (idValue == -1) {
-                                                        skipHotel = true;
-                                                    }
-                                                    hotelId = idValue;
-                                                    break;
-                                                case "distance":
-                                                    distance = jsonReader.nextDouble();
-                                                    break;
-                                                case "name":
-                                                    jsonReader.beginObject();
-                                                    String ruName = null;
-                                                    String enName = null;
-                                                    while (jsonReader.hasNext()) {
-                                                        String nameType = jsonReader.nextName();
-                                                        if (nameType.equals("ru")) {
-                                                            ruName = jsonReader.nextString();
-                                                        } else if (nameType.equals("en")) {
-                                                            enName = jsonReader.nextString();
-                                                        } else {
-                                                            jsonReader.skipValue();
-                                                        }
-                                                    }
-                                                    jsonReader.endObject();
-                                                    hotelName = (ruName != null) ? ruName : (enName != null) ? enName : "N/A";
-                                                    if (hotelName.equals("N/A")) {
-                                                    }
-                                                    break;
-                                                case "stars":
-                                                    stars = jsonReader.nextInt();
-                                                    break;
-                                                case "pricefrom":
-                                                    int priceInt = jsonReader.nextInt();
-                                                    priceFrom = (double) priceInt*89*nightsCount;
-                                                    break;
-                                                case "rating":
-                                                    rating = jsonReader.nextInt();
-                                                    break;
-                                                case "propertyType":
-                                                    propertyType = jsonReader.nextString();
-                                                    break;
-                                                case "cntRooms":
-                                                    if (jsonReader.peek() == JsonToken.NULL) {
-                                                        jsonReader.skipValue();
+                                        skipHotel = false;
+                                        String hotelProperty = jsonReader.nextName();
+                                        switch (hotelProperty) {
+                                            case "id":
+                                                int idValue = jsonReader.nextInt();
+                                                if (idValue == -1) {
+                                                    skipHotel = true;
+                                                }
+                                                hotelId = idValue;
+                                                break;
+                                            case "distance":
+                                                distance = jsonReader.nextDouble();
+                                                break;
+                                            case "name":
+                                                jsonReader.beginObject();
+                                                String ruName = null;
+                                                String enName = null;
+                                                while (jsonReader.hasNext()) {
+                                                    String nameType = jsonReader.nextName();
+                                                    if (nameType.equals("ru")) {
+                                                        ruName = jsonReader.nextString();
+                                                    } else if (nameType.equals("en")) {
+                                                        enName = jsonReader.nextString();
                                                     } else {
-                                                        cntRooms = jsonReader.nextInt();
-                                                    }
-                                                    break;
-                                                case "cntFloors":
-                                                    if (jsonReader.peek() == JsonToken.NULL) {
                                                         jsonReader.skipValue();
-                                                    } else {
-                                                        cntFloors = jsonReader.nextInt();
                                                     }
-                                                    break;
-                                                case "address":
-                                                    jsonReader.beginObject();
-                                                    String ruAddress = null;
-                                                    String enAddress = null;
-                                                    while (jsonReader.hasNext()) {
-                                                        String addressType = jsonReader.nextName();
-                                                        if (addressType.equals("ru")) {
-                                                            ruAddress = jsonReader.nextString();
-                                                        } else if (addressType.equals("en")) {
-                                                            enAddress = jsonReader.nextString();
-                                                        } else {
-                                                            jsonReader.skipValue();
-                                                        }
-                                                    }
-                                                    jsonReader.endObject();
-                                                    address = (ruAddress != null) ? ruAddress : (enAddress != null) ? enAddress : "N/A";
-                                                    break;
-                                                case "location":
-                                                    jsonReader.beginObject();
-                                                    while (jsonReader.hasNext()) {
-                                                        String locationProperty = jsonReader.nextName();
-                                                        if (locationProperty.equals("lat")) {
-                                                            latitude = jsonReader.nextDouble();
-                                                        } else if (locationProperty.equals("lon")) {
-                                                            longitude = jsonReader.nextDouble();
-                                                        } else {
-                                                            jsonReader.skipValue();
-                                                        }
-                                                    }
-                                                    jsonReader.endObject();
-                                                    break;
-                                                case "facilities":
-                                                    jsonReader.beginArray();
-                                                    while (jsonReader.hasNext()) {
-                                                        facilities.add(jsonReader.nextString());
-                                                    }
-                                                    jsonReader.endArray();
-                                                    break;
-                                                case "photos":
-                                                    jsonReader.beginArray();
-                                                    while (jsonReader.hasNext()) {
-                                                        jsonReader.beginObject();
-                                                        while (jsonReader.hasNext()) {
-                                                            String photoProperty = jsonReader.nextName();
-                                                            if (photoProperty.equals("url")) {
-                                                                String photoUrl = jsonReader.nextString();
-                                                                photos.add(photoUrl);
-                                                            } else {
-                                                                jsonReader.skipValue();
-                                                            }
-                                                        }
-                                                        jsonReader.endObject();
-                                                    }
-                                                    jsonReader.endArray();
-                                                    break;
-                                                case "poi_distance":
-                                                    jsonReader.beginObject();
-                                                    while (jsonReader.hasNext()) {
-                                                        String poiIdString = jsonReader.nextName();
-                                                        int poiId = Integer.parseInt(poiIdString);
-                                                        int distancePoi = jsonReader.nextInt();
-                                                        poiDistance.add(poiId);
-                                                        poiDistance.add(distancePoi);
-                                                    }
-                                                    jsonReader.endObject();
-                                                    break;
-                                                default:
+                                                }
+                                                jsonReader.endObject();
+                                                hotelName = (ruName != null) ? ruName : (enName != null) ? enName : "N/A";
+                                                if (hotelName.equals("N/A")) {
+                                                }
+                                                break;
+                                            case "stars":
+                                                stars = jsonReader.nextInt();
+                                                break;
+                                            case "pricefrom":
+                                                int priceInt = jsonReader.nextInt();
+                                                priceFrom = (double) priceInt * 89 * nightsCount;
+                                                break;
+                                            case "rating":
+                                                rating = jsonReader.nextInt();
+                                                break;
+                                            case "propertyType":
+                                                propertyType = jsonReader.nextString();
+                                                break;
+                                            case "cntRooms":
+                                                if (jsonReader.peek() == JsonToken.NULL) {
                                                     jsonReader.skipValue();
-                                                    break;
-                                            }
-                                                if (!skipHotel) {
-                                                    link = "https://search.hotellook.com/?hotelId=" + hotelId + "&checkIn=" + departureDate +
-                                                            "&checkOut=" + returnDate + "&adults=" + adultsCount + "&locale=ru_RU";
+                                                } else {
+                                                    cntRooms = jsonReader.nextInt();
                                                 }
+                                                break;
+                                            case "cntFloors":
+                                                if (jsonReader.peek() == JsonToken.NULL) {
+                                                    jsonReader.skipValue();
+                                                } else {
+                                                    cntFloors = jsonReader.nextInt();
+                                                }
+                                                break;
+                                            case "address":
+                                                jsonReader.beginObject();
+                                                String ruAddress = null;
+                                                String enAddress = null;
+                                                while (jsonReader.hasNext()) {
+                                                    String addressType = jsonReader.nextName();
+                                                    if (addressType.equals("ru")) {
+                                                        ruAddress = jsonReader.nextString();
+                                                    } else if (addressType.equals("en")) {
+                                                        enAddress = jsonReader.nextString();
+                                                    } else {
+                                                        jsonReader.skipValue();
+                                                    }
+                                                }
+                                                jsonReader.endObject();
+                                                address = (ruAddress != null) ? ruAddress : (enAddress != null) ? enAddress : "N/A";
+                                                break;
+                                            case "location":
+                                                jsonReader.beginObject();
+                                                while (jsonReader.hasNext()) {
+                                                    String locationProperty = jsonReader.nextName();
+                                                    if (locationProperty.equals("lat")) {
+                                                        latitude = jsonReader.nextDouble();
+                                                    } else if (locationProperty.equals("lon")) {
+                                                        longitude = jsonReader.nextDouble();
+                                                    } else {
+                                                        jsonReader.skipValue();
+                                                    }
+                                                }
+                                                jsonReader.endObject();
+                                                break;
+                                            case "facilities":
+                                                jsonReader.beginArray();
+                                                while (jsonReader.hasNext()) {
+                                                    facilities.add(jsonReader.nextString());
+                                                }
+                                                jsonReader.endArray();
+                                                break;
+                                            case "photos":
+                                                jsonReader.beginArray();
+                                                while (jsonReader.hasNext()) {
+                                                    jsonReader.beginObject();
+                                                    while (jsonReader.hasNext()) {
+                                                        String photoProperty = jsonReader.nextName();
+                                                        if (photoProperty.equals("url")) {
+                                                            String photoUrl = jsonReader.nextString();
+                                                            photos.add(photoUrl);
+                                                        } else {
+                                                            jsonReader.skipValue();
+                                                        }
+                                                    }
+                                                    jsonReader.endObject();
+                                                }
+                                                jsonReader.endArray();
+                                                break;
+                                            case "poi_distance":
+                                                jsonReader.beginObject();
+                                                while (jsonReader.hasNext()) {
+                                                    String poiIdString = jsonReader.nextName();
+                                                    int poiId = Integer.parseInt(poiIdString);
+                                                    int distancePoi = jsonReader.nextInt();
+                                                    poiDistance.add(poiId);
+                                                    poiDistance.add(distancePoi);
+                                                }
+                                                jsonReader.endObject();
+                                                break;
+                                            default:
+                                                jsonReader.skipValue();
+                                                break;
                                         }
-                                        loadFilters();
                                         if (!skipHotel) {
-                                            boolean isHotelMatching = true;
-                                            for (String selectedFilter : selectedFilters) {
-                                                int filterId = filterMap.get(selectedFilter);
-                                                if (!facilities.contains(String.valueOf(filterId))) {
-                                                    isHotelMatching = false;
-                                                    break;
-                                                }
-                                            }
-                                            if (isHotelMatching && priceFrom >= minPrice && priceFrom <= maxPrice) {
-                                                ArrayList<Object> noTypeHotelData = new ArrayList<>(Arrays.asList(hotelId, facilities, latitude, longitude, address, photos, cntFloors, cntRooms, poiDistance, distance, hotelName, stars, rating, propertyType, priceFrom, link));
-                                                noTypeHotelsList.add(noTypeHotelData);
+                                            link = "https://search.hotellook.com/?hotelId=" + hotelId + "&checkIn=" + departureDate +
+                                                    "&checkOut=" + returnDate + "&adults=" + adultsCount + "&locale=ru_RU";
+                                        }
+                                    }
+                                    loadFilters();
+                                    if (!skipHotel) {
+                                        boolean isHotelMatching = true;
+                                        for (String selectedFilter : selectedFilters) {
+                                            int filterId = filterMap.get(selectedFilter);
+                                            if (!facilities.contains(String.valueOf(filterId))) {
+                                                isHotelMatching = false;
+                                                break;
                                             }
                                         }
-                                        jsonReader.endObject();
+                                        if (isHotelMatching && priceFrom >= minPrice && priceFrom <= maxPrice) {
+                                            ArrayList<Object> noTypeHotelData = new ArrayList<>(Arrays.asList(hotelId, facilities, latitude, longitude, address, photos, cntFloors, cntRooms, poiDistance, distance, hotelName, stars, rating, propertyType, priceFrom, link));
+                                            noTypeHotelsList.add(noTypeHotelData);
+                                        }
                                     }
-                                    jsonReader.endArray();
-
-                                    Spinner sortSpinner = findViewById(R.id.sortSpinner);
-                                    String sorting = sortSpinner.getSelectedItem().toString();
-                                    noTypeHotelsList = sortHotels(noTypeHotelsList, sorting);
-                                    Log.d("SortedData NO Type:", String.valueOf(noTypeHotelsList));
-                                    Log.d("SortedData NO Type len:", String.valueOf(noTypeHotelsList.size()));
-                                    if(noTypeHotelsList.isEmpty()){
-                                        ProgressBar progressBar = findViewById(R.id.progressBar);
-                                        progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(context, "Отели не найдены.", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
-                                        loadNextPage(noTypeHotelsList, true);
-                                        ProgressBar progressBar = findViewById(R.id.progressBar);
-                                        progressBar.setVisibility(View.GONE);
-                                        retriesCount = 0;
-                                    }
-                                } else {
-                                    jsonReader.skipValue();
+                                    jsonReader.endObject();
                                 }
+                                jsonReader.endArray();
+
+                                Spinner sortSpinner = findViewById(R.id.sortSpinner);
+                                String sorting = sortSpinner.getSelectedItem().toString();
+                                noTypeHotelsList = sortHotels(noTypeHotelsList, sorting);
+                                Log.d("SortedData NO Type:", String.valueOf(noTypeHotelsList));
+                                Log.d("SortedData NO Type len:", String.valueOf(noTypeHotelsList.size()));
+                                if (noTypeHotelsList.isEmpty()) {
+                                    ProgressBar progressBar = findViewById(R.id.progressBar);
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(context, "Отели не найдены.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    loadNextPage(noTypeHotelsList, true);
+                                    ProgressBar progressBar = findViewById(R.id.progressBar);
+                                    progressBar.setVisibility(View.GONE);
+                                    retriesCount = 0;
+                                }
+                            } else {
+                                jsonReader.skipValue();
                             }
+                        }
                         jsonReader.endObject();
                         jsonReader.close();
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-            } else {
-                Log.d("response is null", "network error");
+                }
+            }
+            else {
+//                Log.d("response is null", "network error");
+//                ProgressBar progressBar = findViewById(R.id.progressBar);
+//                progressBar.setVisibility(View.GONE);
+//                if (retriesCount < 4) {
+//                    retriesCount += 1;
+//                    progressBar.setVisibility(View.VISIBLE);
+//                    new FetchNoTypesTask().execute(String.valueOf(locationId), type, departureDate, returnDate);
+//                } else {
+//                    Toast.makeText(context, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();
+//                }
                 ProgressBar progressBar = findViewById(R.id.progressBar);
                 progressBar.setVisibility(View.GONE);
-                if(retriesCount<4) {
-                    retriesCount += 1;
-                    progressBar.setVisibility(View.VISIBLE);
-                    new FetchNoTypesTask().execute(String.valueOf(locationId), type, departureDate, returnDate);
-                }
-                else{
-                    Toast.makeText(context, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(context, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();
             }
-            }
+
+        }
 
         private ArrayList<ArrayList<Object>> sortHotels(ArrayList<ArrayList<Object>> hotels, String sorting) {
             if (sorting.equals("по цене")) {
@@ -1071,24 +1090,68 @@ public class HotelActivity extends AppCompatActivity {
             }
             return hotels;
         }
+
         private String makeHttpRequestWithOkHttp(String urlString) throws IOException {
-            okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(40, TimeUnit.SECONDS)
+                    .readTimeout(40, TimeUnit.SECONDS)
+                    .writeTimeout(40, TimeUnit.SECONDS)
+                    .build();
             okhttp3.Request request = new okhttp3.Request.Builder()
                     .url(urlString)
+                    .addHeader("x-cors-api-key", corsApiKey)
+                    .addHeader("Origin", "http://localhost/")
                     .build();
+            int maxRetries = 3;
+            int retryCount = 0;
+            IOException lastException = null;
+            okhttp3.Response response = client.newCall(request).execute();
+            Log.d("response", String.valueOf(response));
 
-            try (okhttp3.Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) {
-                    throw new IOException("Unexpected code " + response);
-                }
+            while (retryCount < maxRetries) {
+                try {
+                    if (response.code() == 502) {
+                        Log.d("error 502", "retrying");
+                        String modifiedUrl = urlString.replace(proxy_api, "https://cors.eu.org/");
+                        request = new okhttp3.Request.Builder()
+                                .url(modifiedUrl)
+                                .build();
+                        response = client.newCall(request).execute();
+                        Log.d("response", String.valueOf(response));
 
-                okhttp3.ResponseBody responseBody = response.body();
-                if (responseBody != null) {
-                    return responseBody.string();
-                } else {
-                    return null;
+                        if (response.isSuccessful()) {
+                            okhttp3.ResponseBody responseBody = response.body();
+                            if (responseBody != null) {
+                                return responseBody.string();
+                            } else {
+                                return null;
+                            }
+                        } else if (response.code() == 502) {
+                            retryCount++;
+                            lastException = new IOException("HTTP Error: 502 Bad Gateway");
+                        } else {
+                            throw new IOException("Unexpected code " + response);
+                        }
+                    } else if (response.code() == 403) {
+                        Log.d("Произошла ошибка сервера", "Произошла ошибка сервера");
+                        return "HTTP Error: 403 Forbidden";
+                    } else {
+                        if (response.isSuccessful()) {
+                            okhttp3.ResponseBody responseBody = response.body();
+                            if (responseBody != null) {
+                                return responseBody.string();
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            throw new IOException("Unexpected code " + response);
+                        }
+                    }
+                } catch (IOException e) {
+                    lastException = e;
                 }
             }
+            throw lastException;
         }
     }
 
@@ -1142,7 +1205,7 @@ public class HotelActivity extends AppCompatActivity {
                                 price = lastPriceInfo.getDouble("old_price_pn");
                             }
                         } else {
-                            price = 55000.0;
+                            price = 55567.97;
                         }
                         String link = "https://search.hotellook.com/?hotelId=" + hotelId + "&checkIn=" + departureDate + "&checkOut=" + returnDate + "&adults=" + adultsCount + "&locale=ru_RU";
                         if (price >= minPrice && price <= maxPrice && (selectedEnglishPropertyTypes.isEmpty() || selectedEnglishPropertyTypes.contains(propertyType))) {
@@ -1181,7 +1244,7 @@ public class HotelActivity extends AppCompatActivity {
                 for (String idString : idStrings) {
                     listOfIDs.add(Integer.parseInt(idString));
                 }
-                String hotelRequestApi = "https://cors.eu.org/https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token="+apiKey;
+                String hotelRequestApi = proxy_api+"https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
                 Log.d("Matching hotels:", hotelRequestApi);
                 try {
                     String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -1196,6 +1259,12 @@ public class HotelActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String response) {
                 if (response != null) {
+                    if (response.startsWith("HTTP Error: 403")) {
+                        Toast.makeText(context, "Произошла ошибка сервера", Toast.LENGTH_SHORT).show();
+                        ProgressBar progressBar = findViewById(R.id.progressBar);
+                        progressBar.setVisibility(View.GONE);
+                    }
+                    else {
                         try {
                             JsonReader jsonReader = new JsonReader(new StringReader(response));
                             jsonReader.beginObject();
@@ -1209,8 +1278,8 @@ public class HotelActivity extends AppCompatActivity {
                                         jsonReader.beginObject();
 
                                         int hotelId = -1;
-                                        int cntRooms=1;
-                                        int cntFloors=1;
+                                        int cntRooms = 1;
+                                        int cntFloors = 1;
                                         List<String> facilities = new ArrayList<>();
                                         List<String> photos = new ArrayList<>();
                                         ArrayList<Integer> poiDistance = new ArrayList<>();
@@ -1337,12 +1406,11 @@ public class HotelActivity extends AppCompatActivity {
                                     String sorting = sortSpinner.getSelectedItem().toString();
                                     finalHotelList = sortHotels(finalHotelList, sorting);
                                     Log.d("SortedData matching:", String.valueOf(finalHotelList));
-                                    if(finalHotelList.isEmpty()){
+                                    if (finalHotelList.isEmpty()) {
                                         Toast.makeText(HotelActivity.this, "По таким критериям отели не найдены.", Toast.LENGTH_SHORT).show();
                                         ProgressBar progressBar = findViewById(R.id.progressBar);
                                         progressBar.setVisibility(View.GONE);
-                                    }
-                                    else {
+                                    } else {
                                         showMapMarkers(finalHotelList);
                                         Log.d("selectedEnglishPropertyTypes", String.valueOf(selectedEnglishPropertyTypes));
                                         retriesCount = 0;
@@ -1362,14 +1430,18 @@ public class HotelActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                } else {
-                    if(retriesCount<4) {
-                        retriesCount += 1;
-                        new FetchHotelsTask().execute(String.valueOf(locationId), type, departureDate, returnDate);
                     }
-                    else{
-                        Toast.makeText(context, "Ошибка сети, проверьте подключение и повторите попытку.", Toast.LENGTH_SHORT).show();
-                    }
+                }
+                else {
+//                    if (retriesCount < 4) {
+//                        retriesCount += 1;
+//                        new FetchHotelsTask().execute(String.valueOf(locationId), type, departureDate, returnDate);
+//                    } else {
+//                        Toast.makeText(context, "Ошибка сети, проверьте подключение и повторите попытку.", Toast.LENGTH_SHORT).show();
+//                    }
+                    ProgressBar progressBar = findViewById(R.id.progressBar);
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(context, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -1390,26 +1462,73 @@ public class HotelActivity extends AppCompatActivity {
                     }
                 }
             }
+
             private String makeHttpRequestWithOkHttp(String urlString) throws IOException {
-                okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(40, TimeUnit.SECONDS)
+                        .readTimeout(40, TimeUnit.SECONDS)
+                        .writeTimeout(40, TimeUnit.SECONDS)
+                        .build();
                 okhttp3.Request request = new okhttp3.Request.Builder()
                         .url(urlString)
+                        .addHeader("x-cors-api-key", corsApiKey)
+                        .addHeader("Origin", "http://localhost/")
                         .build();
-                try (okhttp3.Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) {
-                        throw new IOException("Unexpected code " + response);
-                    }
-                    okhttp3.ResponseBody responseBody = response.body();
-                    if (responseBody != null) {
-                        return responseBody.string();
-                    } else {
-                        return null;
+                int maxRetries = 3;
+                int retryCount = 0;
+                IOException lastException = null;
+                okhttp3.Response response = client.newCall(request).execute();
+                Log.d("response", String.valueOf(response));
+
+                while (retryCount < maxRetries) {
+                    try {
+                        if (response.code() == 502) {
+                            Log.d("error 502", "retrying");
+                            String modifiedUrl = urlString.replace(proxy_api, "https://cors.eu.org/");
+                            request = new okhttp3.Request.Builder()
+                                    .url(modifiedUrl)
+                                    .build();
+                            response = client.newCall(request).execute();
+                            Log.d("response", String.valueOf(response));
+
+                            if (response.isSuccessful()) {
+                                okhttp3.ResponseBody responseBody = response.body();
+                                if (responseBody != null) {
+                                    return responseBody.string();
+                                } else {
+                                    return null;
+                                }
+                            } else if (response.code() == 502) {
+                                retryCount++;
+                                lastException = new IOException("HTTP Error: 502 Bad Gateway");
+                            } else {
+                                throw new IOException("Unexpected code " + response);
+                            }
+                        } else if (response.code() == 403) {
+                            Log.d("Произошла ошибка сервера", "Произошла ошибка сервера");
+                            return "HTTP Error: 403 Forbidden";
+                        } else {
+                            if (response.isSuccessful()) {
+                                okhttp3.ResponseBody responseBody = response.body();
+                                if (responseBody != null) {
+                                    return responseBody.string();
+                                } else {
+                                    return null;
+                                }
+                            } else {
+                                throw new IOException("Unexpected code " + response);
+                            }
+                        }
+                    } catch (IOException e) {
+                        lastException = e;
                     }
                 }
+                throw lastException;
             }
         }
 
-        private String makeHttpRequest(String urlString) throws IOException {
+
+            private String makeHttpRequest(String urlString) throws IOException {
             HttpURLConnection connection = null;
             InputStream inputStream = null;
             Scanner scanner = null;
@@ -1518,6 +1637,13 @@ public class HotelActivity extends AppCompatActivity {
             int rating = (int) hotelData.get(12);
             String propertyType = hotelData.get(13).toString().trim();
             double price = (double) hotelData.get(14);
+            String priceString="";
+            if(price==55567.97){
+                priceString="н/д руб.";
+            }
+            else{
+                 priceString = "от "+price+ " руб.";
+            }
             if(stars==0){
                 stars=1;
             }
@@ -1618,7 +1744,7 @@ public class HotelActivity extends AppCompatActivity {
             });
             holder.hotelNameTextView.setText(hotelName);
             holder.hotelRatingTextView.setText(String.valueOf((double) rating / 10 / 2));
-            holder.hotelPriceTextView.setText("от "+price+ " руб.");
+            holder.hotelPriceTextView.setText(priceString);
             holder.hotelDistanceTextView.setText(hotelDistance+" км");
         }
         private void updateImage(ImageView imageView, String imageUrl) {

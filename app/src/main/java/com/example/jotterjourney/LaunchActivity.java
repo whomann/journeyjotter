@@ -1205,6 +1205,7 @@ public class LaunchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
+                Toast.makeText(context, "Генерируем поездку, подождите...", Toast.LENGTH_SHORT).show();
                 Log.d("Response", result);
                 Log.d("yandex url", yandexTaxiUrl);
                 webView.loadUrl(yandexTaxiUrl);

@@ -279,7 +279,14 @@ public class HotelInformationActivity extends AppCompatActivity {
         hotelInfoAddressTextView.setText(address);
         starsTextView.setText(String.valueOf(stars));
         ratingTextViewHotel.setText(String.valueOf((double) rating / 10 / 2));
-        hotelInfoPriceTextView.setText("от "+String.valueOf(price)+ " руб.");
+        String priceString="";
+        if(price==55567.97){
+            priceString="н/д руб.";
+        }
+        else{
+            priceString = "от "+price+ " руб.";
+        }
+        hotelInfoPriceTextView.setText(priceString);
         hotelInfoNameTextView.setText(hotelName);
         distanceTextView.setText(String.valueOf(hotelDistance)+" км.");
         hotelInfoTextView.setText("Тип: "+propertyType.toLowerCase()+floorsString);
@@ -450,19 +457,56 @@ public class HotelInformationActivity extends AppCompatActivity {
                     .addHeader("x-cors-api-key", corsApiKey)
                     .addHeader("Origin", "http://localhost/")
                     .build();
+            int maxRetries = 3;
+            int retryCount = 0;
+            IOException lastException = null;
+            okhttp3.Response response = client.newCall(request).execute();
+            Log.d("response", String.valueOf(response));
 
-            try (okhttp3.Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) {
-                    throw new IOException("Unexpected code " + response);
-                }
+            while (retryCount < maxRetries) {
+                try {
+                    if (response.code() == 502) {
+                        Log.d("error 502", "retrying");
+                        String modifiedUrl = urlString.replace(proxy_api, "https://cors.eu.org/");
+                        request = new okhttp3.Request.Builder()
+                                .url(modifiedUrl)
+                                .build();
+                        response = client.newCall(request).execute();
+                        Log.d("response", String.valueOf(response));
 
-                okhttp3.ResponseBody responseBody = response.body();
-                if (responseBody != null) {
-                    return responseBody.string();
-                } else {
-                    return null;
+                        if (response.isSuccessful()) {
+                            okhttp3.ResponseBody responseBody = response.body();
+                            if (responseBody != null) {
+                                return responseBody.string();
+                            } else {
+                                return null;
+                            }
+                        } else if (response.code() == 502) {
+                            retryCount++;
+                            lastException = new IOException("HTTP Error: 502 Bad Gateway");
+                        } else {
+                            throw new IOException("Unexpected code " + response);
+                        }
+                    } else if (response.code() == 403) {
+                        Log.d("Произошла ошибка сервера", "Произошла ошибка сервера");
+                        return "HTTP Error: 403 Forbidden";
+                    } else {
+                        if (response.isSuccessful()) {
+                            okhttp3.ResponseBody responseBody = response.body();
+                            if (responseBody != null) {
+                                return responseBody.string();
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            throw new IOException("Unexpected code " + response);
+                        }
+                    }
+                } catch (IOException e) {
+                    lastException = e;
                 }
             }
+            throw lastException;
         }
 
         @Override
@@ -483,65 +527,70 @@ public class HotelInformationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             if (response != null) {
-                try {
-                    JsonReader jsonReader = new JsonReader(new StringReader(response));
-                    jsonReader.beginObject();
-                    Log.d("List of IDs: ", poiList.toString());
-                    while (jsonReader.hasNext()) {
-                        String name = jsonReader.nextName();
-                        if (name.equals("pois")) {
-                            jsonReader.beginArray();
-                            while (jsonReader.hasNext()) {
-                                jsonReader.beginObject();
-                                int poiId = -1;
-                                String poiName = "";
+                if (response.startsWith("HTTP Error: 403")) {
+                    Toast.makeText(HotelInformationActivity.this, "Произошла ошибка сервера", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        JsonReader jsonReader = new JsonReader(new StringReader(response));
+                        jsonReader.beginObject();
+                        Log.d("List of IDs: ", poiList.toString());
+                        while (jsonReader.hasNext()) {
+                            String name = jsonReader.nextName();
+                            if (name.equals("pois")) {
+                                jsonReader.beginArray();
                                 while (jsonReader.hasNext()) {
-                                    String poiProperty = jsonReader.nextName();
-                                    switch (poiProperty) {
-                                        case "id":
-                                            poiId = jsonReader.nextInt();
-                                            break;
-                                        case "name":
-                                            poiName = jsonReader.nextString();
-                                            break;
-                                        default:
-                                            jsonReader.skipValue();
-                                            break;
-                                    }
-                                }
-                                for (Integer poiInfo : poiList) {
-                                    if (poiInfo.equals(poiId)) {
-                                        if (poiList.indexOf(poiInfo) + 1 < poiList.size()) {
-                                            if(poisNamesTextView.getText().toString().trim().contains("загрузка...")){
-                                                poisNamesTextView.setText("");
-                                            }
-                                            if(poisDistanceTextView.getText().toString().trim().contains("загрузка...")){
-                                                poisDistanceTextView.setText("");
-                                            }
-                                            int distance = poiList.get(poiList.indexOf(poiInfo) + 1);
-                                            double distanceInKilometers = distance / 1000.0;
-                                            String formattedDistance = String.format("%.1f км", distanceInKilometers);
-                                            SpannableString spannableString = new SpannableString(poiName+"\n");
-                                            spannableString.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), poiName.length() + 1, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                            poisNamesTextView.append(spannableString);
-                                            poisDistanceTextView.append(formattedDistance+"\n");
-                                            Log.d("poi name", poiName+ ", poi distance"+formattedDistance);
-                                        } else {
-                                            Log.e("POI", "Distance information missing or out of bounds for ID: " + poiInfo);
+                                    jsonReader.beginObject();
+                                    int poiId = -1;
+                                    String poiName = "";
+                                    while (jsonReader.hasNext()) {
+                                        String poiProperty = jsonReader.nextName();
+                                        switch (poiProperty) {
+                                            case "id":
+                                                poiId = jsonReader.nextInt();
+                                                break;
+                                            case "name":
+                                                poiName = jsonReader.nextString();
+                                                break;
+                                            default:
+                                                jsonReader.skipValue();
+                                                break;
                                         }
-                                        break;
                                     }
+                                    for (Integer poiInfo : poiList) {
+                                        if (poiInfo.equals(poiId)) {
+                                            if (poiList.indexOf(poiInfo) + 1 < poiList.size()) {
+                                                if (poisNamesTextView.getText().toString().trim().contains("загрузка...")) {
+                                                    poisNamesTextView.setText("");
+                                                }
+                                                if (poisDistanceTextView.getText().toString().trim().contains("загрузка...")) {
+                                                    poisDistanceTextView.setText("");
+                                                }
+                                                int distance = poiList.get(poiList.indexOf(poiInfo) + 1);
+                                                double distanceInKilometers = distance / 1000.0;
+                                                String formattedDistance = String.format("%.1f км", distanceInKilometers);
+                                                SpannableString spannableString = new SpannableString(poiName + "\n");
+                                                spannableString.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), poiName.length() + 1, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                                poisNamesTextView.append(spannableString);
+                                                poisDistanceTextView.append(formattedDistance + "\n");
+                                                Log.d("poi name", poiName + ", poi distance" + formattedDistance);
+                                            } else {
+                                                Log.e("POI", "Distance information missing or out of bounds for ID: " + poiInfo);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    jsonReader.endObject();
                                 }
-                                jsonReader.endObject();
+                                jsonReader.endArray();
+                            } else {
+                                jsonReader.skipValue();
                             }
-                            jsonReader.endArray();
-                        } else {
-                            jsonReader.skipValue();
                         }
+                        jsonReader.endObject();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    jsonReader.endObject();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }

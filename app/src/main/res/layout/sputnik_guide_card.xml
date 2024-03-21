@@ -72,14 +72,14 @@
                 android:id="@+id/expandableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView14"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="11dp"
                 android:layout_marginEnd="15dp"
-                android:visibility="visible">
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14">
 
                 <TextView
                     android:id="@+id/descriptionTextView"
@@ -89,8 +89,7 @@
                     android:text="Что вас ждет:\r\n\r\nАвтобусом из Петербурга мы отправимся в Петергоф. Уже в дороге вы услышите увлекательный рассказ экскурсовода об этом удивительном месте.\r\n\r\nПо замыслу Петра I резиденция в Петергофе должна была достичь двух целей — сравниться в своем великолепии со знаменитой королевской резиденцией во Франции и стать триумфальным памятником борьбы России за выход к Балтийскому морю. Обе задачи были выполнены блестяще и резиденция с XVIII века восхищает всех путешественников.\r\n\r\nВы погуляете по обширному Нижнему парку с экскурсоводом, узнаете историю этого места и осмотрите фонтаны. А после совершите морскую прогулку до Петербурга на комфортабельном скоростном метеоре.\r\n\r\nНа пути в Петербург вы увидите: \r\n\r\n• Самый северный небоскреб «Лахта Центр» (462 метра)\r\n• Западный скоростной диаметр\r\n• Футбольный стадион «Газпром Арена».\r\n\r\n Важно знать:\r\n\r\n• Экскурсия по парку длится 1,5 часа. Её для вас проводит сотрудник музея. Затем вам будет предоставлено свободно время - 1 час.\r\n• В случае неблагоприятных погодных условиях (шторм, ураган, высокие волны и пр.) рейс может быть отменен. Мы предложим вам вернуться в Санкт-Петербург на туристическом автобусе.\r\n• Будьте внимательны при бронировании туристических услуг. Выбирайте категорию, которую Вы сможете подтвердить при посадке в автобус документами (паспорт, Свидетельство о рождении, Пенсионное удостоверение или студенческий билет). Если категория будет указана неверно, придется доплачивать до полной стоимости билета.\r\n• Стоимость билетов в Петергофе для граждан стран ЕАЭС (Армения, Беларусь, Казахстан, Кыргызстан) одинакова со стоимостью билетов граждан РФ.\r\n• Школьникам 15+ для подтверждения необходима справка из школы.\r\n• Возьмите с собой паспорт (для детей - свидетельство о рождении)! Это обязательное условие для входа в парк.\r\n• Места на метеор приобретаются автоматически класса Standart (в салоне на корме) в зависимости от наличия свободных мест на момент оплаты. Места могут быть расположены  не рядом. \r\n•  Вы можете изменить категорию места на метеоре до Comfort (в центральном салоне), Business Class (в салоне с панорамным остеклением в носовой части) заблаговременно обратившись к организатору по телефону указанному в Вашем билете.\r\n•  Посещать территорию ГМЗ «Петергоф», в том числе музеи и дворцы, с животными любых видов, пород и размеров."
                     android:textColor="@color/TextColor"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.489"
-                     />
+                    app:layout_constraintHorizontal_bias="0.489" />
 
             </LinearLayout>
 
@@ -162,7 +161,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.541"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandableLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/expandDescriptionButton" />
 
             <Button
                 android:id="@+id/buyGuideButton"
@@ -224,6 +223,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/boughtGuideButton" />
+
+            <ImageButton
+                android:id="@+id/expandDescriptionButton"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:scaleType="fitCenter"
+                android:backgroundTint="@color/white"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandableLayout"
+                app:srcCompat="@drawable/downpurple" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>

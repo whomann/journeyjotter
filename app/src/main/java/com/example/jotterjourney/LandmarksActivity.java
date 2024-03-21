@@ -85,7 +85,7 @@ public class LandmarksActivity extends AppCompatActivity {
         loadingLandmarkGif=findViewById(R.id.loadingLandmarkGif);
         loadingLandmarkGif.setVisibility(View.VISIBLE);
         landmarkLoading.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.landmark_loading).into(loadingLandmarkGif);
+        Glide.with(this).load(R.drawable.loadingscreen).into(loadingLandmarkGif);
         addTagsTranslations();
         ImageButton landmarksBack=findViewById(R.id.landmarksBack);
         landmarksBack.setOnClickListener(v->{

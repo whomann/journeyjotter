@@ -78,7 +78,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         noBookmarksImageView.setVisibility(View.GONE);
         hotelLoading=findViewById(R.id.hotelLoading);
         hotelLoading.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.hotel_loading).into(hotelLoading);
+        Glide.with(this).load(R.drawable.loadingscreen).into(hotelLoading);
         loadingBookmarksView=findViewById(R.id.loadingBookmarksView);
         loadingBookmarksView.setVisibility(View.VISIBLE);
         recyclerView=findViewById(R.id.recyclerViewBookmarks);
@@ -134,25 +134,64 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url(urlString)
+                .addHeader("x-cors-api-key", corsApiKey)
+                .addHeader("Origin", "http://localhost/")
                 .build();
+        int maxRetries = 3;
+        int retryCount = 0;
+        IOException lastException = null;
+        okhttp3.Response response = client.newCall(request).execute();
+        Log.d("response", String.valueOf(response));
 
-        try (okhttp3.Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
-            }
+        while (retryCount < maxRetries) {
+            try {
+                if (response.code() == 502) {
+                    Log.d("error 502", "retrying");
+                    String modifiedUrl = urlString.replace(proxy_api, "https://cors.eu.org/");
+                    request = new okhttp3.Request.Builder()
+                            .url(modifiedUrl)
+                            .build();
+                    response = client.newCall(request).execute();
+                    Log.d("response", String.valueOf(response));
 
-            okhttp3.ResponseBody responseBody = response.body();
-            if (responseBody != null) {
-                return responseBody.string();
-            } else {
-                return null;
+                    if (response.isSuccessful()) {
+                        okhttp3.ResponseBody responseBody = response.body();
+                        if (responseBody != null) {
+                            return responseBody.string();
+                        } else {
+                            return null;
+                        }
+                    } else if (response.code() == 502) {
+                        retryCount++;
+                        lastException = new IOException("HTTP Error: 502 Bad Gateway");
+                    } else {
+                        throw new IOException("Unexpected code " + response);
+                    }
+                } else if (response.code() == 403) {
+                    Log.d("Произошла ошибка сервера", "Произошла ошибка сервера");
+                    return "HTTP Error: 403 Forbidden";
+                } else {
+                    if (response.isSuccessful()) {
+                        okhttp3.ResponseBody responseBody = response.body();
+                        if (responseBody != null) {
+                            return responseBody.string();
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        throw new IOException("Unexpected code " + response);
+                    }
+                }
+            } catch (IOException e) {
+                lastException = e;
             }
         }
+        throw lastException;
     }
     private class SendHotelsRequestTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            String hotelRequestApi = "https://cors.eu.org/http://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
+            String hotelRequestApi = proxy_api+"https://engine.hotellook.com/api/v2/static/hotels.json?locationId=" + locationId + "&token=" + apiKey;
             Log.d("Matching hotels:", hotelRequestApi);
             try {
                 String response = makeHttpRequestWithOkHttp(hotelRequestApi);
@@ -168,195 +207,200 @@ public class HotelBookmarksActivity extends AppCompatActivity {
         protected void onPostExecute(String response) {
             boolean skipHotel = false;
             if (response != null) {
-                try {
-                    JsonReader jsonReader = new JsonReader(new StringReader(response));
-                    jsonReader.beginObject();
-                    while (jsonReader.hasNext()) {
-                        String name = jsonReader.nextName();
-                        if (name.equals("hotels")) {
-                            jsonReader.beginArray();
-                            while (jsonReader.hasNext()) {
-                                jsonReader.beginObject();
-                                int hotelId = -1;
-                                int cntRooms = 1;
-                                int cntFloors = 1;
-                                List<String> facilities = new ArrayList<>();
-                                List<String> photos = new ArrayList<>();
-                                ArrayList<Integer> poiDistance = new ArrayList<>();
-                                double latitude = 0.0;
-                                double longitude = 0.0;
-                                String address = "";
-                                double distance = 0.0;
-                                String hotelName = "n/a", propertyType = "hotel";
-                                int stars = 3, rating = 0;
-                                String link = "";
-                                double priceFrom = 0.0;
+                if (response.startsWith("HTTP Error: 403")) {
+                    Toast.makeText(context, "Произошла ошибка сервера", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        JsonReader jsonReader = new JsonReader(new StringReader(response));
+                        jsonReader.beginObject();
+                        while (jsonReader.hasNext()) {
+                            String name = jsonReader.nextName();
+                            if (name.equals("hotels")) {
+                                jsonReader.beginArray();
                                 while (jsonReader.hasNext()) {
-                                    skipHotel = false;
-                                    String hotelProperty = jsonReader.nextName();
-                                    switch (hotelProperty) {
-                                        case "id":
-                                            int idValue = jsonReader.nextInt();
-                                            if (idValue == -1) {
-                                                skipHotel = true;
-                                            }
-                                            hotelId = idValue;
-                                            break;
-                                        case "distance":
-                                            distance = jsonReader.nextDouble();
-                                            break;
-                                        case "name":
-                                            jsonReader.beginObject();
-                                            String ruName = null;
-                                            String enName = null;
-                                            while (jsonReader.hasNext()) {
-                                                String nameType = jsonReader.nextName();
-                                                if (nameType.equals("ru")) {
-                                                    ruName = jsonReader.nextString();
-                                                } else if (nameType.equals("en")) {
-                                                    enName = jsonReader.nextString();
-                                                } else {
-                                                    jsonReader.skipValue();
+                                    jsonReader.beginObject();
+                                    int hotelId = -1;
+                                    int cntRooms = 1;
+                                    int cntFloors = 1;
+                                    List<String> facilities = new ArrayList<>();
+                                    List<String> photos = new ArrayList<>();
+                                    ArrayList<Integer> poiDistance = new ArrayList<>();
+                                    double latitude = 0.0;
+                                    double longitude = 0.0;
+                                    String address = "";
+                                    double distance = 0.0;
+                                    String hotelName = "n/a", propertyType = "hotel";
+                                    int stars = 3, rating = 0;
+                                    String link = "";
+                                    double priceFrom = 0.0;
+                                    while (jsonReader.hasNext()) {
+                                        skipHotel = false;
+                                        String hotelProperty = jsonReader.nextName();
+                                        switch (hotelProperty) {
+                                            case "id":
+                                                int idValue = jsonReader.nextInt();
+                                                if (idValue == -1) {
+                                                    skipHotel = true;
                                                 }
-                                            }
-                                            jsonReader.endObject();
-                                            hotelName = (ruName != null) ? ruName : (enName != null) ? enName : "N/A";
-                                            if (hotelName.equals("N/A")) {
-                                            }
-                                            break;
-                                        case "stars":
-                                            stars = jsonReader.nextInt();
-                                            break;
-                                        case "pricefrom":
-                                            int priceInt = jsonReader.nextInt();
-                                            priceFrom = (double) priceInt * 89;
-                                            break;
-                                        case "rating":
-                                            rating = jsonReader.nextInt();
-                                            break;
-                                        case "propertyType":
-                                            propertyType = jsonReader.nextString();
-                                            break;
-                                        case "cntRooms":
-                                            if (jsonReader.peek() == JsonToken.NULL) {
-                                                jsonReader.skipValue();
-                                            } else {
-                                                cntRooms = jsonReader.nextInt();
-                                            }
-                                            break;
-                                        case "cntFloors":
-                                            if (jsonReader.peek() == JsonToken.NULL) {
-                                                jsonReader.skipValue();
-                                            } else {
-                                                cntFloors = jsonReader.nextInt();
-                                            }
-                                            break;
-                                        case "address":
-                                            jsonReader.beginObject();
-                                            String ruAddress = null;
-                                            String enAddress = null;
-                                            while (jsonReader.hasNext()) {
-                                                String addressType = jsonReader.nextName();
-                                                if (addressType.equals("ru")) {
-                                                    ruAddress = jsonReader.nextString();
-                                                } else if (addressType.equals("en")) {
-                                                    enAddress = jsonReader.nextString();
-                                                } else {
-                                                    jsonReader.skipValue();
-                                                }
-                                            }
-                                            jsonReader.endObject();
-                                            address = (ruAddress != null) ? ruAddress : (enAddress != null) ? enAddress : "N/A";
-                                            break;
-                                        case "location":
-                                            jsonReader.beginObject();
-                                            while (jsonReader.hasNext()) {
-                                                String locationProperty = jsonReader.nextName();
-                                                if (locationProperty.equals("lat")) {
-                                                    latitude = jsonReader.nextDouble();
-                                                } else if (locationProperty.equals("lon")) {
-                                                    longitude = jsonReader.nextDouble();
-                                                } else {
-                                                    jsonReader.skipValue();
-                                                }
-                                            }
-                                            jsonReader.endObject();
-                                            break;
-                                        case "facilities":
-                                            jsonReader.beginArray();
-                                            while (jsonReader.hasNext()) {
-                                                facilities.add(jsonReader.nextString());
-                                            }
-                                            jsonReader.endArray();
-                                            break;
-                                        case "photos":
-                                            jsonReader.beginArray();
-                                            while (jsonReader.hasNext()) {
+                                                hotelId = idValue;
+                                                break;
+                                            case "distance":
+                                                distance = jsonReader.nextDouble();
+                                                break;
+                                            case "name":
                                                 jsonReader.beginObject();
+                                                String ruName = null;
+                                                String enName = null;
                                                 while (jsonReader.hasNext()) {
-                                                    String photoProperty = jsonReader.nextName();
-                                                    if (photoProperty.equals("url")) {
-                                                        String photoUrl = jsonReader.nextString();
-                                                        photos.add(photoUrl);
+                                                    String nameType = jsonReader.nextName();
+                                                    if (nameType.equals("ru")) {
+                                                        ruName = jsonReader.nextString();
+                                                    } else if (nameType.equals("en")) {
+                                                        enName = jsonReader.nextString();
                                                     } else {
                                                         jsonReader.skipValue();
                                                     }
                                                 }
                                                 jsonReader.endObject();
-                                            }
-                                            jsonReader.endArray();
-                                            break;
-                                        case "poi_distance":
-                                            jsonReader.beginObject();
-                                            while (jsonReader.hasNext()) {
-                                                String poiIdString = jsonReader.nextName();
-                                                int poiId = Integer.parseInt(poiIdString);
-                                                int distancePoi = jsonReader.nextInt();
-                                                poiDistance.add(poiId);
-                                                poiDistance.add(distancePoi);
-                                            }
-                                            jsonReader.endObject();
-                                            break;
-                                        default:
-                                            jsonReader.skipValue();
-                                            break;
+                                                hotelName = (ruName != null) ? ruName : (enName != null) ? enName : "N/A";
+                                                if (hotelName.equals("N/A")) {
+                                                }
+                                                break;
+                                            case "stars":
+                                                stars = jsonReader.nextInt();
+                                                break;
+                                            case "pricefrom":
+                                                int priceInt = jsonReader.nextInt();
+                                                priceFrom = (double) priceInt * 89;
+                                                break;
+                                            case "rating":
+                                                rating = jsonReader.nextInt();
+                                                break;
+                                            case "propertyType":
+                                                propertyType = jsonReader.nextString();
+                                                break;
+                                            case "cntRooms":
+                                                if (jsonReader.peek() == JsonToken.NULL) {
+                                                    jsonReader.skipValue();
+                                                } else {
+                                                    cntRooms = jsonReader.nextInt();
+                                                }
+                                                break;
+                                            case "cntFloors":
+                                                if (jsonReader.peek() == JsonToken.NULL) {
+                                                    jsonReader.skipValue();
+                                                } else {
+                                                    cntFloors = jsonReader.nextInt();
+                                                }
+                                                break;
+                                            case "address":
+                                                jsonReader.beginObject();
+                                                String ruAddress = null;
+                                                String enAddress = null;
+                                                while (jsonReader.hasNext()) {
+                                                    String addressType = jsonReader.nextName();
+                                                    if (addressType.equals("ru")) {
+                                                        ruAddress = jsonReader.nextString();
+                                                    } else if (addressType.equals("en")) {
+                                                        enAddress = jsonReader.nextString();
+                                                    } else {
+                                                        jsonReader.skipValue();
+                                                    }
+                                                }
+                                                jsonReader.endObject();
+                                                address = (ruAddress != null) ? ruAddress : (enAddress != null) ? enAddress : "N/A";
+                                                break;
+                                            case "location":
+                                                jsonReader.beginObject();
+                                                while (jsonReader.hasNext()) {
+                                                    String locationProperty = jsonReader.nextName();
+                                                    if (locationProperty.equals("lat")) {
+                                                        latitude = jsonReader.nextDouble();
+                                                    } else if (locationProperty.equals("lon")) {
+                                                        longitude = jsonReader.nextDouble();
+                                                    } else {
+                                                        jsonReader.skipValue();
+                                                    }
+                                                }
+                                                jsonReader.endObject();
+                                                break;
+                                            case "facilities":
+                                                jsonReader.beginArray();
+                                                while (jsonReader.hasNext()) {
+                                                    facilities.add(jsonReader.nextString());
+                                                }
+                                                jsonReader.endArray();
+                                                break;
+                                            case "photos":
+                                                jsonReader.beginArray();
+                                                while (jsonReader.hasNext()) {
+                                                    jsonReader.beginObject();
+                                                    while (jsonReader.hasNext()) {
+                                                        String photoProperty = jsonReader.nextName();
+                                                        if (photoProperty.equals("url")) {
+                                                            String photoUrl = jsonReader.nextString();
+                                                            photos.add(photoUrl);
+                                                        } else {
+                                                            jsonReader.skipValue();
+                                                        }
+                                                    }
+                                                    jsonReader.endObject();
+                                                }
+                                                jsonReader.endArray();
+                                                break;
+                                            case "poi_distance":
+                                                jsonReader.beginObject();
+                                                while (jsonReader.hasNext()) {
+                                                    String poiIdString = jsonReader.nextName();
+                                                    int poiId = Integer.parseInt(poiIdString);
+                                                    int distancePoi = jsonReader.nextInt();
+                                                    poiDistance.add(poiId);
+                                                    poiDistance.add(distancePoi);
+                                                }
+                                                jsonReader.endObject();
+                                                break;
+                                            default:
+                                                jsonReader.skipValue();
+                                                break;
+                                        }
+                                        if (!skipHotel) {
+                                            link = "https://search.hotellook.com/?hotelId=" + hotelId + "&checkIn=" + departureDate +
+                                                    "&checkOut=" + returnDate + "&adults=" + adultsCount + "&locale=ru_RU";
+                                        }
                                     }
-                                    if (!skipHotel) {
-                                        link = "https://search.hotellook.com/?hotelId=" + hotelId + "&checkIn=" + departureDate +
-                                                "&checkOut=" + returnDate + "&adults=" + adultsCount + "&locale=ru_RU";
+                                    if (!skipHotel && bookmarksListIds.contains(hotelId)) {
+                                        ArrayList<Object> hotelData = new ArrayList<>(Arrays.asList(hotelId, facilities, latitude, longitude, address, photos, cntFloors, cntRooms, poiDistance, distance, hotelName, stars, rating, propertyType, priceFrom, link));
+                                        bookmarkedHotelsList.add(hotelData);
                                     }
+                                    jsonReader.endObject();
                                 }
-                                if (!skipHotel && bookmarksListIds.contains(hotelId)) {
-                                    ArrayList<Object> hotelData = new ArrayList<>(Arrays.asList(hotelId, facilities, latitude, longitude, address, photos, cntFloors, cntRooms, poiDistance, distance, hotelName, stars, rating, propertyType, priceFrom, link));
-                                    bookmarkedHotelsList.add(hotelData);
+                                jsonReader.endArray();
+                                Log.d("bookmarkedHotelsList:", String.valueOf(bookmarkedHotelsList));
+                                Log.d("bookmarkedHotelsList len:", String.valueOf(bookmarkedHotelsList.size()));
+                                if (bookmarkedHotelsList.isEmpty()) {
+                                    loadingBookmarksView.setVisibility(View.GONE);
+                                    hotelLoading.setVisibility(View.GONE);
+                                    noBookmarksImageView.setVisibility(View.VISIBLE);
+                                    Toast.makeText(HotelBookmarksActivity.this, "В избранном пока нет отелей.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    BookmarkedHotelAdapter bookmarkedHotelAdapter = new BookmarkedHotelAdapter(bookmarkedHotelsList);
+                                    recyclerView.setAdapter(bookmarkedHotelAdapter);
+                                    retriesCount = 0;
+                                    hotelLoading.setVisibility(View.GONE);
+                                    loadingBookmarksView.setVisibility(View.GONE);
                                 }
-                                jsonReader.endObject();
-                            }
-                            jsonReader.endArray();
-                            Log.d("bookmarkedHotelsList:", String.valueOf(bookmarkedHotelsList));
-                            Log.d("bookmarkedHotelsList len:", String.valueOf(bookmarkedHotelsList.size()));
-                            if (bookmarkedHotelsList.isEmpty()) {
-                                loadingBookmarksView.setVisibility(View.GONE);
-                                hotelLoading.setVisibility(View.GONE);
-                                noBookmarksImageView.setVisibility(View.VISIBLE);
-                                Toast.makeText(HotelBookmarksActivity.this, "В избранном пока нет отелей.", Toast.LENGTH_SHORT).show();
                             } else {
-                                BookmarkedHotelAdapter bookmarkedHotelAdapter = new BookmarkedHotelAdapter(bookmarkedHotelsList);
-                                recyclerView.setAdapter(bookmarkedHotelAdapter);
-                                retriesCount = 0;
-                                hotelLoading.setVisibility(View.GONE);
-                                loadingBookmarksView.setVisibility(View.GONE);
+                                jsonReader.skipValue();
                             }
-                        } else {
-                            jsonReader.skipValue();
                         }
-                    }
-                    jsonReader.endObject();
-                    jsonReader.close();
+                        jsonReader.endObject();
+                        jsonReader.close();
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.d("Error reading JSON", String.valueOf(e));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.d("Error reading JSON", String.valueOf(e));
+                    }
                 }
             } else {
                 Log.d("response is null", "network error");

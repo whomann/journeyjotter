@@ -32,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -58,7 +59,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 public class SputnikGuidesActivity extends AppCompatActivity {
-    private String sputnikUsername, sputnikApiKey; private int selectedTripId; ImageButton previousSputnikPageButton; ProgressBar progressBar; RecyclerView recyclerView; ArrayList<ArrayList<Object>> guidesList = new ArrayList<>(); private int regionId; private SQLiteDatabase db; private String targetLocation; private int page = 1; ImageButton searchSputnikTourButton, nextSputnikPageButton;
+    View sputnikLoadingContainer; ImageView sputnikLoadingScreen; private String sputnikUsername, sputnikApiKey; private int selectedTripId; ImageButton previousSputnikPageButton; ProgressBar progressBar; RecyclerView recyclerView; ArrayList<ArrayList<Object>> guidesList = new ArrayList<>(); private int regionId; private SQLiteDatabase db; private String targetLocation; private int page = 1; ImageButton searchSputnikTourButton, nextSputnikPageButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,11 @@ public class SputnikGuidesActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        sputnikLoadingContainer=findViewById(R.id.sputnikLoadingContainer);
+        sputnikLoadingScreen=findViewById(R.id.sputnikLoadingScreen);
+        sputnikLoadingScreen.setVisibility(View.VISIBLE);
+        sputnikLoadingContainer.setVisibility(View.VISIBLE);
+        Glide.with(this).load(R.drawable.loadingscreen).into(sputnikLoadingScreen);
         selectedTripId = getIntent().getIntExtra("selectedTripId", 1);
         previousSputnikPageButton=findViewById(R.id.previousSputnikPageButton);
         previousSputnikPageButton.setVisibility(View.GONE);
@@ -314,6 +320,8 @@ public class SputnikGuidesActivity extends AppCompatActivity {
             if(guidesList.isEmpty()) {
                 Toast.makeText(SputnikGuidesActivity.this, "Экскурсий не нашлось.", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
+                sputnikLoadingScreen.setVisibility(View.GONE);
+                sputnikLoadingContainer.setVisibility(View.GONE);
             }
             else{
                 if(page>1){
@@ -329,6 +337,8 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                     nextSputnikPageButton.setVisibility(View.VISIBLE);
                 }
                 progressBar.setVisibility(View.GONE);
+                sputnikLoadingScreen.setVisibility(View.GONE);
+                sputnikLoadingContainer.setVisibility(View.GONE);
                 RecyclerView recyclerView = findViewById(R.id.recyclerViewGuides);
                 GuidesAdapter guidesAdapter = new GuidesAdapter(guidesList);
                 recyclerView.setAdapter(guidesAdapter);
@@ -427,35 +437,27 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                     params.height = maxHeightPx;
                     holder.descriptionTextView.setLayoutParams(params);
                     holder.descriptionTextView.setTag(true);
-                    showExpandIndicator(holder.descriptionTextView);
-                } else {
-                    hideExpandIndicator(holder.descriptionTextView);
+                }
+                else{
+                    holder.expandDescriptionButton.setVisibility(View.GONE);
                 }
             });
-            holder.descriptionTextView.setOnClickListener(v -> {
-                toggleTextView(holder.descriptionTextView);
+            holder.expandDescriptionButton.setOnClickListener(v -> {
+                toggleTextView(holder.descriptionTextView, holder.expandDescriptionButton);
             });
         }
 
-        private void showExpandIndicator(TextView textView) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.downpurple);
-        }
-
-        private void hideExpandIndicator(TextView textView) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
-
-        public void toggleTextView(TextView descriptionTextView) {
+        public void toggleTextView(TextView descriptionTextView, ImageButton expandButton) {
             int originalHeight = descriptionTextView.getLineHeight() * descriptionTextView.getLineCount();
             int maxHeight = 90;
             int maxHeightPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeight, descriptionTextView.getResources().getDisplayMetrics());
             ViewGroup.LayoutParams params = descriptionTextView.getLayoutParams();
             if (params.height == ViewGroup.LayoutParams.WRAP_CONTENT || params.height == originalHeight) {
                 params.height = maxHeightPx;
-                hideExpandIndicator(descriptionTextView);
+                expandButton.setImageResource(R.drawable.downpurple);
             } else {
                 params.height = originalHeight;
-                showExpandIndicator(descriptionTextView);
+                expandButton.setImageResource(R.drawable.uppurple);
             }
             descriptionTextView.setLayoutParams(params);
         }
@@ -477,6 +479,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
             public TextView beginPlaceTextView;
             public TextView languageTextView;
             public TextView guidePriceTextView;
+            public ImageButton expandDescriptionButton;
             public Button buyGuideButton;
             public ImageButton boughtGuideButton;
 
@@ -484,6 +487,7 @@ public class SputnikGuidesActivity extends AppCompatActivity {
                 super(itemView);
                 guideImageView = itemView.findViewById(R.id.guideImageView);
                 titleTextView = itemView.findViewById(R.id.titleTextView);
+                expandDescriptionButton=itemView.findViewById(R.id.expandDescriptionButton);
                 ratingTextView = itemView.findViewById(R.id.ratingTextView);
                 descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
                 placesToSeeTextView = itemView.findViewById(R.id.placesToSeeTextView);

@@ -7,6 +7,25 @@
     android:background="@color/white"
     tools:context=".SputnikGuidesActivity">
 
+    <View
+        android:id="@+id/sputnikLoadingContainer"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:elevation="10dp"/>
+
+    <ImageView
+        android:id="@+id/sputnikLoadingScreen"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="11dp"/>
+
     <ImageButton
         android:id="@+id/nextSputnikPageButton"
         android:layout_width="48dp"

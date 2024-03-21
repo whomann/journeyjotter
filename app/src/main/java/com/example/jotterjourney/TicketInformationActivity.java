@@ -69,7 +69,7 @@ public class TicketInformationActivity extends AppCompatActivity {
         loadingContainer.setVisibility(View.VISIBLE);
         loadingIV=findViewById(R.id.loadingIV);
         loadingIV.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.loading).into(loadingIV);
+        Glide.with(this).load(R.drawable.loadingscreen).into(loadingIV);
         flightNumber = getIntent().getStringExtra("flightNumber");
         departureAt=getIntent().getStringExtra("departureAt");
         durationTo=getIntent().getStringExtra("durationTo");

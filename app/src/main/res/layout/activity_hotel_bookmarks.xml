@@ -73,12 +73,10 @@
 
     <ImageView
         android:id="@+id/hotelLoading"
-        android:layout_width="186dp"
-        android:layout_height="210dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,14 +84,14 @@
 
     <ImageView
         android:id="@+id/noBookmarksImageView"
-        android:layout_width="318dp"
-        android:layout_height="245dp"
+        android:layout_width="162dp"
+        android:layout_height="137dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/nobookmarks" />
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/nothinghere" />
 </androidx.constraintlayout.widget.ConstraintLayout>
