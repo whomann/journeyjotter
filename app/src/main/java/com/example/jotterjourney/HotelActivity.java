@@ -46,10 +46,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -641,6 +643,37 @@ public class HotelActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "Error getting location ID: " + error.getMessage());
+                        if (error.networkResponse != null && error.networkResponse.statusCode == 429) {
+                            try {
+                                InputStream inputStream = getAssets().open("locations.json");
+                                int size = inputStream.available();
+                                byte[] buffer = new byte[size];
+                                inputStream.read(buffer);
+                                inputStream.close();
+                                String jsonString = new String(buffer, "UTF-8");
+
+                                JSONArray locations = new JSONArray(jsonString);
+                                for (int i = 0; i < locations.length(); i++) {
+                                    JSONObject location = locations.getJSONObject(i);
+                                    String code = location.getString("code");
+                                    if (code.equals(targetLocation)) {
+                                        locationId = location.getInt("id");
+                                        Log.d(TAG, "Location ID found in local JSON file: " + locationId);
+                                        Spinner typeSpinner = findViewById(R.id.typeSpinner);
+                                        getTypes(typeSpinner);
+                                        return;
+                                    }
+                                }
+                            } catch (IOException | JSONException e) {
+                                Log.e(TAG, "Error searching for location ID in local JSON file", e);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(HotelActivity.this, "Отели в этой локации не поддерживаются", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
                         if (error.networkResponse != null) {
                             Log.e(TAG, "Error Response code: " + error.networkResponse.statusCode);
                             String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
@@ -1190,26 +1223,9 @@ public class HotelActivity extends AppCompatActivity {
                         int stars = hotel.optInt("stars", 3);
                         int rating = hotel.getInt("rating");
                         String propertyType = hotel.getString("property_type");
-                        double price = 0.0;
-
-                        if (hotel.has("last_price_info") && !hotel.isNull("last_price_info")) {
-                            JSONObject lastPriceInfo = hotel.getJSONObject("last_price_info");
-
-                            if (lastPriceInfo.has("price")) {
-                                price = lastPriceInfo.getDouble("price");
-                            } else if (lastPriceInfo.has("old_price")) {
-                                price = lastPriceInfo.getDouble("old_price");
-                            } else if (lastPriceInfo.has("price_pn")) {
-                                price = lastPriceInfo.getDouble("price_pn");
-                            } else if (lastPriceInfo.has("old_price_pn")) {
-                                price = lastPriceInfo.getDouble("old_price_pn");
-                            }
-                        } else {
-                            price = 55567.97;
-                        }
                         String link = "https://search.hotellook.com/?hotelId=" + hotelId + "&checkIn=" + departureDate + "&checkOut=" + returnDate + "&adults=" + adultsCount + "&locale=ru_RU";
-                        if (price >= minPrice && price <= maxPrice && (selectedEnglishPropertyTypes.isEmpty() || selectedEnglishPropertyTypes.contains(propertyType))) {
-                            ArrayList<Object> hotelData = new ArrayList<>(Arrays.asList(hotelId, distance, name, stars, rating, propertyType, price, link));
+                        if ((selectedEnglishPropertyTypes.isEmpty() || selectedEnglishPropertyTypes.contains(propertyType))) {
+                            ArrayList<Object> hotelData = new ArrayList<>(Arrays.asList(hotelId, distance, name, stars, rating, propertyType, link));
                             hotelsList.add(hotelData);
                         }
                     }
@@ -1279,6 +1295,7 @@ public class HotelActivity extends AppCompatActivity {
 
                                         int hotelId = -1;
                                         int cntRooms = 1;
+                                        double priceFrom=0.0;
                                         int cntFloors = 1;
                                         List<String> facilities = new ArrayList<>();
                                         List<String> photos = new ArrayList<>();
@@ -1356,6 +1373,10 @@ public class HotelActivity extends AppCompatActivity {
                                                     }
                                                     jsonReader.endObject();
                                                     break;
+                                                case "pricefrom":
+                                                    int priceInt = jsonReader.nextInt();
+                                                    priceFrom = (double) priceInt * 89 * nightsCount;
+                                                    break;
                                                 case "photos":
                                                     jsonReader.beginArray();
                                                     while (jsonReader.hasNext()) {
@@ -1389,7 +1410,7 @@ public class HotelActivity extends AppCompatActivity {
                                                 }
                                             }
                                             if (isHotelMatching) {
-                                                ArrayList<Object> matchingHotelData = new ArrayList<>(Arrays.asList(hotelId, facilities, latitude, longitude, address, photos, cntFloors, cntRooms, poiDistance));
+                                                ArrayList<Object> matchingHotelData = new ArrayList<>(Arrays.asList(hotelId, facilities, latitude, longitude, address, photos, cntFloors, cntRooms, poiDistance, priceFrom));
                                                 matchingHotelsList.add(matchingHotelData);
                                             }
                                         }
@@ -1399,6 +1420,9 @@ public class HotelActivity extends AppCompatActivity {
                                     Log.d("MatchingArray:", String.valueOf(matchingHotelsList));
                                     Log.d("MatchingArrayLen:", String.valueOf(matchingHotelsList.size()));
                                     mergeHotelData(matchingHotelsList, hotelsList, finalHotelList);
+                                    Log.d("before rearrangement", String.valueOf(finalHotelList));
+                                    reorderPriceFrom(finalHotelList);
+                                    Log.d("rearranged list", String.valueOf(finalHotelList));
                                     Log.d("MergedData:", String.valueOf(finalHotelList));
                                     Log.d("MergedDataLen:", String.valueOf(finalHotelList.size()));
 
@@ -1433,19 +1457,18 @@ public class HotelActivity extends AppCompatActivity {
                     }
                 }
                 else {
-//                    if (retriesCount < 4) {
-//                        retriesCount += 1;
-//                        new FetchHotelsTask().execute(String.valueOf(locationId), type, departureDate, returnDate);
-//                    } else {
-//                        Toast.makeText(context, "Ошибка сети, проверьте подключение и повторите попытку.", Toast.LENGTH_SHORT).show();
-//                    }
                     ProgressBar progressBar = findViewById(R.id.progressBar);
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(context, "Ошибка сети, проверьте подключение.", Toast.LENGTH_SHORT).show();
                 }
             }
 
-
+            public void reorderPriceFrom(ArrayList<ArrayList<Object>> finalHotelList) {
+                for (ArrayList<Object> hotelData : finalHotelList) {
+                    Object priceFrom = hotelData.remove(9);
+                    hotelData.add(14, priceFrom);
+                }
+            }
             public void mergeHotelData(ArrayList<ArrayList<Object>> matchingHotelsList, ArrayList<ArrayList<Object>> hotelsList, ArrayList<ArrayList<Object>> finalHotelList) {
                 for (ArrayList<Object> matchingHotelData : matchingHotelsList) {
                     for (ArrayList<Object> hotelData : hotelsList) {
@@ -1574,9 +1597,15 @@ public class HotelActivity extends AppCompatActivity {
                 Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
                     @Override
                     public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        double price1 = (double) hotel1.get(14);
-                        double price2 = (double) hotel2.get(14);
-                        return Double.compare(price1, price2);
+                        double price1 = ((Number) hotel1.get(14)).doubleValue();
+                        double price2 = ((Number) hotel2.get(14)).doubleValue();
+                        if (price1 == 0.0 && price2 != 0.0) {
+                            return 1;
+                        } else if (price1 != 0.0 && price2 == 0.0) {
+                            return -1;
+                        } else {
+                            return Double.compare(price1, price2);
+                        }
                     }
                 });
             } else if (sorting.equals("по расстоянию от центра")) {
@@ -1638,7 +1667,7 @@ public class HotelActivity extends AppCompatActivity {
             String propertyType = hotelData.get(13).toString().trim();
             double price = (double) hotelData.get(14);
             String priceString="";
-            if(price==55567.97){
+            if(price==0.0){
                 priceString="н/д руб.";
             }
             else{
@@ -1647,7 +1676,7 @@ public class HotelActivity extends AppCompatActivity {
             if(stars==0){
                 stars=1;
             }
-            if (!imageUrls.isEmpty()) {
+            if (!imageUrls.isEmpty() && currentImageIndex.get() < imageUrls.size()) {
                 updateImage(holder.hotelImageView, imageUrls.get(currentImageIndex.get()));
             } else {
                 holder.hotelImageView.setImageResource(R.drawable.placeholder);

@@ -280,7 +280,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         starsTextView.setText(String.valueOf(stars));
         ratingTextViewHotel.setText(String.valueOf((double) rating / 10 / 2));
         String priceString="";
-        if(price==55567.97){
+        if(price==0.0){
             priceString="н/д руб.";
         }
         else{

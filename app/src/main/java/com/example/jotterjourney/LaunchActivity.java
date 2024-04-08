@@ -405,10 +405,11 @@ public class LaunchActivity extends AppCompatActivity {
             JSONArray optionsArray = jsonObject.getJSONArray("options");
             if (optionsArray.length() > 0) {
                 JSONObject firstOption = optionsArray.getJSONObject(0);
-                if (firstOption.has("price_text")) {
+                if (firstOption.has("min_price")) {
+                    double minPrice = firstOption.getDouble("min_price");
+                    return "от " + (int) minPrice + " руб.";
+                } else if (firstOption.has("price_text")) {
                     return firstOption.getString("price_text");
-                } else if (firstOption.has("price")) {
-                    return "от " + firstOption.getDouble("price") + " руб.";
                 }
             }
         } catch (JSONException e) {
@@ -896,7 +897,23 @@ public class LaunchActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
     public void startHotelApp(View view) {
-        if(!targetLocationSelect.getText().toString().equals("") &&returnDate!=null&&departureDate!=null&&adultsCount!=0) {
+        String ticketInfo="";
+        String[] selectionArgs = {String.valueOf(selectedTripId)};
+        if (isTableExists(db, "jjtrips1")) {
+            Cursor cursor = db.rawQuery("SELECT * FROM jjtrips1 WHERE userID = ?", selectionArgs);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        @SuppressLint("Range") int userID = cursor.getInt(cursor.getColumnIndex("userID"));
+                        ticketInfo = cursor.getString(cursor.getColumnIndex("ticketInfo"));
+                        Log.d("SQLite Data", "Ticket Info: " + ticketInfo);
+                        cursor.close();
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
+            }
+        }
+        if(!targetLocationSelect.getText().toString().equals("") &&returnDate!=null&&departureDate!=null&&adultsCount!=0&&ticketInfo!=""&&ticketInfo!=null) {
             int userId = selectedTripId;
             SQLiteDatabase db = openOrCreateDatabase("JourneyJotterDB", MODE_PRIVATE, null);
             ContentValues values = new ContentValues();
@@ -917,7 +934,7 @@ public class LaunchActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Toast.makeText(this, "Выберите даты и точку назначения.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Выберите даты, точку назначения и приобретите билеты.", Toast.LENGTH_SHORT).show();
         }
     }
     public void startGuidesApp(View view) {

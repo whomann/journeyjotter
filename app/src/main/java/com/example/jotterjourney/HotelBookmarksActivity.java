@@ -448,6 +448,13 @@ public class HotelBookmarksActivity extends AppCompatActivity {
             if(stars==0){
                 stars=1;
             }
+            String priceString="";
+            if(price==0.0){
+                priceString="н/д руб.";
+            }
+            else{
+                priceString = "от "+price+ " руб.";
+            }
             if (!imageUrls.isEmpty()) {
                 updateImage(holder.hotelImageView, imageUrls.get(currentImageIndex.get()));
             } else {
@@ -533,7 +540,7 @@ public class HotelBookmarksActivity extends AppCompatActivity {
             });
             holder.hotelNameTextView.setText(hotelName);
             holder.hotelRatingTextView.setText(String.valueOf((double) rating / 10 / 2));
-            holder.hotelPriceTextView.setText("от "+price+ " руб.");
+            holder.hotelPriceTextView.setText(priceString);
             holder.hotelDistanceTextView.setText(hotelDistance+" км");
         }
         private void updateImage(ImageView imageView, String imageUrl) {
