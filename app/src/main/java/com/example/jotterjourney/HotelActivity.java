@@ -1718,7 +1718,6 @@ public class HotelActivity extends AppCompatActivity {
                 }
             }
             //endregion
-            String starsSymbol = "\u2605";
             if(Objects.equals(type, "Нет")){
                 try {
                     InputStream is = context.getAssets().open("roomTypes.json");

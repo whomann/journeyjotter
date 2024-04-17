@@ -256,20 +256,31 @@ public class LaunchActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         SpannableString spannableTitle = new SpannableString("Выберите план путешествия");
         TypefaceSpan typefaceSpan = new TypefaceSpan("montserrat_bold");
-        spannableTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.accent_color)), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.accent_color)), 0, spannableTitle.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableTitle.setSpan(new StyleSpan(Typeface.BOLD), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableTitle.setSpan(typefaceSpan, 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setTitle(spannableTitle);
-        Cursor cursor = db.rawQuery("SELECT userID FROM jjtrips1", null);
+        Cursor cursor = db.rawQuery("SELECT userID, targetLocation FROM jjtrips1", null);
         List<Integer> tripIds = new ArrayList<>();
+        List<String> tripLocations = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 tripIds.add(cursor.getInt(cursor.getColumnIndex("userID")));
+                tripLocations.add(cursor.getString(cursor.getColumnIndex("targetLocation")));
             } while (cursor.moveToNext());
             cursor.close();
         }
+        List<String> options = new ArrayList<>();
+        for (int i = 0; i < tripIds.size(); i++) {
+            String tripLocation = tripLocations.get(i);
+            if(tripLocation==null|| tripLocation.equals("") || tripLocation.equals("null")){
+                tripLocation="Неизвестно";
+            }
+            options.add(tripIds.get(i) + ". " + tripLocation);
+        }
         Integer[] tripIdArray = tripIds.toArray(new Integer[0]);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripIdArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, options);
         builder.setAdapter(adapter, (dialog, which) -> {
             selectedTripId = tripIdArray[which];
             SharedPreferences preferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
@@ -287,7 +298,6 @@ public class LaunchActivity extends AppCompatActivity {
             insertDataIntoSQLite(selectedTripId);
             readAndLogDataFromSQLite(selectedTripId);
         });
-
         SpannableString deleteAllPlans = new SpannableString("Очистить");
         deleteAllPlans.setSpan(new StyleSpan(Typeface.BOLD), 0, deleteAllPlans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         deleteAllPlans.setSpan(new ForegroundColorSpan(color), 0, deleteAllPlans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -452,10 +462,8 @@ public class LaunchActivity extends AppCompatActivity {
     }
     private LatLng getCoordinates(String address) {
         Geocoder geocoder = new Geocoder(this);
-
         try {
             List<Address> addresses = geocoder.getFromLocationName(address, 1);
-
             if (addresses.size() > 0) {
                 Address location = addresses.get(0);
                 double latitude = location.getLatitude();
@@ -1009,7 +1017,6 @@ public class LaunchActivity extends AppCompatActivity {
             try {
                 URL url = new URL(urlString);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
                 try {
                     InputStream in = urlConnection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
