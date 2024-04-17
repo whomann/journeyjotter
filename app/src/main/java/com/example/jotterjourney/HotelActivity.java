@@ -1091,35 +1091,37 @@ public class HotelActivity extends AppCompatActivity {
         }
 
         private ArrayList<ArrayList<Object>> sortHotels(ArrayList<ArrayList<Object>> hotels, String sorting) {
-            if (sorting.equals("по цене")) {
-                Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
-                    @Override
-                    public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        double price1 = (double) hotel1.get(14);
-                        double price2 = (double) hotel2.get(14);
-                        return Double.compare(price1, price2);
-                    }
-                });
-            } else if (sorting.equals("по расстоянию от центра")) {
-                Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
-                    @Override
-                    public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        double distance1 = (double) hotel1.get(9);
-                        double distance2 = (double) hotel2.get(9);
-                        return Double.compare(distance1, distance2);
-                    }
-                });
-            } else if (sorting.equals("по рейтингу")) {
-                Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
-                    @Override
-                    public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        int rating1 = (int) hotel1.get(12);
-                        int rating2 = (int) hotel2.get(12);
-                        double rating1Double = (double) rating1;
-                        double rating2Double = (double) rating2;
-                        return Double.compare(rating2Double, rating1Double);
-                    }
-                });
+            switch (sorting) {
+                case "по цене":
+                    Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
+                        @Override
+                        public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
+                            double price1 = (double) hotel1.get(14);
+                            double price2 = (double) hotel2.get(14);
+                            return Double.compare(price1, price2);
+                        }
+                    });
+                    break;
+                case "по расстоянию от центра":
+                    Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
+                        @Override
+                        public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
+                            double distance1 = (double) hotel1.get(9);
+                            double distance2 = (double) hotel2.get(9);
+                            return Double.compare(distance1, distance2);
+                        }
+                    });
+                    break;
+                case "по рейтингу":
+                    Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
+                        @Override
+                        public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
+                            int rating1 = (int) hotel1.get(12);
+                            int rating2 = (int) hotel2.get(12);
+                            return Double.compare((double) rating2, (double) rating1);
+                        }
+                    });
+                    break;
             }
             return hotels;
         }
@@ -1593,41 +1595,43 @@ public class HotelActivity extends AppCompatActivity {
         }
 
         private ArrayList<ArrayList<Object>> sortHotels(ArrayList<ArrayList<Object>> hotels, String sorting) {
-            if (sorting.equals("по цене")) {
-                Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
-                    @Override
-                    public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        double price1 = ((Number) hotel1.get(14)).doubleValue();
-                        double price2 = ((Number) hotel2.get(14)).doubleValue();
-                        if (price1 == 0.0 && price2 != 0.0) {
-                            return 1;
-                        } else if (price1 != 0.0 && price2 == 0.0) {
-                            return -1;
-                        } else {
-                            return Double.compare(price1, price2);
+            switch (sorting) {
+                case "по цене":
+                    Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
+                        @Override
+                        public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
+                            double price1 = ((Number) hotel1.get(14)).doubleValue();
+                            double price2 = ((Number) hotel2.get(14)).doubleValue();
+                            if (price1 == 0.0 && price2 != 0.0) {
+                                return 1;
+                            } else if (price1 != 0.0 && price2 == 0.0) {
+                                return -1;
+                            } else {
+                                return Double.compare(price1, price2);
+                            }
                         }
-                    }
-                });
-            } else if (sorting.equals("по расстоянию от центра")) {
-                Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
-                    @Override
-                    public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        double distance1 = (double) hotel1.get(9);
-                        double distance2 = (double) hotel2.get(9);
-                        return Double.compare(distance1, distance2);
-                    }
-                });
-            } else if (sorting.equals("по рейтингу")) {
-                Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
-                    @Override
-                    public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
-                        int rating1 = (int) hotel1.get(12);
-                        int rating2 = (int) hotel2.get(12);
-                        double rating1Double = (double) rating1;
-                        double rating2Double = (double) rating2;
-                        return Double.compare(rating2Double, rating1Double);
-                    }
-                });
+                    });
+                    break;
+                case "по расстоянию от центра":
+                    Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
+                        @Override
+                        public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
+                            double distance1 = (double) hotel1.get(9);
+                            double distance2 = (double) hotel2.get(9);
+                            return Double.compare(distance1, distance2);
+                        }
+                    });
+                    break;
+                case "по рейтингу":
+                    Collections.sort(hotels, new Comparator<ArrayList<Object>>() {
+                        @Override
+                        public int compare(ArrayList<Object> hotel1, ArrayList<Object> hotel2) {
+                            int rating1 = (int) hotel1.get(12);
+                            int rating2 = (int) hotel2.get(12);
+                            return Double.compare((double) rating2, (double) rating1);
+                        }
+                    });
+                    break;
             }
             return hotels;
         }
