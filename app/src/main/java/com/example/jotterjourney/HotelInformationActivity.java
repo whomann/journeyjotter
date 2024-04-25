@@ -118,6 +118,7 @@ public class HotelInformationActivity extends AppCompatActivity {
         hotelLink = getIntent().getStringExtra("hotelLink");
         hotelLatValue = getIntent().getDoubleExtra("hotelLatValue", 0.0);
         hotelLonValue = getIntent().getDoubleExtra("hotelLonValue", 0.0);
+        Log.d("hotel lat: "+hotelLatValue," hotel lon: "+hotelLonValue);
         imageUrls = getIntent().getStringArrayListExtra("imageUrls");
         int locationId = getIntent().getIntExtra("locationID", 0);
         int cntFloors = getIntent().getIntExtra("cntFloors", 0);
@@ -391,20 +392,16 @@ public class HotelInformationActivity extends AppCompatActivity {
             LatLngBounds bounds = builder.build();
             LatLng center = new LatLng((bounds.southwest.latitude + bounds.northeast.latitude) / 2, (bounds.southwest.longitude + bounds.northeast.longitude) / 2);
             float zoomLevel = 12.0f;
-
-            ViewTreeObserver viewTreeObserver = mMapView.getViewTreeObserver();
-            if (viewTreeObserver.isAlive()) {
-                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(center, zoomLevel);
-                        mMap.moveCamera(cameraUpdate);
-                    }
-                });
-            }
+            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(center, zoomLevel);
+                    mMap.moveCamera(cameraUpdate);
+                }
+            });
         }
     }
+
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng kremlin = new LatLng(55.753930, 37.620795);

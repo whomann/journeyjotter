@@ -688,7 +688,15 @@ public class LaunchActivity extends AppCompatActivity {
                 eventInfo.add(fields[2].trim());
                 eventInfo.add(fields[3].trim());
                 eventsList.add(eventInfo);
-            } else {
+            } else if(fields.length==3){
+                ArrayList<Object> eventInfo = new ArrayList<>();
+                eventInfo.add(fields[0].trim());
+                eventInfo.add(fields[1].trim());
+                eventInfo.add(fields[2].trim());
+                eventInfo.add("");
+                eventsList.add(eventInfo);
+            }
+            else{
                 Log.d("Invalid format", "Invalid event format: " + event);
             }
         }
